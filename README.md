@@ -1,0 +1,1 @@
+CardFlow is a trading card collection tracker for Pokémon, Magic: The Gathering, and One Piece. Users can add cards with details (set, condition, quantity, value), browse their collection in a binder-style grid, search/filter/sort, and open a details page for each card.
