@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CardFlow</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-row">
+        <div>
+          <h1 class="brand">CardFlow</h1>
+          <p class="subtitle">Your digital trading card binder</p>
+        </div>
+
+        <div class="header-actions">
+          <button id="addCardBtn" class="btn primary" type="button">+ Add Card</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="panel">
+        <div class="panel-row">
+          <div class="summary">
+            <div class="summary-item">
+              <div class="summary-label">Total cards</div>
+              <div id="totalCards" class="summary-value">0</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Estimated value</div>
+              <div id="totalValue" class="summary-value">$0.00</div>
+            </div>
+          </div>
+
+          <div class="filters-toggle-wrap">
+            <button id="toggleFiltersBtn" class="btn ghost" type="button" aria-expanded="true" aria-controls="filters">
+              Filters
+            </button>
+          </div>
+        </div>
+
+        <div id="filters" class="filters">
+          <label class="field">
+            <span class="field-label">Search</span>
+            <input id="searchInput" class="input" type="search" placeholder="Search by card name…" />
+          </label>
+
+          <label class="field">
+            <span class="field-label">Game</span>
+            <select id="gameFilter" class="select">
+              <option value="">All games</option>
+              <option value="pokemon">Pokémon</option>
+              <option value="mtg">Magic: The Gathering</option>
+              <option value="onepiece">One Piece</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span class="field-label">Set</span>
+            <select id="setFilter" class="select">
+              <option value="">All sets</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span class="field-label">Condition</span>
+            <select id="conditionFilter" class="select">
+              <option value="">All conditions</option>
+              <option value="NM">Near Mint (NM)</option>
+              <option value="LP">Lightly Played (LP)</option>
+              <option value="MP">Moderately Played (MP)</option>
+              <option value="HP">Heavily Played (HP)</option>
+              <option value="DMG">Damaged (DMG)</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span class="field-label">Sort</span>
+            <select id="sortSelect" class="select">
+              <option value="recent">Recently added</option>
+              <option value="name">Name (A→Z)</option>
+              <option value="valueDesc">Value (high→low)</option>
+              <option value="qtyDesc">Quantity (high→low)</option>
+            </select>
+          </label>
+
+          <div class="filters-actions">
+            <button id="clearFiltersBtn" class="btn" type="button">Clear</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div id="emptyState" class="empty-state" hidden>
+          <h2>No cards yet</h2>
+          <p>Add your first card to start building your binder.</p>
+          <button id="emptyAddBtn" class="btn primary" type="button">+ Add Card</button>
+        </div>
+
+        <div id="binderGrid" class="binder-grid" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <!-- Modal -->
+    <div id="modalOverlay" class="modal-overlay" hidden>
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-header">
+          <h2 id="modalTitle">Add Card</h2>
+          <button id="closeModalBtn" class="icon-btn" type="button" aria-label="Close dialog">✕</button>
+        </div>
+
+        <form id="cardForm" class="modal-body" novalidate>
+          <input type="hidden" id="cardId" />
+
+          <div class="form-grid">
+            <label class="field">
+              <span class="field-label">Game <span class="req">*</span></span>
+              <select id="game" class="select" required>
+                <option value="">Select…</option>
+                <option value="pokemon">Pokémon</option>
+                <option value="mtg">Magic: The Gathering</option>
+                <option value="onepiece">One Piece</option>
+              </select>
+              <small class="error" data-for="game"></small>
+            </label>
+
+            <label class="field">
+              <span class="field-label">Name <span class="req">*</span></span>
+              <input id="name" class="input" type="text" required maxlength="120" />
+              <small class="error" data-for="name"></small>
+            </label>
+
+            <label class="field">
+              <span class="field-label">Set <span class="req">*</span></span>
+              <select id="setId" class="select" required>
+                <option value="">Select a game first…</option>
+              </select>
+              <small class="error" data-for="setId"></small>
+            </label>
+
+            <label class="field">
+              <span class="field-label">Card #</span>
+              <input id="cardNumber" class="input" type="text" maxlength="40" />
+            </label>
+
+            <label class="field">
+              <span class="field-label">Condition <span class="req">*</span></span>
+              <select id="condition" class="select" required>
+                <option value="">Select…</option>
+                <option value="NM">Near Mint (NM)</option>
+                <option value="LP">Lightly Played (LP)</option>
+                <option value="MP">Moderately Played (MP)</option>
+                <option value="HP">Heavily Played (HP)</option>
+                <option value="DMG">Damaged (DMG)</option>
+              </select>
+              <small class="error" data-for="condition"></small>
+            </label>
+
+            <label class="field">
+              <span class="field-label">Quantity <span class="req">*</span></span>
+              <input id="quantity" class="input" type="number" min="1" step="1" required value="1" />
+              <small class="error" data-for="quantity"></small>
+            </label>
+
+            <label class="field checkbox">
+              <input id="foil" type="checkbox" />
+              <span>Foil</span>
+            </label>
+
+            <label class="field">
+              <span class="field-label">Purchase price</span>
+              <input id="purchasePrice" class="input" type="number" min="0" step="0.01" placeholder="0.00" />
+              <small class="hint">USD</small>
+              <small class="error" data-for="purchasePrice"></small>
+            </label>
+
+            <label class="field">
+              <span class="field-label">Current value</span>
+              <input id="currentValue" class="input" type="number" min="0" step="0.01" placeholder="0.00" />
+              <small class="hint">USD</small>
+              <small class="error" data-for="currentValue"></small>
+            </label>
+
+            <label class="field full">
+              <span class="field-label">Image URL</span>
+              <input id="imageUrl" class="input" type="url" placeholder="https://…" />
+              <small class="hint">Optional. Must be a valid URL if provided.</small>
+              <small class="error" data-for="imageUrl"></small>
+            </label>
+
+            <label class="field full">
+              <span class="field-label">Notes</span>
+              <textarea id="notes" class="textarea" rows="3" maxlength="500"></textarea>
+            </label>
+          </div>
+
+          <div class="modal-footer">
+            <button id="deleteBtn" class="btn danger" type="button" hidden>Delete</button>
+            <div class="spacer"></div>
+            <button class="btn" type="button" id="cancelBtn">Cancel</button>
+            <button class="btn primary" type="submit">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="toast" class="toast" hidden></div>
+
+    <script type="module" src="./js/app.js"></script>
+  </body>
+</html>
