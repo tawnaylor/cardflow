@@ -1,4 +1,3 @@
-import { addCard } from "./storage.js";
 import { addCard, getCard, updateCard } from "./storage.js";
 import { uid, fileToDataUrl, fetchPokemonSeries, getParam } from "./shared.js";
 
@@ -24,6 +23,7 @@ async function init() {
     `<option value="">Select…</option>` +
     (data.series ?? []).map((s) => `<option value="${s}">${s}</option>`).join("");
 
+  // wire file preview
   imgEl.addEventListener("change", async () => {
     const file = imgEl.files?.[0];
     if (!file) return (preview.textContent = "Preview");
@@ -38,26 +38,6 @@ async function init() {
   });
 
   f.addEventListener("submit", onSubmit);
-}
-
-async function onSubmit(e) {
-  e.preventDefault();
-  clearErrors();
-
-  const file = imgEl.files?.[0] ?? null;
-  const mv = valueEl.value === "" ? 0 : Number(valueEl.value);
-
-  const errs = {};
-  if (!nameEl.value.trim()) errs.name = "Required.";
-  if (!seriesEl.value) errs.series = "Required.";
-  if (!detailsEl.value.trim()) errs.details = "Required.";
-  if (!file) {
-    // we'll try to auto-fetch an image if the user didn't upload one
-    // keep validation deferred until after fetch attempt
-  }
-  if (!Number.isFinite(mv) || mv < 0) errs.value = "Must be ≥ 0.";
-
-  if (Object.keys(errs).length) {
 
   // If editing, load card and populate fields
   if (editId) {
@@ -77,6 +57,22 @@ async function onSubmit(e) {
       if (submitBtn) submitBtn.textContent = 'Save Changes';
     }
   }
+}
+
+async function onSubmit(e) {
+  e.preventDefault();
+  clearErrors();
+
+  const file = imgEl.files?.[0] ?? null;
+  const mv = valueEl.value === "" ? 0 : Number(valueEl.value);
+
+  const errs = {};
+  if (!nameEl.value.trim()) errs.name = "Required.";
+  if (!seriesEl.value) errs.series = "Required.";
+  if (!detailsEl.value.trim()) errs.details = "Required.";
+  if (!Number.isFinite(mv) || mv < 0) errs.value = "Must be ≥ 0.";
+
+  if (Object.keys(errs).length) {
     for (const [k, msg] of Object.entries(errs)) setError(k, msg);
     return;
   }
@@ -84,6 +80,9 @@ async function onSubmit(e) {
   let imageDataUrl = null;
   if (file) {
     imageDataUrl = await fileToDataUrl(file);
+  } else if (editing && existingCard && existingCard.imageDataUrl) {
+    // keep previous image when editing and no new file provided
+    imageDataUrl = existingCard.imageDataUrl;
   } else {
     // attempt to fetch from PokéTCG API using the provided name and series
     try {
@@ -106,16 +105,20 @@ async function onSubmit(e) {
   }
 
   const card = {
-    id: uid(),
+    id: editing && existingCard ? existingCard.id : uid(),
     name: nameEl.value.trim(),
     series: seriesEl.value,
     details: detailsEl.value.trim(),
     marketValue: mv,
     imageDataUrl,
-    createdAt: Date.now()
+    createdAt: editing && existingCard ? existingCard.createdAt : Date.now()
   };
 
-  addCard(card);
+  if (editing) {
+    updateCard(card);
+  } else {
+    addCard(card);
+  }
 
   location.href = `./index.html?selected=${encodeURIComponent(card.id)}`;
 }
@@ -129,21 +132,16 @@ function setError(key, msg) {
   if (el) el.textContent = msg;
 }
 
-    id: editing && existingCard ? existingCard.id : uid(),
+async function fetchImageFromPokeTcg(name, series) {
   if (!name) return null;
   const base = "https://api.pokemontcg.io/v2/cards";
 
   const qParts = [];
   if (name) qParts.push(`name:"${name}"`);
-    createdAt: editing && existingCard ? existingCard.createdAt : Date.now()
+  if (series) qParts.push(`set.name:"${series}"`);
 
   const tries = [qParts.join(" "), `name:"${name}"`].filter(Boolean);
 
-  if (editing) {
-    updateCard(card);
-  } else {
-    addCard(card);
-  }
   for (const q of tries) {
     const url = `${base}?q=${encodeURIComponent(q)}&pageSize=1`;
     const res = await fetch(url);
