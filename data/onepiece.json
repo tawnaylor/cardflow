@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Monkey D. Luffy",
+    "set": "East Blue",
+    "code": "OP-EB-001",
+    "image": "../test-image.svg"
+  },
+  {
+    "name": "Roronoa Zoro",
+    "set": "East Blue",
+    "code": "OP-EB-002",
+    "image": "../test-image.svg"
+  }
+]

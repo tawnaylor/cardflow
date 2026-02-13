@@ -1,7 +1,7 @@
 {
   "name": "cardflow",
   "version": "1.0.0",
-  "description": "CardFlow is a trading card collection tracker for Pokémon, Magic: The Gathering, and One Piece. Users can add cards with details (set, condition, quantity, value), browse their collection in a binder-style grid, search/filter/sort, and open a details page for each card.",
+  "description": "CardFlow is a trading card collection tracker for multiple TCG brands.",
   "main": "index.js",
   "directories": {
     "test": "tests"
@@ -10,9 +10,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "e2e": "node tests/e2e-add-card.js",
     "e2e:mtg": "node tests/e2e-mtg.js",
-    "e2e:ygo": "node tests/e2e-yugioh.js"
-    ,"e2e:onepiece": "node tests/e2e-onepiece.js",
-    "e2e:dragonball": "node tests/e2e-dragonball.js"
+    "e2e:ygo": "node tests/e2e-yugioh.js",
+    "e2e:onepiece": "node tests/e2e-onepiece.js",
+    "e2e:dragonball": "node tests/e2e-dragonball.js",
+    "e2e:all": "npm run e2e && npm run e2e:mtg && npm run e2e:ygo && npm run e2e:onepiece && npm run e2e:dragonball",
+    "playwright:install": "npx playwright install --with-deps",
+    "playwright:test": "npx playwright test"
   },
   "repository": {
     "type": "git",
@@ -26,6 +29,7 @@
   },
   "homepage": "https://github.com/tawnaylor/cardflow#readme",
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "playwright": "^1.36.0"
   }
 }
