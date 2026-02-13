@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CardFlow • Binder</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+
+  <header class="topbar">
+    <div class="wrap topbar__row">
+      <div class="brand" aria-label="CardFlow">
+        <div class="brand__logo" aria-hidden="true">CF</div>
+        <div class="brand__text">
+          <h1>CardFlow</h1>
+          <p class="muted">A digital binder (WDD 231 Team Project)</p>
+        </div>
+      </div>
+
+      <button id="openAdd" class="btn btn--primary" type="button">+ Add Card</button>
+    </div>
+  </header>
+
+  <main id="main" class="wrap" tabindex="-1">
+    <!-- REQUIREMENT: Drop-down menus -->
+    <section class="panel" aria-label="Filters">
+      <div class="filters">
+        <div class="field">
+          <label for="search">Search</label>
+          <input id="search" type="search" placeholder="Search by name..." />
+        </div>
+
+        <div class="field">
+          <label for="gameFilter">Game</label>
+          <select id="gameFilter">
+            <option value="">All</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="setFilter">Set</label>
+          <select id="setFilter" disabled>
+            <option value="">All</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="sort">Sort</label>
+          <select id="sort">
+            <option value="recent">Recently added</option>
+            <option value="name">Name A–Z</option>
+            <option value="value">Value high → low</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="stats" aria-live="polite">
+        <div class="stats__item">
+          <span class="muted">Cards</span>
+          <strong id="count">0</strong>
+        </div>
+        <div class="stats__item">
+          <span class="muted">Estimated Value</span>
+          <strong id="total">$0.00</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- REQUIREMENT: Responsive design + binder grid -->
+    <section class="panel" aria-label="Binder">
+      <div id="empty" class="empty hidden" role="status">
+        <h2>No cards yet</h2>
+        <p class="muted">Add a card to start your binder.</p>
+        <button id="openAdd2" class="btn btn--primary" type="button">+ Add Card</button>
+      </div>
+
+      <div id="grid" class="grid" role="list" aria-label="Card list"></div>
+    </section>
+  </main>
+
+  <!-- REQUIREMENT: Detailed validated form (modal) -->
+  <div id="backdrop" class="backdrop hidden" aria-hidden="true"></div>
+
+  <dialog id="modal" class="modal" aria-labelledby="modalTitle">
+    <form id="cardForm" novalidate>
+      <header class="modal__head">
+        <h2 id="modalTitle">Add Card</h2>
+        <button id="closeModal" class="icon" type="button" aria-label="Close">✕</button>
+      </header>
+
+      <section class="modal__body">
+        <input type="hidden" id="id" />
+
+        <div class="formgrid">
+          <div class="field">
+            <label for="game">Game <span class="req">*</span></label>
+            <select id="game" required>
+              <option value="">Select…</option>
+            </select>
+            <p class="err" id="err-game" aria-live="polite"></p>
+          </div>
+
+          <div class="field">
+            <label for="name">Card Name <span class="req">*</span></label>
+            <input id="name" type="text" required maxlength="60" />
+            <p class="err" id="err-name" aria-live="polite"></p>
+          </div>
+
+          <div class="field">
+            <label for="set">Set <span class="req">*</span></label>
+            <select id="set" required disabled>
+              <option value="">Select game first…</option>
+            </select>
+            <p class="err" id="err-set" aria-live="polite"></p>
+          </div>
+
+          <div class="field">
+            <label for="number">Card #</label>
+            <input id="number" type="text" maxlength="20" placeholder="12/102" />
+          </div>
+
+          <div class="field">
+            <label for="qty">Quantity <span class="req">*</span></label>
+            <input id="qty" type="number" min="1" step="1" required />
+            <p class="err" id="err-qty" aria-live="polite"></p>
+          </div>
+
+          <div class="field">
+            <label for="value">Current Value ($)</label>
+            <input id="value" type="number" min="0" step="0.01" />
+            <p class="err" id="err-value" aria-live="polite"></p>
+          </div>
+
+          <div class="field full">
+            <label for="img">Image URL</label>
+            <input id="img" type="url" placeholder="https://…" />
+            <p class="err" id="err-img" aria-live="polite"></p>
+          </div>
+        </div>
+      </section>
+
+      <footer class="modal__foot">
+        <button id="deleteBtn" class="btn btn--danger hidden" type="button">Delete</button>
+        <div class="spacer"></div>
+        <button class="btn" type="button" id="cancel">Cancel</button>
+        <button class="btn btn--primary" type="submit">Save</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Small toast for UX -->
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <!-- REQUIREMENT: Modules -->
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
