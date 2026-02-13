@@ -18,7 +18,8 @@ function renderNotFound() {
 
 function renderCard(card) {
   const img = card.img
-    ? `<img src="${esc(card.img)}" alt="${esc(card.name)} card image" style="width:min(360px,100%);border-radius:18px;border:1px solid rgba(255,255,255,.12);">`
+    ? `<img src="${esc(card.img)}" alt="${esc(card.name)} card image"
+         style="width:min(360px,100%);border-radius:18px;border:1px solid rgba(255,255,255,.12);">`
     : "";
 
   const totalValue = money((Number(card.value) || 0) * (Number(card.qty) || 0));
@@ -26,6 +27,7 @@ function renderCard(card) {
   document.getElementById("details").innerHTML = `
     <h2 style="margin-top:0;">${esc(card.name)}</h2>
     <p class="muted" style="margin-top:4px;">${esc(card.gameName)} • ${esc(card.setName)}</p>
+
     <div style="display:grid;gap:12px;margin-top:14px;">
       ${img}
       <div class="panel" style="margin:0;">

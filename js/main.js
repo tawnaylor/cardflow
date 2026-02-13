@@ -1,13 +1,13 @@
-// REQUIREMENT: Modules for organization (main is just orchestration)
-
 import { getSets } from "./api.js";
-import { loadCards, saveCards } from "./store.js";
+import { loadCards, saveCards, loadPageIndex, savePageIndex } from "./store.js";
 import { uid, money } from "./utils.js";
 import { validate } from "./form.js";
-import { cardHTML, totals } from "./render.js";
+import { totals, pocketsHTML } from "./render.js";
+import { pageCount, clampPageIndex, slicePage } from "./binder.js";
 
 let setsData = null;
 let cards = [];
+let pageIndex = 0; // 0-based
 
 const $ = (id) => document.getElementById(id);
 
@@ -37,15 +37,10 @@ function setMeta(gameId, setId) {
 }
 
 function fillGameDropdowns() {
-  const gameFilter = $("gameFilter");
-  const game = $("game");
-
-  // Filter dropdown
-  gameFilter.innerHTML = `<option value="">All</option>` +
+  $("gameFilter").innerHTML = `<option value="">All</option>` +
     setsData.games.map(g => `<option value="${g.id}">${g.name}</option>`).join("");
 
-  // Form dropdown
-  game.innerHTML = `<option value="">Select…</option>` +
+  $("game").innerHTML = `<option value="">Select…</option>` +
     setsData.games.map(g => `<option value="${g.id}">${g.name}</option>`).join("");
 }
 
@@ -118,9 +113,24 @@ function filteredCards() {
   return list;
 }
 
-function render() {
-  const grid = $("grid");
+function updatePagerUI(totalPages) {
+  $("pageNum").textContent = String(pageIndex + 1);
+  $("pageTotal").textContent = String(totalPages);
+
+  $("prevPage").disabled = pageIndex <= 0;
+  $("nextPage").disabled = pageIndex >= totalPages - 1;
+}
+
+function flip(direction) {
+  // direction: "next" | "prev"
+  const pageEl = $("page");
+  pageEl.dataset.flip = direction;
+  window.setTimeout(() => { pageEl.dataset.flip = "none"; }, 430);
+}
+
+function render(direction = null) {
   const empty = $("empty");
+  const pockets = $("pockets");
 
   const { count, total } = totals(cards);
   $("count").textContent = String(count);
@@ -128,17 +138,32 @@ function render() {
 
   if (cards.length === 0) {
     empty.classList.remove("hidden");
-    grid.innerHTML = "";
+    pockets.innerHTML = "";
+    $("pageNum").textContent = "1";
+    $("pageTotal").textContent = "1";
+    $("prevPage").disabled = true;
+    $("nextPage").disabled = true;
     return;
   }
   empty.classList.add("hidden");
 
   const list = filteredCards();
-  grid.innerHTML = list.map(cardHTML).join("");
+  const totalPages = pageCount(list);
 
-  grid.querySelectorAll('button[data-action="edit"]').forEach(btn => {
+  pageIndex = clampPageIndex(pageIndex, totalPages);
+  savePageIndex(pageIndex);
+
+  const onPage = slicePage(list, pageIndex);
+  pockets.innerHTML = pocketsHTML(onPage);
+
+  updatePagerUI(totalPages);
+
+  if (direction) flip(direction);
+
+  // Wire edit buttons only for filled pockets
+  pockets.querySelectorAll('button[data-action="edit"]').forEach(btn => {
     btn.addEventListener("click", (e) => {
-      const id = e.currentTarget.closest(".card")?.dataset?.id;
+      const id = e.currentTarget.closest(".pocket")?.dataset?.id;
       const card = cards.find(c => c.id === id);
       if (card) openModal("edit", card);
     });
@@ -178,21 +203,32 @@ function attachEvents() {
   $("cancel").addEventListener("click", closeModal);
   $("backdrop").addEventListener("click", closeModal);
 
-  // When game changes in form, update set dropdown
+  // Form: update set dropdown when game changes
   $("game").addEventListener("change", () => {
     fillSetDropdown($("set"), $("game").value, false);
   });
 
-  // Filters
+  // Filters: update set filter when game filter changes
   $("gameFilter").addEventListener("change", () => {
     fillSetDropdown($("setFilter"), $("gameFilter").value, true);
     $("setFilter").value = "";
+    pageIndex = 0;
     render();
   });
 
   ["search","setFilter","sort"].forEach(id => {
-    $(id).addEventListener("input", render);
-    $(id).addEventListener("change", render);
+    $(id).addEventListener("input", () => { pageIndex = 0; render(); });
+    $(id).addEventListener("change", () => { pageIndex = 0; render(); });
+  });
+
+  // Pager
+  $("prevPage").addEventListener("click", () => {
+    pageIndex = Math.max(0, pageIndex - 1);
+    render("prev");
+  });
+  $("nextPage").addEventListener("click", () => {
+    pageIndex = pageIndex + 1;
+    render("next");
   });
 
   // Save form with validation
@@ -210,7 +246,6 @@ function attachEvents() {
       return;
     }
 
-    // Build final normalized card object
     const g = gameMeta(raw.game);
     const s = setMeta(raw.game, raw.set);
 
@@ -239,25 +274,36 @@ function attachEvents() {
     const id = $("id").value;
     if (!id) return;
     if (!confirm("Delete this card?")) return;
+
     remove(id);
     closeModal();
     toast("Deleted.");
     render();
   });
 
-  // Ensure backdrop hides when dialog closes (ESC)
+  // ESC close handling
   $("modal").addEventListener("close", () => {
     $("backdrop").classList.add("hidden");
     $("backdrop").setAttribute("aria-hidden", "true");
   });
+
+  // Keyboard pager (nice UX)
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft" && !e.repeat && !$("modal").open) {
+      if (!$("prevPage").disabled) { pageIndex = Math.max(0, pageIndex - 1); render("prev"); }
+    }
+    if (e.key === "ArrowRight" && !e.repeat && !$("modal").open) {
+      // total pages depends on filtered list; render() clamps anyway
+      pageIndex = pageIndex + 1;
+      render("next");
+    }
+  });
 }
 
 async function init() {
-  // REQUIREMENT: Fetching data from JSON
-  setsData = await getSets();
-
-  // REQUIREMENT: localStorage persistence
-  cards = loadCards();
+  setsData = await getSets();          // fetch JSON requirement
+  cards = loadCards();                // localStorage requirement
+  pageIndex = loadPageIndex();
 
   fillGameDropdowns();
   attachEvents();
