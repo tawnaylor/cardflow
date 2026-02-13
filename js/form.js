@@ -58,7 +58,21 @@ let lastSearchQuery = '';
 init().catch(console.error);
 
 async function init() {
-  brandData = await fetchBrandSeries();
+  try {
+    brandData = await fetchBrandSeries();
+  } catch (e) {
+    console.warn('Failed to fetch brand series, using fallback', e);
+    brandData = {
+      brands: [
+        { id: 'pokemon', name: 'Pokémon', series: ['Base Set'] },
+        { id: 'mtg', name: 'Magic: The Gathering', series: ['Default'] },
+        { id: 'yugioh', name: 'Yu-Gi-Oh!', series: ['Default'] },
+        { id: 'onepiece', name: 'One Piece', series: ['Default'] },
+        { id: 'dragonball', name: 'Dragon Ball', series: ['Default'] },
+        { id: 'lorcana', name: 'Lorcana', series: ['Default'] }
+      ]
+    };
+  }
   marketSample = await fetchMarketSample();
 
   // load expansions list
@@ -149,6 +163,39 @@ async function init() {
   }
 
   setSelectOptions(els.brand, getBrandOptions(brandData), "Select…");
+  // if URL contains brand or other prefill params, apply them
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const b = params.get('brand');
+    if (b) {
+      els.brand.value = b;
+      // trigger change to render series and detail fields
+      try { els.brand.dispatchEvent(new Event('change')); } catch (e) {}
+    }
+
+    // optional prefill fields
+    const prefill = ['name','series','expansion','setCode','details','marketValue','imageUrl'];
+    for (const k of prefill) {
+      const v = params.get(k);
+      if (!v) continue;
+      if (k === 'name') els.cardName.value = decodeURIComponent(v);
+      if (k === 'series') {
+        // add series option if missing
+        const opt = Array.from(els.series.options).find(o => o.value === v || o.text === v);
+        if (opt) els.series.value = opt.value; else { const o = document.createElement('option'); o.value = v; o.text = v; els.series.appendChild(o); els.series.value = v; }
+      }
+      if (k === 'expansion') { try { els.expansion.value = v; } catch (e) {} }
+      if (k === 'setCode') { try { els.setCode.value = v; } catch (e) {} }
+      if (k === 'details') { try { els.cardDetails.value = decodeURIComponent(v); } catch (e) {} }
+      if (k === 'marketValue') { try { els.marketValue.value = v; } catch (e) {} }
+      if (k === 'imageUrl') {
+        // try to fetch image and set preview
+        try {
+          fetchImageAsDataUrl(decodeURIComponent(v)).then(dataUrl => { els.imgPreview.innerHTML = `<img alt="Preview" src="${dataUrl}" />`; els._fetchedImageDataUrl = dataUrl; }).catch(()=>{});
+        } catch (e) {}
+      }
+    }
+  } catch (e) {}
 
   els.brand.addEventListener("change", () => {
     const b = els.brand.value;
