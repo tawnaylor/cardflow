@@ -68,6 +68,12 @@ async function onSubmit(e) {
         setError("img", "Could not find image for this card.");
         return;
       }
+      // show fetched image in the preview so the user can confirm
+      try {
+        preview.innerHTML = `<img alt="Preview" src="${imageDataUrl}" />`;
+      } catch (err) {
+        console.warn("Could not render preview image:", err);
+      }
     } catch (err) {
       console.error("Image fetch failed:", err);
       setError("img", "Image lookup failed. Try uploading one.");
