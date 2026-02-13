@@ -1,4 +1,4 @@
-import { getCard } from "./storage.js";
+import { getCard, removeCard } from "./storage.js";
 import { getParam, money } from "./shared.js";
 
 const view = document.getElementById("view");
@@ -36,35 +36,81 @@ function makeKv(keyText, valueText) {
 
 function renderCard(c) {
   clearView();
-
+  // image column
   const imgWrap = document.createElement("div");
   imgWrap.className = "dp-img";
+  const imgInner = document.createElement("div");
+  imgInner.className = "dp-img-inner";
   if (c.imageDataUrl) {
     const img = document.createElement("img");
     img.alt = c.name ?? "";
     img.src = c.imageDataUrl;
-    imgWrap.appendChild(img);
+    img.style.cursor = "zoom-in";
+    img.addEventListener("click", () => openImageModal(c.imageDataUrl, c.name));
+    imgInner.appendChild(img);
   } else {
-    imgWrap.textContent = "No image";
+    imgInner.textContent = "No image";
   }
+  imgWrap.appendChild(imgInner);
 
+  // details column
   const body = document.createElement("div");
   body.className = "dp-body";
 
   const h2 = document.createElement("h2");
-  h2.style.margin = "0";
   h2.textContent = c.name ?? "";
 
   const series = document.createElement("div");
   series.className = "muted";
   series.textContent = `Series: ${c.series ?? ""}`;
 
-  const kvMarket = makeKv("Market Value", money(c.marketValue || 0));
-  const kvDetails = makeKv("Details", c.details ?? "");
+  const metaWrap = document.createElement("div");
+  metaWrap.className = "dp-meta";
+  metaWrap.append(makeKv("Market", money(c.marketValue || 0)));
+  metaWrap.append(makeKv("Details", c.details ?? ""));
 
-  body.append(h2, series, kvMarket, kvDetails);
+  const created = document.createElement("div");
+  created.className = "muted";
+  const date = c.createdAt ? new Date(c.createdAt) : null;
+  created.textContent = date ? `Added: ${date.toLocaleString()}` : "";
+
+  const actions = document.createElement("div");
+  actions.className = "dp-actions";
+  const openBtn = document.createElement("a");
+  openBtn.className = "btn light";
+  openBtn.href = c.imageDataUrl || "#";
+  openBtn.target = "_blank";
+  openBtn.rel = "noopener noreferrer";
+  openBtn.textContent = "Open Image";
+
+  const delBtn = document.createElement("button");
+  delBtn.className = "btn danger";
+  delBtn.textContent = "Delete Card";
+  delBtn.addEventListener("click", () => {
+    if (!confirm("Delete this card?")) return;
+    removeCard(c.id);
+    location.href = "./index.html";
+  });
+
+  actions.append(openBtn, delBtn);
+
+  body.append(h2, series, metaWrap, created, actions);
   view.append(imgWrap, body);
 }
+
+function openImageModal(src, alt) {
+  const modal = document.createElement("div");
+  modal.className = "img-modal";
+  modal.tabIndex = -1;
+  const img = document.createElement("img");
+  img.src = src;
+  img.alt = alt ?? "";
+  modal.appendChild(img);
+  modal.addEventListener("click", () => modal.remove());
+  document.body.appendChild(modal);
+  modal.focus();
+  const onKey = (e) => { if (e.key === "Escape") { modal.remove(); document.removeEventListener('keydown', onKey); } };
+  document.addEventListener('keydown', onKey);
 
 function renderNotFound() {
   clearView();
