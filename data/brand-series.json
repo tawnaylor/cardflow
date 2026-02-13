@@ -4,31 +4,6 @@
       "id": "pokemon",
       "name": "Pokémon",
       "series": ["Base Set", "Jungle", "Fossil", "Scarlet & Violet", "Sword & Shield"]
-    },
-    {
-      "id": "onepiece",
-      "name": "One Piece",
-      "series": ["Romance Dawn (OP-01)", "Paramount War (OP-02)", "Awakening of the New Era (OP-05)"]
-    },
-    {
-      "id": "mtg",
-      "name": "Magic: The Gathering",
-      "series": ["Kaldheim", "Neon Dynasty", "March of the Machine"]
-    },
-    {
-      "id": "dragonball",
-      "name": "Dragon Ball",
-      "series": ["Saiyan Showdown", "Realm of the Gods", "Tournament of Power"]
-    },
-    {
-      "id": "yugioh",
-      "name": "Yu-Gi-Oh!",
-      "series": ["Legend of Blue Eyes", "Metal Raiders", "Pharaoh's Servant"]
-    },
-    {
-      "id": "lorcana",
-      "name": "Disney Lorcana",
-      "series": ["The First Chapter", "Rise of the Floodborn", "Into the Inklands"]
     }
   ]
 }

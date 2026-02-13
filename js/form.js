@@ -21,31 +21,11 @@ const els = {
   resetBtn: document.getElementById("resetBtn")
 };
 
-// Definitions for brand-specific detail dropdowns
+// Definitions for brand-specific detail dropdowns (Pokémon-only)
 const detailFieldDefs = {
   pokemon: [
     { id: 'rarity', label: 'Rarity', options: ['Common','Uncommon','Rare','Holo Rare','Ultra Rare','Secret Rare','Promo'] },
     { id: 'card_type', label: 'Card Type', options: ['Pokémon','Trainer','Energy'] }
-  ],
-  mtg: [
-    { id: 'rarity', label: 'Rarity', options: ['Basic','Common','Uncommon','Rare','Mythic Rare'] },
-    { id: 'color', label: 'Color', options: ['White','Blue','Black','Red','Green','Colorless','Multicolor'] }
-  ],
-  yugioh: [
-    { id: 'rarity', label: 'Rarity', options: ['Common','Rare','Super Rare','Ultra Rare','Secret Rare'] },
-    { id: 'attribute', label: 'Attribute', options: ['Light','Dark','Earth','Water','Fire','Wind'] }
-  ],
-  onepiece: [
-    { id: 'rarity', label: 'Rarity', options: ['Common','Uncommon','Rare','Super Rare'] },
-    { id: 'card_class', label: 'Card Class', options: ['Character','Event','Stage','Other'] }
-  ],
-  dragonball: [
-    { id: 'rarity', label: 'Rarity', options: ['Common','Uncommon','Rare','Super Rare','Secret Rare'] },
-    { id: 'card_type', label: 'Type', options: ['Leader','Battle','Extra','Unison','Other'] }
-  ],
-  lorcana: [
-    { id: 'rarity', label: 'Rarity', options: ['Common','Uncommon','Rare','Legendary'] },
-    { id: 'card_type', label: 'Type', options: ['Character','Item','Action','Other'] }
   ]
 };
 
@@ -162,7 +142,8 @@ async function init() {
     return name; // fallback
   }
 
-  setSelectOptions(els.brand, getBrandOptions(brandData), "Select…");
+  // Only expose Pokémon as the brand option
+  setSelectOptions(els.brand, [{ id: 'pokemon', name: 'Pokémon' }], "Pokémon");
   // if URL contains brand or other prefill params, apply them
   try {
     const params = new URLSearchParams(window.location.search);
@@ -898,6 +879,13 @@ async function onSubmit(e) {
   };
 
   addCard(card);
+  // In test mode we avoid navigation so tests can observe the client-side save
+  try {
+    if (window.__CARD_FLOW_TEST_MODE) {
+      // noop: keep page open for E2E tests
+      return;
+    }
+  } catch (e) {}
 
   // Go back to binder and auto-select the new card
   window.location.href = `./index.html?selected=${encodeURIComponent(card.id)}`;

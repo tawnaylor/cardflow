@@ -18,6 +18,13 @@ export function addCard(card) {
   const cards = loadCards();
   cards.unshift(card);
   saveCards(cards);
+  try {
+    if (typeof window !== 'undefined') {
+      window.__cardflow_saved = { id: card.id, time: Date.now() };
+      try { window.dispatchEvent(new Event('cardflow-saved')); } catch (e) {}
+      try { localStorage.setItem('__cardflow_saved', JSON.stringify(window.__cardflow_saved)); } catch (e) {}
+    }
+  } catch (e) {}
   return card;
 }
 

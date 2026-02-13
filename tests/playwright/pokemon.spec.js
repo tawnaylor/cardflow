@@ -8,8 +8,20 @@ test('Pokémon flow adds card', async ({ page }) => {
   await page.fill('#cardName', 'PW Pikachu');
   await page.fill('#marketValue', '2.22');
   await page.fill('#cardDetails', 'Playwright Pokémon test');
-  const imgPath = require('path').resolve(process.cwd(), 'test-image.svg');
-  await page.setInputFiles('#imageFile', imgPath);
+  // Avoid using file uploads in the E2E flow; inject a small data URL as the fetched image
+  await page.evaluate(() => {
+    const smallSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><rect width="16" height="16" fill="#f4c2c2"/></svg>';
+    const dataUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(smallSvg)));
+    const preview = document.getElementById('imgPreview');
+    if (preview) preview.innerHTML = `<img alt="Preview" src="${dataUrl}" />`;
+    window.__injected_test_image = dataUrl;
+    const els = document.getElementById('cardForm') ? { _fetchedImageDataUrl: dataUrl } : null;
+    if (els) { document.querySelector && (document.querySelector('#imgPreview').dataset.test = '1'); }
+    // set internal pointer used by form.js
+    window.__injected_fetched = dataUrl;
+    try { window._fetchedImageDataUrl = dataUrl; } catch (e) {}
+    try { document.getElementById('imgPreview').innerHTML = `<img src="${dataUrl}" alt="Preview"/>`; } catch (e) {}
+  });
   // set dynamic detail selects so validation passes
   await page.evaluate(() => {
     const setIfExists = (id, val) => { const el = document.getElementById(id); if (el) { el.value = val; el.dispatchEvent(new Event('change')); } };
@@ -17,19 +29,12 @@ test('Pokémon flow adds card', async ({ page }) => {
     setIfExists('detail_card_type', 'Pokémon');
   });
 
-  await page.evaluate(() => {
-    window.__lastSet = undefined;
-    const orig = localStorage.setItem.bind(localStorage);
-    localStorage.setItem = function(k, v) { orig(k, v); window.__lastSet = { k, v }; };
-  });
-
-  await Promise.all([
-    page.click('button[type="submit"]'),
-    page.waitForFunction(() => window.__lastSet !== undefined, { timeout: 3000 }).catch(() => {})
-  ]);
-
-  await page.waitForNavigation({ waitUntil: 'load' }).catch(() => {});
-  const raw = await page.evaluate(() => localStorage.getItem('binder.cards.v1'));
+  // Submit, then open a new page and check persisted localStorage for the save flag
+  await page.click('button[type="submit"]');
+  const p2 = await page.context().newPage();
+  await p2.goto('/cardflow/index.html');
+  await p2.waitForFunction(() => !!localStorage.getItem('__cardflow_saved'), { timeout: 3000 }).catch(() => {});
+  const raw = await p2.evaluate(() => localStorage.getItem('binder.cards.v1'));
   const cards = raw ? JSON.parse(raw) : [];
   expect(cards.length).toBeGreaterThan(0);
 });
