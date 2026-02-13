@@ -3,15 +3,15 @@ let marketCache = null;
 
 export async function fetchBrandSeries() {
   if (brandCache) return brandCache;
-  const res = await fetch("./data/brand-series.json");
-  if (!res.ok) throw new Error("Failed to load brands-series.json");
+  const res = await fetch("../data/brand-series.json");
+  if (!res.ok) throw new Error("Failed to load brand-series.json");
   brandCache = await res.json();
   return brandCache;
 }
 
 export async function fetchMarketSample() {
   if (marketCache) return marketCache;
-  const res = await fetch("./data/market-sample.json");
+  const res = await fetch("../data/market-sample.json");
   if (!res.ok) {
     marketCache = {}; // optional file
     return marketCache;
