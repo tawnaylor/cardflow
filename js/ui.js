@@ -62,6 +62,8 @@ export function renderDetails({ imageEl, fieldsEl, linkEl, deleteBtn, card, bran
     card.name,
     brandLabel,
     card.series,
+    card.expansion ?? "",
+    card.setCode ?? "",
     card.details,
     money(card.marketValue ?? 0)
   ];

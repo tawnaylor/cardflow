@@ -9,6 +9,7 @@ const els = {
   brand: document.getElementById("brand"),
   series: document.getElementById("series"),
   expansion: document.getElementById("expansion"),
+  setCode: document.getElementById("setCode"),
   marketValue: document.getElementById("marketValue"),
   cardDetails: document.getElementById("cardDetails"),
   imageFile: document.getElementById("imageFile"),
@@ -33,9 +34,60 @@ async function init() {
       expansions = await res.json();
       const opts = (expansions ?? []).map((s) => ({ id: s.id, name: s.name }));
       setSelectOptions(els.expansion, opts, "Select expansion…");
+      // populate setCode dropdown (use id as short code)
+      const setOpts = (expansions ?? []).map((s) => ({ id: s.id, name: s.id + ' — ' + s.name }));
+      setSelectOptions(els.setCode, setOpts, "Select set code…");
     }
   } catch (err) {
     console.warn("Failed to load pokemon expansions", err);
+  }
+
+  // When a set code is selected, auto-fill brand, series, expansion
+  els.setCode.addEventListener('change', () => {
+    const code = els.setCode.value;
+    if (!code) return;
+
+    // Find expansion entry
+    const setEntry = (expansions ?? []).find((s) => s.id === code);
+    if (!setEntry) return;
+
+    // Ensure brand is Pokemon
+    try { els.brand.value = 'pokemon'; } catch (e) {}
+
+    // Set expansion select to the set id
+    try { els.expansion.value = setEntry.id; } catch (e) {}
+
+    // Attempt to set series: use expansion name as fallback
+    const derivedSeries = deriveSeriesFromExpansion(setEntry.name);
+    // If a series option matching derivedSeries exists, set it; otherwise add it
+    if (derivedSeries) {
+      const opt = Array.from(els.series.options).find(o => o.value === derivedSeries || o.text === derivedSeries);
+      if (opt) {
+        els.series.value = opt.value;
+      } else {
+        const option = document.createElement('option');
+        option.value = derivedSeries;
+        option.text = derivedSeries;
+        els.series.appendChild(option);
+        els.series.value = derivedSeries;
+      }
+    }
+  });
+
+  function deriveSeriesFromExpansion(name) {
+    if (!name) return '';
+    const n = name.toLowerCase();
+    if (n.includes('base set') || n.includes('base')) return 'Base Set';
+    if (n.includes('jungle')) return 'Jungle';
+    if (n.includes('fossil')) return 'Fossil';
+    if (n.includes('neo')) return 'Neo';
+    if (n.includes('ex ') || n.startsWith('ex') ) return 'EX';
+    if (n.includes('diamond') || n.includes('pearl') || n.includes('platinum')) return 'Diamond & Pearl';
+    if (n.includes('xy') || n.includes('primal') || n.includes('roaring')) return 'XY';
+    if (n.includes('sun') || n.includes('moon')) return 'Sun & Moon';
+    if (n.includes('sword') || n.includes('shield')) return 'Sword & Shield';
+    if (n.includes('scarlet') || n.includes('violet')) return 'Scarlet & Violet';
+    return name; // fallback
   }
 
   setSelectOptions(els.brand, getBrandOptions(brandData), "Select…");
@@ -77,6 +129,7 @@ async function onSubmit(e) {
     brand: els.brand.value,
     series: els.series.value,
     expansion: els.expansion?.value || "",
+    setCode: els.setCode?.value || "",
     details: els.cardDetails.value.trim(),
     marketValue: els.marketValue.value === "" ? "" : Number(els.marketValue.value),
     imageFile: file
@@ -106,6 +159,7 @@ async function onSubmit(e) {
     brandLabel,
     series: data.series,
     expansion: data.expansion,
+    setCode: data.setCode,
     details: data.details,
     marketValue: finalMarketValue,
     imageDataUrl,
