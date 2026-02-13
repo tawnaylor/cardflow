@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pokémon Binder</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <div>
+          <h1>Pokémon Card Binder</h1>
+          <div class="muted">Click a card to view details • Stored in localStorage</div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+          <input id="search" type="search" placeholder="Search card name…" aria-label="Search cards" />
+          <a class="btn primary" href="./form.html">Form</a>
+        </div>
+      </header>
+
+      <section class="layout">
+        <section class="panel">
+          <h2 style="margin:0 0 12px 0;">Binder</h2>
+          <div id="empty" class="muted" hidden>No cards yet. Use the form to add one.</div>
+          <div id="grid" class="grid" role="list"></div>
+        </section>
+
+        <aside class="panel" aria-label="Card details">
+          <h2 style="margin:0 0 12px 0;">Card Details and Image</h2>
+
+          <div id="dImg" class="details-img">Select a card</div>
+
+          <div id="dFields">
+            <div class="kv"><div class="k">Name</div><div class="v">—</div></div>
+            <div class="kv"><div class="k">Series</div><div class="v">—</div></div>
+            <div class="kv"><div class="k">Details</div><div class="v">—</div></div>
+            <div class="kv"><div class="k">Market</div><div class="v">—</div></div>
+          </div>
+
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;">
+            <a id="open" class="btn" href="./card.html" aria-disabled="true">Open Details Page</a>
+            <button id="del" class="btn danger" type="button" disabled>Delete</button>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>

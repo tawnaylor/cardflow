@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Add Pokémon Card</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header>
+        <div>
+          <h1>Add Pokémon Card</h1>
+          <div class="muted">Series dropdown is loaded from JSON.</div>
+        </div>
+        <a class="btn" href="./index.html">← Back</a>
+      </header>
+
+      <section class="panel" style="margin-top:16px;">
+        <form id="f" novalidate>
+          <div class="form-grid">
+            <label class="field">
+              <span>Card name *</span>
+              <input id="name" type="text" required />
+              <div class="error" data-for="name"></div>
+            </label>
+
+            <label class="field">
+              <span>Series *</span>
+              <select id="series" required>
+                <option value="">Loading…</option>
+              </select>
+              <div class="error" data-for="series"></div>
+            </label>
+
+            <label class="field">
+              <span>Market value (USD)</span>
+              <input id="value" type="number" min="0" step="0.01" placeholder="0.00" />
+              <div class="error" data-for="value"></div>
+            </label>
+
+            <label class="field full">
+              <span>Card details *</span>
+              <textarea id="details" rows="4" required placeholder="Powers, number in series, rarity, etc…"></textarea>
+              <div class="error" data-for="details"></div>
+            </label>
+
+            <label class="field full">
+              <span>Card image *</span>
+              <input id="img" type="file" accept="image/*" required />
+              <div class="error" data-for="img"></div>
+            </label>
+          </div>
+
+          <div class="preview" style="margin-top:12px;">
+            <div id="p" class="details-img" style="height:240px;">Preview</div>
+          </div>
+
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;">
+            <button class="btn primary" type="submit">Add To Binder</button>
+            <button id="reset" class="btn" type="button">Reset</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <script type="module" src="./js/form.js"></script>
+  </body>
+</html>
