@@ -16,7 +16,7 @@
         <div class="brand__logo" aria-hidden="true">CF</div>
         <div class="brand__text">
           <h1>CardFlow</h1>
-          <p class="muted">A digital binder (WDD 231 Team Project)</p>
+          <p class="muted">Digital Binder • 9-slot pages</p>
         </div>
       </div>
 
@@ -25,7 +25,7 @@
   </header>
 
   <main id="main" class="wrap" tabindex="-1">
-    <!-- REQUIREMENT: Drop-down menus -->
+    <!-- Filters (drop-down requirement) -->
     <section class="panel" aria-label="Filters">
       <div class="filters">
         <div class="field">
@@ -69,19 +69,41 @@
       </div>
     </section>
 
-    <!-- REQUIREMENT: Responsive design + binder grid -->
-    <section class="panel" aria-label="Binder">
+    <!-- Binder pages -->
+    <section class="panel" aria-label="Binder pages">
+      <div class="binderbar">
+        <div class="pager" aria-label="Binder pagination">
+          <button id="prevPage" class="btn" type="button" aria-label="Previous page">← Prev</button>
+          <div class="pageinfo" aria-live="polite">
+            <span class="muted">Page</span>
+            <strong id="pageNum">1</strong>
+            <span class="muted">of</span>
+            <strong id="pageTotal">1</strong>
+          </div>
+          <button id="nextPage" class="btn" type="button" aria-label="Next page">Next →</button>
+        </div>
+
+        <div class="hintline muted" id="pageHint">
+          Tip: Each page holds 9 cards (3×3).
+        </div>
+      </div>
+
       <div id="empty" class="empty hidden" role="status">
         <h2>No cards yet</h2>
         <p class="muted">Add a card to start your binder.</p>
         <button id="openAdd2" class="btn btn--primary" type="button">+ Add Card</button>
       </div>
 
-      <div id="grid" class="grid" role="list" aria-label="Card list"></div>
+      <!-- Flip stage -->
+      <div class="flipstage" aria-label="Binder page view">
+        <div id="page" class="page" data-flip="none">
+          <div id="pockets" class="pockets" role="list" aria-label="Binder pockets (9 slots)"></div>
+        </div>
+      </div>
     </section>
   </main>
 
-  <!-- REQUIREMENT: Detailed validated form (modal) -->
+  <!-- Modal (validated form requirement) -->
   <div id="backdrop" class="backdrop hidden" aria-hidden="true"></div>
 
   <dialog id="modal" class="modal" aria-labelledby="modalTitle">
@@ -151,10 +173,8 @@
     </form>
   </dialog>
 
-  <!-- Small toast for UX -->
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
-  <!-- REQUIREMENT: Modules -->
   <script type="module" src="./js/main.js"></script>
 </body>
 </html>
