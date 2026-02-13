@@ -1,9 +1,0 @@
-{
-  "brands": [
-    {
-      "id": "pokemon",
-      "name": "Pokémon",
-      "series": ["Base Set", "Jungle", "Fossil", "Scarlet & Violet", "Sword & Shield"]
-    }
-  ]
-}
