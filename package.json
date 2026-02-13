@@ -8,7 +8,11 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "e2e": "node tests/e2e-add-card.js"
+    "e2e": "node tests/e2e-add-card.js",
+    "e2e:mtg": "node tests/e2e-mtg.js",
+    "e2e:ygo": "node tests/e2e-yugioh.js"
+    ,"e2e:onepiece": "node tests/e2e-onepiece.js",
+    "e2e:dragonball": "node tests/e2e-dragonball.js"
   },
   "repository": {
     "type": "git",
