@@ -56,6 +56,61 @@ h1{margin:0;font-size:22px}
   padding:14px;
 }
 
+/* Binder page styling */
+.panel.binder{
+  position:relative;
+  padding-left:70px;
+  background: linear-gradient(180deg,#f7f8fa 0%, #eef2f6 100%);
+  color:#111;
+  border-color:rgba(0,0,0,.08);
+  box-shadow: 0 6px 18px rgba(15,17,21,.35) inset;
+}
+
+.panel.binder::before{
+  /* binder spine with metal rings */
+  content: "";
+  position:absolute;
+  left:14px;
+  top:18px;
+  bottom:18px;
+  width:44px;
+  border-radius:10px;
+  background: linear-gradient(180deg,#1f2226 0%, #111315 100%);
+  box-shadow: 0 2px 6px rgba(0,0,0,.5);
+}
+
+.panel.binder::after{
+  /* metal rings */
+  content: "";
+  position:absolute;
+  left:18px;
+  top:34px;
+  width:36px;
+  height:calc(100% - 68px);
+  background:
+    radial-gradient(circle at 50% 18px, #cfcfcf 0 6px, transparent 7px),
+    radial-gradient(circle at 50% 64px, #cfcfcf 0 6px, transparent 7px),
+    radial-gradient(circle at 50% 110px, #cfcfcf 0 6px, transparent 7px),
+    radial-gradient(circle at 50% 156px, #cfcfcf 0 6px, transparent 7px);
+  background-repeat:no-repeat;
+}
+
+/* Make cards look like sleeved inserts */
+.panel.binder .grid{padding:12px;background:transparent}
+.panel.binder .card{
+  background: linear-gradient(180deg,#ffffff 0%, #f1f5f9 100%);
+  color:#111;
+  border:1px solid rgba(0,0,0,.08);
+  box-shadow: 0 4px 10px rgba(2,6,23,.06);
+}
+.panel.binder .card img{height:150px;object-fit:contain;background:linear-gradient(180deg,#fff,#f6f8fa);padding:8px}
+.panel.binder .card .meta{padding:8px}
+.panel.binder .name{color:#0b1220}
+.panel.binder .sub{color:#495057}
+
+/* Details panel contrast on the right */
+.panel + aside.panel{background:rgba(255,255,255,.02);color:var(--text)}
+
 .grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
