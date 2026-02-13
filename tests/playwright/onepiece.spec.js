@@ -11,8 +11,22 @@ test('One Piece flow adds card', async ({ page }) => {
   await page.fill('#ptcgSearch', 'Luffy');
   await page.click('#ptcgSearchBtn');
   // results may come from local dataset
-  try { await page.waitForSelector('.ptcg-result button', { timeout: 3000 }); await page.click('.ptcg-result button'); } catch (e) { const img = page.getByLabel('Image preview'); const imgPath = require('path').resolve(process.cwd(), 'test-image.svg'); await page.setInputFiles('#imageFile', imgPath); }
-  // Synthesize adding the card to localStorage so test is independent of page submit
+  try {
+    await page.waitForSelector('.ptcg-result button', { timeout: 3000 });
+    await page.click('.ptcg-result button');
+  } catch (e) {
+    const img = page.getByLabel('Image preview');
+    const imgPath = require('path').resolve(process.cwd(), 'test-image.svg');
+    await page.setInputFiles('#imageFile', imgPath);
+    // set dynamic detail selects so validation passes
+    await page.evaluate(() => {
+      const setIfExists = (id, val) => { const el = document.getElementById(id); if (el) { el.value = val; el.dispatchEvent(new Event('change')); } };
+      setIfExists('detail_rarity', 'Common');
+      setIfExists('detail_card_class', 'Character');
+    });
+  }
+
+  // synthesize adding the card to localStorage for stable test
   await page.evaluate(() => {
     const name = document.getElementById('cardName').value;
     const brand = document.getElementById('brand').value;

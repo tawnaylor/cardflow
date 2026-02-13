@@ -10,8 +10,21 @@ test('Dragon Ball flow adds card', async ({ page }) => {
   await page.fill('#cardDetails', 'Playwright Dragon Ball test');
   await page.fill('#ptcgSearch', 'Goku');
   await page.click('#ptcgSearchBtn');
-  try { await page.waitForSelector('.ptcg-result button', { timeout: 3000 }); await page.click('.ptcg-result button'); } catch (e) { const imgPath = require('path').resolve(process.cwd(), 'test-image.svg'); await page.setInputFiles('#imageFile', imgPath); }
-  // Synthesize adding the card to localStorage for test stability
+  try {
+    await page.waitForSelector('.ptcg-result button', { timeout: 3000 });
+    await page.click('.ptcg-result button');
+  } catch (e) {
+    const imgPath = require('path').resolve(process.cwd(), 'test-image.svg');
+    await page.setInputFiles('#imageFile', imgPath);
+    // set dynamic detail selects so validation passes
+    await page.evaluate(() => {
+      const setIfExists = (id, val) => { const el = document.getElementById(id); if (el) { el.value = val; el.dispatchEvent(new Event('change')); } };
+      setIfExists('detail_rarity', 'Common');
+      setIfExists('detail_card_type', 'Battle');
+    });
+  }
+
+  // synthesize adding the card to localStorage for stable test
   await page.evaluate(() => {
     const name = document.getElementById('cardName').value;
     const brand = document.getElementById('brand').value;

@@ -11,7 +11,14 @@ test('YGO flow adds card', async ({ page }) => {
   // Provide a local test image to avoid network search
   const imgPath = require('path').resolve(process.cwd(), 'test-image.svg');
   await page.setInputFiles('#imageFile', imgPath);
-  // Synthesize adding card to localStorage for test reliability
+  // set dynamic detail selects so validation passes
+  await page.evaluate(() => {
+    const setIfExists = (id, val) => { const el = document.getElementById(id); if (el) { el.value = val; el.dispatchEvent(new Event('change')); } };
+    setIfExists('detail_rarity', 'Common');
+    setIfExists('detail_attribute', 'Light');
+  });
+
+  // synthesize adding the card to localStorage for stable test
   await page.evaluate(() => {
     const name = document.getElementById('cardName').value;
     const brand = document.getElementById('brand').value;

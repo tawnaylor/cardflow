@@ -1,0 +1,58 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - heading "Add a Card" [level=1] [ref=e6]
+        - paragraph [ref=e7]: Upload an image, enter card info, then click Add To Binder.
+      - link "← Back to Binder" [ref=e8] [cursor=pointer]:
+        - /url: ./index.html
+    - generic [ref=e10]:
+      - generic [ref=e11]:
+        - generic [ref=e12]: Search Pokémon TCG (name)
+        - generic [ref=e13]:
+          - searchbox "e.g. Pikachu" [ref=e14]
+          - button "Search" [ref=e15] [cursor=pointer]
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - generic [ref=e18]: Card name *
+          - textbox "Card name *" [ref=e19]
+        - generic [ref=e21]:
+          - generic [ref=e22]: Brand *
+          - combobox "Brand *" [ref=e23]:
+            - option "Select…" [selected]
+        - generic [ref=e25]:
+          - generic [ref=e26]: Set Code / Symbol
+          - combobox "Set Code / Symbol Pick a set code to auto-fill Brand, Series and Expansion." [ref=e27]:
+            - option "Select set code…" [selected]
+          - generic [ref=e28]: Pick a set code to auto-fill Brand, Series and Expansion.
+        - generic [ref=e29]:
+          - generic [ref=e30]: Series *
+          - combobox "Series *" [ref=e31]:
+            - option "Select brand first…" [selected]
+        - generic [ref=e33]:
+          - generic [ref=e34]: Expansion
+          - 'combobox "Expansion Optional: choose the Pokémon TCG expansion this card is from." [ref=e35]':
+            - option "Select expansion…" [selected]
+          - generic [ref=e36]: "Optional: choose the Pokémon TCG expansion this card is from."
+        - generic [ref=e38]:
+          - generic [ref=e39]: Market value (USD)
+          - spinbutton "Market value (USD) If blank, we’ll try a sample JSON lookup." [ref=e40]
+          - generic [ref=e41]: If blank, we’ll try a sample JSON lookup.
+        - generic [ref=e43]:
+          - generic [ref=e44]: Card details *
+          - textbox "Card details *" [ref=e45]:
+            - /placeholder: Powers, card number in series, rarity, etc…
+        - generic [ref=e47]:
+          - generic [ref=e48]: Card image *
+          - button "Card image * Images are stored in localStorage as data URLs. Keep them reasonably sized." [ref=e49]
+          - generic [ref=e50]: Images are stored in localStorage as data URLs. Keep them reasonably sized.
+      - generic [ref=e53]: Image preview
+      - generic [ref=e54]:
+        - button "Add To Binder" [ref=e55] [cursor=pointer]
+        - button "Reset" [ref=e56] [cursor=pointer]
+```
