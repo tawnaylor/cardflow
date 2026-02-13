@@ -3,7 +3,7 @@ let marketCache = null;
 
 export async function fetchBrandSeries() {
   if (brandCache) return brandCache;
-  const res = await fetch("./data/brands-series.json");
+  const res = await fetch("./data/brand-series.json");
   if (!res.ok) throw new Error("Failed to load brands-series.json");
   brandCache = await res.json();
   return brandCache;
@@ -36,5 +36,6 @@ export function getBrandName(data, brandId) {
 export function getSeriesName(data, brandId, seriesId) {
   const b = (data?.brands ?? []).find((b) => b.id === brandId);
   if (!b) return "Unknown";
-  return (b.series ?? []).find((s) => s.id === seriesId)?.name ?? "Unknown";
+  // series in the data are simple strings
+  return (b.series ?? []).find((s) => s === seriesId) ?? "Unknown";
 }
