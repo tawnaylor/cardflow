@@ -3,22 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Card Details • CardFlow</title>
-    <link rel="stylesheet" href="./css/styles.css" />
+    <title>Card Details • Card Binder</title>
+    <link rel="stylesheet" href="./css/base.css" />
   </head>
   <body>
-    <header class="site-header">
-      <div class="container header-row">
+    <main class="page">
+      <header class="page-head">
         <div>
-          <h1 class="brand"><a class="brand-link" href="./index.html">CardFlow</a></h1>
-          <p class="subtitle">Card details</p>
+          <h1 class="site-title">Card Details</h1>
+          <p class="muted">Loaded using URL parameter: <code>?id=...</code></p>
         </div>
-      </div>
-    </header>
+        <a class="btn" href="./index.html">← Back to Binder</a>
+      </header>
 
-    <main class="container">
       <section class="panel">
-        <div id="details" class="details"></div>
+        <div id="cardDetailsView" class="details-page"></div>
       </section>
     </main>
 
