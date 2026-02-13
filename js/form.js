@@ -8,6 +8,7 @@ const els = {
   cardName: document.getElementById("cardName"),
   brand: document.getElementById("brand"),
   series: document.getElementById("series"),
+  expansion: document.getElementById("expansion"),
   marketValue: document.getElementById("marketValue"),
   cardDetails: document.getElementById("cardDetails"),
   imageFile: document.getElementById("imageFile"),
@@ -17,12 +18,25 @@ const els = {
 
 let brandData = null;
 let marketSample = {};
+let expansions = [];
 
 init().catch(console.error);
 
 async function init() {
   brandData = await fetchBrandSeries();
   marketSample = await fetchMarketSample();
+
+  // load expansions list
+  try {
+    const res = await fetch("../data/pokemon-tcg-sets.json");
+    if (res.ok) {
+      expansions = await res.json();
+      const opts = (expansions ?? []).map((s) => ({ id: s.id, name: s.name }));
+      setSelectOptions(els.expansion, opts, "Select expansion…");
+    }
+  } catch (err) {
+    console.warn("Failed to load pokemon expansions", err);
+  }
 
   setSelectOptions(els.brand, getBrandOptions(brandData), "Select…");
 
@@ -62,6 +76,7 @@ async function onSubmit(e) {
     name: els.cardName.value.trim(),
     brand: els.brand.value,
     series: els.series.value,
+    expansion: els.expansion?.value || "",
     details: els.cardDetails.value.trim(),
     marketValue: els.marketValue.value === "" ? "" : Number(els.marketValue.value),
     imageFile: file
@@ -90,6 +105,7 @@ async function onSubmit(e) {
     brand: data.brand,
     brandLabel,
     series: data.series,
+    expansion: data.expansion,
     details: data.details,
     marketValue: finalMarketValue,
     imageDataUrl,

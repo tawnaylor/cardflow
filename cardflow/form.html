@@ -44,6 +44,15 @@
             </label>
 
             <label class="field">
+              <span class="label">Expansion</span>
+              <select id="expansion" class="select">
+                <option value="">Select expansion…</option>
+              </select>
+              <small class="muted">Optional: choose the Pokémon TCG expansion this card is from.</small>
+              <small class="error" data-for="expansion"></small>
+            </label>
+
+            <label class="field">
               <span class="label">Market value (USD)</span>
               <input id="marketValue" class="input" type="number" min="0" step="0.01" placeholder="0.00" />
               <small class="muted">If blank, we’ll try a sample JSON lookup.</small>
