@@ -1,0 +1,27 @@
+{
+  "name": "cardflow",
+  "version": "1.0.0",
+  "description": "CardFlow is a trading card collection tracker for Pokémon, Magic: The Gathering, and One Piece. Users can add cards with details (set, condition, quantity, value), browse their collection in a binder-style grid, search/filter/sort, and open a details page for each card.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "e2e": "node tests/e2e-add-card.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tawnaylor/cardflow.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tawnaylor/cardflow/issues"
+  },
+  "homepage": "https://github.com/tawnaylor/cardflow#readme",
+  "devDependencies": {
+    "playwright": "^1.36.0"
+  }
+}
