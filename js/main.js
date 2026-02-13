@@ -1,6 +1,33 @@
 import { loadCards, saveCards, removeCard } from "./storage.js";
 import { escapeHtml, money, getParam } from "./shared.js";
 
+// glare toggle with small-screen confirmation and animation
+const glareToggle = document.getElementById('glare-toggle');
+function animateGlareToggle() {
+  document.documentElement.classList.add('glare-toggle-anim');
+  setTimeout(() => document.documentElement.classList.remove('glare-toggle-anim'), 420);
+}
+function applyGlareSetting() {
+  const off = localStorage.getItem('glare') === 'off';
+  if (off) document.documentElement.classList.add('glare-off');
+  else document.documentElement.classList.remove('glare-off');
+  if (glareToggle) glareToggle.textContent = off ? 'Glare Off' : 'Glare';
+}
+if (glareToggle) {
+  glareToggle.addEventListener('click', () => {
+    // small screen confirmation
+    if (window.innerWidth <= 600) {
+      const ok = confirm('Toggle sleeve glare? This will change the page appearance.');
+      if (!ok) return;
+    }
+    const off = document.documentElement.classList.toggle('glare-off');
+    localStorage.setItem('glare', off ? 'off' : 'on');
+    animateGlareToggle();
+    applyGlareSetting();
+  });
+}
+applyGlareSetting();
+
 const grid = document.getElementById("grid");
 const empty = document.getElementById("empty");
 const search = document.getElementById("search");

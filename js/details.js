@@ -1,4 +1,4 @@
-import { getCard, removeCard } from "./storage.js";
+import { getCard, removeCard, loadCards } from "./storage.js";
 import { getParam, money } from "./shared.js";
 
 const view = document.getElementById("view");
@@ -71,7 +71,20 @@ function renderCard(c) {
 
   const created = document.createElement("div");
   created.className = "muted";
+
+  const downloadBtn = document.createElement("a");
+  downloadBtn.className = "btn";
+  downloadBtn.textContent = "Download Image";
+  downloadBtn.href = c.imageDataUrl || "#";
+  downloadBtn.download = (c.name || 'card-image') + '.png';
+
+  const editBtn = document.createElement("a");
+  editBtn.className = "btn";
+  editBtn.textContent = "Edit Card";
+  editBtn.href = `./form.html?id=${encodeURIComponent(c.id)}`;
+
   const date = c.createdAt ? new Date(c.createdAt) : null;
+  actions.append(downloadBtn, editBtn);
   created.textContent = date ? `Added: ${date.toLocaleString()}` : "";
 
   const actions = document.createElement("div");
@@ -96,6 +109,12 @@ function renderCard(c) {
 
   body.append(h2, series, metaWrap, created, actions);
   view.append(imgWrap, body);
+
+  // add visible prev/next buttons above the details body
+  addPrevNextButtons(c.id, body);
+
+  // setup keyboard nav for current card
+  setupKeyboardNav(c.id);
 }
 
 function openImageModal(src, alt) {
@@ -112,6 +131,71 @@ function openImageModal(src, alt) {
   const onKey = (e) => { if (e.key === "Escape") { modal.remove(); document.removeEventListener('keydown', onKey); } };
   document.addEventListener('keydown', onKey);
 
+
+// keyboard navigation: left/right to go to previous/next card
+function setupKeyboardNav(currentId) {
+  const cards = loadCards();
+  if (!cards.length) return;
+  const idx = cards.findIndex((c) => c.id === currentId);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+      const prev = cards[(idx - 1 + cards.length) % cards.length];
+      if (prev) location.href = `./card.html?id=${encodeURIComponent(prev.id)}`;
+    } else if (e.key === 'ArrowRight') {
+      const next = cards[(idx + 1) % cards.length];
+      if (next) location.href = `./card.html?id=${encodeURIComponent(next.id)}`;
+    }
+  });
+}
+
+// glare toggle wiring for details page
+const glareToggle = document.getElementById('glare-toggle');
+function applyGlareSetting() {
+  const off = localStorage.getItem('glare') === 'off';
+  if (off) document.documentElement.classList.add('glare-off');
+  else document.documentElement.classList.remove('glare-off');
+  if (glareToggle) glareToggle.textContent = off ? 'Glare Off' : 'Glare';
+}
+if (glareToggle) {
+  glareToggle.addEventListener('click', () => {
+    const off = document.documentElement.classList.toggle('glare-off');
+    localStorage.setItem('glare', off ? 'off' : 'on');
+    applyGlareSetting();
+  });
+}
+applyGlareSetting();
+
+// create visible prev/next buttons in the details view
+function createPrevNext(currentId) {
+  const cards = loadCards();
+  if (!cards.length) return { prev: null, next: null };
+  const idx = cards.findIndex((c) => c.id === currentId);
+  const prev = cards[(idx - 1 + cards.length) % cards.length];
+  const next = cards[(idx + 1) % cards.length];
+  return { prev, next };
+}
+
+function addPrevNextButtons(currentId, container) {
+  const { prev, next } = createPrevNext(currentId);
+  const navWrap = document.createElement('div');
+  navWrap.style.display = 'flex';
+  navWrap.style.gap = '8px';
+
+  const prevBtn = document.createElement('button');
+  prevBtn.className = 'btn';
+  prevBtn.textContent = '← Prev';
+  prevBtn.disabled = !prev;
+  prevBtn.addEventListener('click', () => { if (prev) location.href = `./card.html?id=${encodeURIComponent(prev.id)}`; });
+
+  const nextBtn = document.createElement('button');
+  nextBtn.className = 'btn';
+  nextBtn.textContent = 'Next →';
+  nextBtn.disabled = !next;
+  nextBtn.addEventListener('click', () => { if (next) location.href = `./card.html?id=${encodeURIComponent(next.id)}`; });
+
+  navWrap.append(prevBtn, nextBtn);
+  container.prepend(navWrap);
+}
 function renderNotFound() {
   clearView();
   const h2 = document.createElement("h2");

@@ -30,3 +30,15 @@ export function removeCard(id) {
   saveCards(next);
   return next;
 }
+
+export function updateCard(card) {
+  const cards = loadCards();
+  const idx = cards.findIndex((c) => c.id === card.id);
+  if (idx >= 0) {
+    cards[idx] = card;
+  } else {
+    cards.unshift(card);
+  }
+  saveCards(cards);
+  return card;
+}

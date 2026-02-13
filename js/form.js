@@ -1,5 +1,6 @@
 import { addCard } from "./storage.js";
-import { uid, fileToDataUrl, fetchPokemonSeries } from "./shared.js";
+import { addCard, getCard, updateCard } from "./storage.js";
+import { uid, fileToDataUrl, fetchPokemonSeries, getParam } from "./shared.js";
 
 const f = document.getElementById("f");
 const nameEl = document.getElementById("name");
@@ -11,6 +12,10 @@ const preview = document.getElementById("p");
 const resetBtn = document.getElementById("reset");
 
 init().catch(console.error);
+
+const editId = getParam("id");
+let editing = false;
+let existingCard = null;
 
 async function init() {
   // Populate series dropdown from JSON (fetch requirement)
@@ -53,6 +58,25 @@ async function onSubmit(e) {
   if (!Number.isFinite(mv) || mv < 0) errs.value = "Must be ≥ 0.";
 
   if (Object.keys(errs).length) {
+
+  // If editing, load card and populate fields
+  if (editId) {
+    const card = getCard(editId);
+    if (card) {
+      editing = true;
+      existingCard = card;
+      nameEl.value = card.name || "";
+      seriesEl.value = card.series || "";
+      valueEl.value = card.marketValue ?? "";
+      detailsEl.value = card.details || "";
+      // allow leaving image empty when editing
+      imgEl.removeAttribute("required");
+      if (card.imageDataUrl) preview.innerHTML = `<img alt="Preview" src="${card.imageDataUrl}" />`;
+      // update submit button text
+      const submitBtn = f.querySelector('button[type="submit"]');
+      if (submitBtn) submitBtn.textContent = 'Save Changes';
+    }
+  }
     for (const [k, msg] of Object.entries(errs)) setError(k, msg);
     return;
   }
@@ -105,16 +129,21 @@ function setError(key, msg) {
   if (el) el.textContent = msg;
 }
 
-async function fetchImageFromPokeTcg(name, series) {
+    id: editing && existingCard ? existingCard.id : uid(),
   if (!name) return null;
   const base = "https://api.pokemontcg.io/v2/cards";
 
   const qParts = [];
   if (name) qParts.push(`name:"${name}"`);
-  if (series) qParts.push(`set.name:"${series}"`);
+    createdAt: editing && existingCard ? existingCard.createdAt : Date.now()
 
   const tries = [qParts.join(" "), `name:"${name}"`].filter(Boolean);
 
+  if (editing) {
+    updateCard(card);
+  } else {
+    addCard(card);
+  }
   for (const q of tries) {
     const url = `${base}?q=${encodeURIComponent(q)}&pageSize=1`;
     const res = await fetch(url);
