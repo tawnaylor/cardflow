@@ -29,12 +29,14 @@ test('Pokémon flow adds card', async ({ page }) => {
     setIfExists('detail_card_type', 'Pokémon');
   });
 
-  // Submit, then open a new page and check persisted localStorage for the save flag
-  await page.click('button[type="submit"]');
-  const p2 = await page.context().newPage();
-  await p2.goto('/cardflow/index.html');
-  await p2.waitForFunction(() => !!localStorage.getItem('__cardflow_saved'), { timeout: 3000 }).catch(() => {});
-  const raw = await p2.evaluate(() => localStorage.getItem('binder.cards.v1'));
+  // Enable test mode to prevent navigation, then submit and wait for the client save flag
+  await page.evaluate(() => { window.__CARD_FLOW_TEST_MODE = true; });
+  await page.evaluate(() => {
+    const form = document.getElementById('cardForm');
+    if (form) form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+  });
+  await page.waitForFunction(() => !!window.__cardflow_saved, { timeout: 3000 }).catch(() => {});
+  const raw = await page.evaluate(() => localStorage.getItem('binder.cards.v1'));
   const cards = raw ? JSON.parse(raw) : [];
   expect(cards.length).toBeGreaterThan(0);
 });
