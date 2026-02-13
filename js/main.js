@@ -15,18 +15,12 @@ function applyGlareSetting() {
 }
 if (glareToggle) {
   glareToggle.addEventListener('click', () => {
-    // small screen confirmation
-    if (window.innerWidth <= 600) {
-      const ok = confirm('Toggle sleeve glare? This will change the page appearance.');
-      if (!ok) return;
-    }
     const off = document.documentElement.classList.toggle('glare-off');
     localStorage.setItem('glare', off ? 'off' : 'on');
     animateGlareToggle();
     applyGlareSetting();
   });
 }
-applyGlareSetting();
 
 const grid = document.getElementById("grid");
 const empty = document.getElementById("empty");
