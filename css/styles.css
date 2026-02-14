@@ -55,7 +55,7 @@ a{color:inherit}
 .header-grid{
   display:flex; align-items:center; justify-content:space-between; gap:12px;
 }
-.brand{letter-spacing:.5px; margin:0; font-size:1.35rem}
+.brand{letter-spacing:.5px; margin:0; font-size:1.6rem; font-weight:700}
 .brand-link{text-decoration:none}
 .header-actions{display:flex; gap:10px; flex-wrap:wrap}
 
@@ -66,15 +66,21 @@ a{color:inherit}
   box-shadow: var(--shadow);
   padding:18px;
 }
-.hero{padding:22px}
+.hero{padding:28px; background-image: linear-gradient(180deg, rgba(255,255,255,.02) 0%, rgba(255,255,255,.01) 100%); border-radius:20px}
 .hero-grid{
   display:grid; grid-template-columns: 1.2fr .8fr; gap:14px; margin-top:12px;
 }
 .mini{
-  background: rgba(0,0,0,.18);
+  background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.06));
   border:1px solid var(--border);
   border-radius: 14px;
   padding:14px;
+}
+
+.shop-badge{
+  display:inline-block; padding:6px 10px; border-radius:999px; font-weight:700;
+  background: linear-gradient(90deg, rgba(96,165,250,.16), rgba(52,211,153,.10));
+  color:var(--text); border:1px solid rgba(255,255,255,.06);
 }
 .row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
 .space-between{justify-content:space-between}

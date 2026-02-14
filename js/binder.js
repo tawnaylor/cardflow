@@ -68,14 +68,13 @@ function filteredCards(b){
     if(sort === "series"){
       return (a.series||"").localeCompare(b2.series||"");
     }
-    if(sort === "expansion"){
-  const ax = (a.expansionName || a.expansionCode || "");
-  const bx = (b2.expansionName || b2.expansionCode || "");
-  return ax.localeCompare(bx);
-}
-
+    if (sort === "expansion") {
+      const ax = (a.expansionName || a.expansionCode || "");
+      const bx = (b2.expansionName || b2.expansionCode || "");
+      return ax.localeCompare(bx);
     }
-    return (b2.createdAt||0) - (a.createdAt||0);
+
+    return (b2.createdAt || 0) - (a.createdAt || 0);
   });
 
   return cards;
