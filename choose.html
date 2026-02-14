@@ -1,14 +1,113 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>CardFlow - Choose</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Choose Game • CardFlow</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <script type="module" src="js/choose.js"></script>
 </head>
 <body>
-  <h1>Choose a Set</h1>
-  <div id="choose-root"></div>
-  <script type="module" src="js/choose.js"></script>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-grid">
+      <div>
+        <a class="brand-link" href="index.html"><span class="brand">CardFlow</span></a>
+        <p class="muted">Step 1: Choose what you’re uploading.</p>
+      </div>
+      <nav class="header-actions" aria-label="Primary">
+        <a class="btn ghost" href="binder.html">Open Binder</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <section class="card">
+      <h1 class="h2">What are you uploading?</h1>
+
+      <div class="pick-grid">
+        <button class="pick" data-game="pokemon" aria-label="Upload a Pokémon card">
+          <div class="pick-title">Pokémon</div>
+          <div class="muted">Form fields match a Pokémon card.</div>
+        </button>
+
+        <button class="pick" data-game="mtg" aria-label="Upload a Magic: The Gathering card">
+          <div class="pick-title">Magic: The Gathering</div>
+          <div class="muted">Form fields match an MTG card.</div>
+        </button>
+      </div>
+
+      <hr class="sep" />
+
+      <div class="two-col">
+        <div>
+          <h2 class="h3">Create or switch binders</h2>
+          <p class="muted">Each game can have multiple binders with different themes and layouts.</p>
+          <div id="binderList" class="binder-list" aria-live="polite"></div>
+        </div>
+
+        <div>
+          <h2 class="h3">New binder</h2>
+          <form id="newBinderForm" class="form" novalidate>
+            <div class="field">
+              <label for="binderGame">Game</label>
+              <select id="binderGame" required>
+                <option value="">Choose…</option>
+                <option value="pokemon">Pokémon</option>
+                <option value="mtg">Magic: The Gathering</option>
+              </select>
+              <div class="hint">Required</div>
+            </div>
+
+            <div class="field">
+              <label for="binderName">Binder name</label>
+              <input id="binderName" type="text" minlength="2" maxlength="40" required placeholder="e.g., Base Set Classics" />
+              <div class="hint">2–40 characters</div>
+            </div>
+
+            <div class="grid-2">
+              <div class="field">
+                <label for="layout">Layout</label>
+                <select id="layout" required>
+                  <option value="9">9-pocket (3×3)</option>
+                  <option value="12">12-pocket (3×4)</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="accent">Accent style</label>
+                <select id="accent" required>
+                  <option value="classic">Classic</option>
+                  <option value="neon">Neon</option>
+                  <option value="vintage">Vintage</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="field">
+                <label for="coverColor">Cover color</label>
+                <input id="coverColor" type="color" value="#1f2937" />
+              </div>
+
+              <div class="field">
+                <label for="pageColor">Page color</label>
+                <input id="pageColor" type="color" value="#0b1020" />
+              </div>
+            </div>
+
+            <button class="btn primary" type="submit">Create binder</button>
+          </form>
+
+          <p class="muted small">
+            After you pick a game or binder, you’ll be sent to the correct form automatically.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 </body>
 </html>

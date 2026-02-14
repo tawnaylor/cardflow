@@ -1,14 +1,31 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>CardFlow - Card</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Card Details • CardFlow</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <script type="module" src="js/card.js"></script>
 </head>
 <body>
-  <h1>Card</h1>
-  <div id="card-root"></div>
-  <script type="module" src="js/card.js"></script>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-grid">
+      <div>
+        <a class="brand-link" href="index.html"><span class="brand">CardFlow</span></a>
+        <p class="muted">Card details</p>
+      </div>
+      <nav class="header-actions" aria-label="Primary">
+        <a class="btn ghost" href="binder.html">Back to Binder</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <section id="content" class="card"></section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 </body>
 </html>

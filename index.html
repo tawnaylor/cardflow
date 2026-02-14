@@ -1,21 +1,70 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>CardFlow - Home</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CardFlow • Digital Binder</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <script type="module" src="js/main.js"></script>
 </head>
 <body>
-  <h1>CardFlow</h1>
-  <nav>
-    <ul>
-      <li><a href="choose.html">Choose</a></li>
-      <li><a href="form.html">Form</a></li>
-      <li><a href="binder.html">Binder</a></li>
-      <li><a href="card.html">Card</a></li>
-    </ul>
-  </nav>
-  <script type="module" src="js/main.js"></script>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-grid">
+      <div>
+        <h1 class="brand">CardFlow</h1>
+        <p class="muted">A simple digital binder for Pokémon &amp; Magic: The Gathering.</p>
+      </div>
+      <nav class="header-actions" aria-label="Primary">
+        <a class="btn ghost" href="binder.html">Open Binder</a>
+        <button id="addBtn" class="btn primary">Add a Card</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <section class="card hero">
+      <h2>Your collection, page-flip style</h2>
+      <p>
+        Add cards with a validated form, store everything in your browser, and browse in a binder grid.
+        You can also create multiple binders per game with custom layouts and themes.
+      </p>
+
+      <div class="hero-grid">
+        <div class="mini">
+          <h3>What you can do</h3>
+          <ul>
+            <li>Create Pokémon and MTG binders</li>
+            <li>Upload/scan a card image (phone camera supported)</li>
+            <li>Search, filter, and sort</li>
+            <li>Open a card details page via URL parameters</li>
+          </ul>
+        </div>
+
+        <div class="mini">
+          <h3>Start here</h3>
+          <p>Click <strong>Add a Card</strong> to choose a game and fill out the right form.</p>
+          <div class="row">
+            <a class="btn" href="choose.html">Choose Game</a>
+            <a class="btn ghost" href="binder.html">View Binder</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Tips</h2>
+      <p class="muted">
+        Images are saved in localStorage. For large collections, prefer smaller images or hosted URLs.
+      </p>
+    </section>
+  </main>
+
+  <footer class="wrap footer">
+    <p class="muted">CardFlow • Built for a course project checklist (forms, localStorage, JSON dataset, modules, URL params).</p>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 </body>
 </html>
