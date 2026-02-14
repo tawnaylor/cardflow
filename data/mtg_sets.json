@@ -1,44 +1,5289 @@
 {
   "game": "mtg",
-  "range": "1993-2026",
+  "range": "1992-2026",
   "series": [
     {
-      "name": "Foundations",
+      "name": "Core Sets",
       "startYear": 1993,
       "expansions": [
-        { "name": "Limited Edition Alpha", "code": "LEA", "releaseYear": 1993 },
-        { "name": "Limited Edition Beta", "code": "LEB", "releaseYear": 1993 },
-        { "name": "Unlimited Edition", "code": "2ED", "releaseYear": 1993 },
-        { "name": "Revised Edition", "code": "3ED", "releaseYear": 1994 },
-        { "name": "Fourth Edition", "code": "4ED", "releaseYear": 1995 },
-        { "name": "Fifth Edition", "code": "5ED", "releaseYear": 1997 }
+        {
+          "name": "Limited Edition Alpha",
+          "code": "LEA",
+          "releaseYear": 1993
+        },
+        {
+          "name": "Limited Edition Beta",
+          "code": "LEB",
+          "releaseYear": 1993
+        },
+        {
+          "name": "Unlimited Edition",
+          "code": "2ED",
+          "releaseYear": 1993
+        },
+        {
+          "name": "Foreign Black Border",
+          "code": "FBB",
+          "releaseYear": 1994
+        },
+        {
+          "name": "Revised Edition",
+          "code": "3ED",
+          "releaseYear": 1994
+        },
+        {
+          "name": "Summer Magic / Edgar",
+          "code": "SUM",
+          "releaseYear": 1994
+        },
+        {
+          "name": "Fourth Edition",
+          "code": "4ED",
+          "releaseYear": 1995
+        },
+        {
+          "name": "Fourth Edition Foreign Black Border",
+          "code": "4BB",
+          "releaseYear": 1995
+        },
+        {
+          "name": "Fifth Edition",
+          "code": "5ED",
+          "releaseYear": 1997
+        },
+        {
+          "name": "Classic Sixth Edition",
+          "code": "6ED",
+          "releaseYear": 1999
+        },
+        {
+          "name": "Seventh Edition",
+          "code": "7ED",
+          "releaseYear": 2001
+        },
+        {
+          "name": "Eighth Edition",
+          "code": "8ED",
+          "releaseYear": 2003
+        },
+        {
+          "name": "Ninth Edition",
+          "code": "9ED",
+          "releaseYear": 2005
+        },
+        {
+          "name": "Tenth Edition",
+          "code": "10E",
+          "releaseYear": 2007
+        },
+        {
+          "name": "Magic 2010",
+          "code": "M10",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Magic 2011",
+          "code": "M11",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Magic 2012",
+          "code": "M12",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Magic 2013",
+          "code": "M13",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Magic 2014",
+          "code": "M14",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Magic 2015",
+          "code": "M15",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Magic Origins",
+          "code": "ORI",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Core Set 2019",
+          "code": "M19",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Core Set 2020",
+          "code": "M20",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Core Set 2021",
+          "code": "M21",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Foundations",
+          "code": "FDN",
+          "releaseYear": 2024
+        }
       ]
     },
     {
-      "name": "Modern Era (sample)",
-      "startYear": 2019,
+      "name": "Expansions",
+      "startYear": 1993,
       "expansions": [
-        { "name": "Throne of Eldraine", "code": "ELD", "releaseYear": 2019 },
-        { "name": "Theros Beyond Death", "code": "THB", "releaseYear": 2020 },
-        { "name": "Ikoria: Lair of Behemoths", "code": "IKO", "releaseYear": 2020 },
-        { "name": "Zendikar Rising", "code": "ZNR", "releaseYear": 2020 },
-        { "name": "Kaldheim", "code": "KHM", "releaseYear": 2021 },
-        { "name": "Strixhaven", "code": "STX", "releaseYear": 2021 },
-        { "name": "Adventures in the Forgotten Realms", "code": "AFR", "releaseYear": 2021 },
-        { "name": "Innistrad: Midnight Hunt", "code": "MID", "releaseYear": 2021 },
-        { "name": "Innistrad: Crimson Vow", "code": "VOW", "releaseYear": 2021 },
-        { "name": "Kamigawa: Neon Dynasty", "code": "NEO", "releaseYear": 2022 },
-        { "name": "Streets of New Capenna", "code": "SNC", "releaseYear": 2022 },
-        { "name": "Dominaria United", "code": "DMU", "releaseYear": 2022 },
-        { "name": "The Brothers' War", "code": "BRO", "releaseYear": 2022 },
-        { "name": "Phyrexia: All Will Be One", "code": "ONE", "releaseYear": 2023 },
-        { "name": "March of the Machine", "code": "MOM", "releaseYear": 2023 },
-        { "name": "Wilds of Eldraine", "code": "WOE", "releaseYear": 2023 },
-        { "name": "The Lost Caverns of Ixalan", "code": "LCI", "releaseYear": 2023 },
-        { "name": "Murders at Karlov Manor", "code": "MKM", "releaseYear": 2024 },
-        { "name": "Outlaws of Thunder Junction", "code": "OTJ", "releaseYear": 2024 },
-        { "name": "Bloomburrow", "code": "BLB", "releaseYear": 2024 },
-        { "name": "Duskmourn: House of Horror", "code": "DSK", "releaseYear": 2024 }
+        {
+          "name": "Arabian Nights",
+          "code": "ARN",
+          "releaseYear": 1993
+        },
+        {
+          "name": "Antiquities",
+          "code": "ATQ",
+          "releaseYear": 1994
+        },
+        {
+          "name": "Fallen Empires",
+          "code": "FEM",
+          "releaseYear": 1994
+        },
+        {
+          "name": "Legends",
+          "code": "LEG",
+          "releaseYear": 1994
+        },
+        {
+          "name": "The Dark",
+          "code": "DRK",
+          "releaseYear": 1994
+        },
+        {
+          "name": "Homelands",
+          "code": "HML",
+          "releaseYear": 1995
+        },
+        {
+          "name": "Ice Age",
+          "code": "ICE",
+          "releaseYear": 1995
+        },
+        {
+          "name": "Alliances",
+          "code": "ALL",
+          "releaseYear": 1996
+        },
+        {
+          "name": "Mirage",
+          "code": "MIR",
+          "releaseYear": 1996
+        },
+        {
+          "name": "Tempest",
+          "code": "TMP",
+          "releaseYear": 1997
+        },
+        {
+          "name": "Visions",
+          "code": "VIS",
+          "releaseYear": 1997
+        },
+        {
+          "name": "Weatherlight",
+          "code": "WTH",
+          "releaseYear": 1997
+        },
+        {
+          "name": "Exodus",
+          "code": "EXO",
+          "releaseYear": 1998
+        },
+        {
+          "name": "Stronghold",
+          "code": "STH",
+          "releaseYear": 1998
+        },
+        {
+          "name": "Urza's Saga",
+          "code": "USG",
+          "releaseYear": 1998
+        },
+        {
+          "name": "Mercadian Masques",
+          "code": "MMQ",
+          "releaseYear": 1999
+        },
+        {
+          "name": "Urza's Destiny",
+          "code": "UDS",
+          "releaseYear": 1999
+        },
+        {
+          "name": "Urza's Legacy",
+          "code": "ULG",
+          "releaseYear": 1999
+        },
+        {
+          "name": "Invasion",
+          "code": "INV",
+          "releaseYear": 2000
+        },
+        {
+          "name": "Nemesis",
+          "code": "NEM",
+          "releaseYear": 2000
+        },
+        {
+          "name": "Prophecy",
+          "code": "PCY",
+          "releaseYear": 2000
+        },
+        {
+          "name": "Apocalypse",
+          "code": "APC",
+          "releaseYear": 2001
+        },
+        {
+          "name": "Odyssey",
+          "code": "ODY",
+          "releaseYear": 2001
+        },
+        {
+          "name": "Planeshift",
+          "code": "PLS",
+          "releaseYear": 2001
+        },
+        {
+          "name": "Judgment",
+          "code": "JUD",
+          "releaseYear": 2002
+        },
+        {
+          "name": "Onslaught",
+          "code": "ONS",
+          "releaseYear": 2002
+        },
+        {
+          "name": "Torment",
+          "code": "TOR",
+          "releaseYear": 2002
+        },
+        {
+          "name": "Legions",
+          "code": "LGN",
+          "releaseYear": 2003
+        },
+        {
+          "name": "Mirrodin",
+          "code": "MRD",
+          "releaseYear": 2003
+        },
+        {
+          "name": "Scourge",
+          "code": "SCG",
+          "releaseYear": 2003
+        },
+        {
+          "name": "Champions of Kamigawa",
+          "code": "CHK",
+          "releaseYear": 2004
+        },
+        {
+          "name": "Darksteel",
+          "code": "DST",
+          "releaseYear": 2004
+        },
+        {
+          "name": "Fifth Dawn",
+          "code": "5DN",
+          "releaseYear": 2004
+        },
+        {
+          "name": "Betrayers of Kamigawa",
+          "code": "BOK",
+          "releaseYear": 2005
+        },
+        {
+          "name": "Ravnica: City of Guilds",
+          "code": "RAV",
+          "releaseYear": 2005
+        },
+        {
+          "name": "Saviors of Kamigawa",
+          "code": "SOK",
+          "releaseYear": 2005
+        },
+        {
+          "name": "Coldsnap",
+          "code": "CSP",
+          "releaseYear": 2006
+        },
+        {
+          "name": "Dissension",
+          "code": "DIS",
+          "releaseYear": 2006
+        },
+        {
+          "name": "Guildpact",
+          "code": "GPT",
+          "releaseYear": 2006
+        },
+        {
+          "name": "Time Spiral",
+          "code": "TSP",
+          "releaseYear": 2006
+        },
+        {
+          "name": "Time Spiral Timeshifted",
+          "code": "TSB",
+          "releaseYear": 2006
+        },
+        {
+          "name": "Future Sight",
+          "code": "FUT",
+          "releaseYear": 2007
+        },
+        {
+          "name": "Lorwyn",
+          "code": "LRW",
+          "releaseYear": 2007
+        },
+        {
+          "name": "Planar Chaos",
+          "code": "PLC",
+          "releaseYear": 2007
+        },
+        {
+          "name": "Eventide",
+          "code": "EVE",
+          "releaseYear": 2008
+        },
+        {
+          "name": "Morningtide",
+          "code": "MOR",
+          "releaseYear": 2008
+        },
+        {
+          "name": "Shadowmoor",
+          "code": "SHM",
+          "releaseYear": 2008
+        },
+        {
+          "name": "Shards of Alara",
+          "code": "ALA",
+          "releaseYear": 2008
+        },
+        {
+          "name": "Alara Reborn",
+          "code": "ARB",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Conflux",
+          "code": "CON",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Zendikar",
+          "code": "ZEN",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Rise of the Eldrazi",
+          "code": "ROE",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Scars of Mirrodin",
+          "code": "SOM",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Worldwake",
+          "code": "WWK",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Innistrad",
+          "code": "ISD",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Mirrodin Besieged",
+          "code": "MBS",
+          "releaseYear": 2011
+        },
+        {
+          "name": "New Phyrexia",
+          "code": "NPH",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Avacyn Restored",
+          "code": "AVR",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Dark Ascension",
+          "code": "DKA",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Return to Ravnica",
+          "code": "RTR",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Dragon's Maze",
+          "code": "DGM",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Gatecrash",
+          "code": "GTC",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Theros",
+          "code": "THS",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Born of the Gods",
+          "code": "BNG",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Journey into Nyx",
+          "code": "JOU",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Khans of Tarkir",
+          "code": "KTK",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Battle for Zendikar",
+          "code": "BFZ",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Dragons of Tarkir",
+          "code": "DTK",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Fate Reforged",
+          "code": "FRF",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Eldritch Moon",
+          "code": "EMN",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Kaladesh",
+          "code": "KLD",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Oath of the Gatewatch",
+          "code": "OGW",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Shadows over Innistrad",
+          "code": "SOI",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Aether Revolt",
+          "code": "AER",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Amonkhet",
+          "code": "AKH",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Hour of Devastation",
+          "code": "HOU",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Ixalan",
+          "code": "XLN",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Dominaria",
+          "code": "DOM",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Guilds of Ravnica",
+          "code": "GRN",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Rivals of Ixalan",
+          "code": "RIX",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Ravnica Allegiance",
+          "code": "RNA",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Throne of Eldraine",
+          "code": "ELD",
+          "releaseYear": 2019
+        },
+        {
+          "name": "War of the Spark",
+          "code": "WAR",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Ikoria: Lair of Behemoths",
+          "code": "IKO",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Theros Beyond Death",
+          "code": "THB",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Zendikar Rising",
+          "code": "ZNR",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Adventures in the Forgotten Realms",
+          "code": "AFR",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Innistrad: Crimson Vow",
+          "code": "VOW",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Innistrad: Midnight Hunt",
+          "code": "MID",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Kaldheim",
+          "code": "KHM",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Strixhaven: School of Mages",
+          "code": "STX",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Dominaria United",
+          "code": "DMU",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Kamigawa: Neon Dynasty",
+          "code": "NEO",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Streets of New Capenna",
+          "code": "SNC",
+          "releaseYear": 2022
+        },
+        {
+          "name": "The Brothers' War",
+          "code": "BRO",
+          "releaseYear": 2022
+        },
+        {
+          "name": "March of the Machine",
+          "code": "MOM",
+          "releaseYear": 2023
+        },
+        {
+          "name": "March of the Machine: The Aftermath",
+          "code": "MAT",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Phyrexia: All Will Be One",
+          "code": "ONE",
+          "releaseYear": 2023
+        },
+        {
+          "name": "The Lost Caverns of Ixalan",
+          "code": "LCI",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Wilds of Eldraine",
+          "code": "WOE",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Bloomburrow",
+          "code": "BLB",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Duskmourn: House of Horror",
+          "code": "DSK",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Murders at Karlov Manor",
+          "code": "MKM",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Outlaws of Thunder Junction",
+          "code": "OTJ",
+          "releaseYear": 2024
+        },
+        {
+          "name": "The Big Score",
+          "code": "BIG",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Aetherdrift",
+          "code": "DFT",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Avatar: The Last Airbender",
+          "code": "TLA",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Edge of Eternities",
+          "code": "EOE",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Final Fantasy",
+          "code": "FIN",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Marvel's Spider-Man",
+          "code": "SPM",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Tarkir: Dragonstorm",
+          "code": "TDM",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Through the Omenpaths",
+          "code": "OM1",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Lorwyn Eclipsed",
+          "code": "ECL",
+          "releaseYear": 2026
+        },
+        {
+          "name": "Marvel Super Heroes",
+          "code": "MSH",
+          "releaseYear": 2026
+        },
+        {
+          "name": "Secrets of Strixhaven",
+          "code": "SOS",
+          "releaseYear": 2026
+        },
+        {
+          "name": "Teenage Mutant Ninja Turtles",
+          "code": "TMT",
+          "releaseYear": 2026
+        },
+        {
+          "name": "Through the Omenpaths 2",
+          "code": "OM2",
+          "releaseYear": 2026
+        }
+      ]
+    },
+    {
+      "name": "Memorabilia",
+      "startYear": 1993,
+      "expansions": [
+        {
+          "name": "Collectors' Edition",
+          "code": "CED",
+          "releaseYear": 1993
+        },
+        {
+          "name": "Intl. Collectors' Edition",
+          "code": "CEI",
+          "releaseYear": 1993
+        },
+        {
+          "name": "Celebration Cards",
+          "code": "PCEL",
+          "releaseYear": 1996
+        },
+        {
+          "name": "Oversized 90's Promos",
+          "code": "O90P",
+          "releaseYear": 1996
+        },
+        {
+          "name": "Pro Tour Collector Set",
+          "code": "PTC",
+          "releaseYear": 1996
+        },
+        {
+          "name": "MicroProse Promos",
+          "code": "PMIC",
+          "releaseYear": 1997
+        },
+        {
+          "name": "Oversized League Prizes",
+          "code": "OLEP",
+          "releaseYear": 1997
+        },
+        {
+          "name": "World Championship Decks 1997",
+          "code": "WC97",
+          "releaseYear": 1997
+        },
+        {
+          "name": "World Championship Decks 1998",
+          "code": "WC98",
+          "releaseYear": 1998
+        },
+        {
+          "name": "World Championship Decks 1999",
+          "code": "WC99",
+          "releaseYear": 1999
+        },
+        {
+          "name": "World Championship Decks 2000",
+          "code": "WC00",
+          "releaseYear": 2000
+        },
+        {
+          "name": "World Championship Decks 2001",
+          "code": "WC01",
+          "releaseYear": 2001
+        },
+        {
+          "name": "World Championship Decks 2002",
+          "code": "WC02",
+          "releaseYear": 2002
+        },
+        {
+          "name": "Vintage Championship",
+          "code": "OVNT",
+          "releaseYear": 2003
+        },
+        {
+          "name": "World Championship Decks 2003",
+          "code": "WC03",
+          "releaseYear": 2003
+        },
+        {
+          "name": "World Championship Decks 2004",
+          "code": "WC04",
+          "releaseYear": 2004
+        },
+        {
+          "name": "Commander 2011 Launch Party",
+          "code": "PCMD",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Commander 2011 Oversized",
+          "code": "OCMD",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Legacy Championship",
+          "code": "OLGC",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Commander's Arsenal Oversized",
+          "code": "OCM1",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Open the Helvault",
+          "code": "PHEL",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Commander 2013 Oversized",
+          "code": "OC13",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Face the Hydra",
+          "code": "TFTH",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Theros Hero's Path",
+          "code": "THP1",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Battle the Horde",
+          "code": "TBTH",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Born of the Gods Hero's Path",
+          "code": "THP2",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Commander 2014 Oversized",
+          "code": "OC14",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Defeat a God",
+          "code": "TDAG",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Journey into Nyx Hero's Path",
+          "code": "THP3",
+          "releaseYear": 2014
+        },
+        {
+          "name": "M15 Prerelease Challenge",
+          "code": "PPC1",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Commander 2015 Oversized",
+          "code": "OC15",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Commander 2016 Oversized",
+          "code": "OC16",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Commander 2017 Oversized",
+          "code": "OC17",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Arena New Player Experience Extras",
+          "code": "XANA",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Commander 2018 Oversized",
+          "code": "OC18",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Commander 2019 Oversized",
+          "code": "OC19",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Modern Horizons Art Series",
+          "code": "AMH1",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Commander 2020 Oversized",
+          "code": "OC20",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Jumpstart Front Cards",
+          "code": "FJMP",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Zendikar Rising Art Series",
+          "code": "AZNR",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Adventures in the Forgotten Realms Art Series",
+          "code": "AAFR",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Commander 2021 Display Commanders",
+          "code": "OC21",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Crimson Vow Art Series",
+          "code": "AVOW",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Crimson Vow Commander Display Commanders",
+          "code": "OVOC",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Forgotten Realms Commander Display Commanders",
+          "code": "OAFC",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Forgotten Realms Oversized Cards",
+          "code": "OAFR",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Kaldheim Art Series",
+          "code": "AKHM",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Midnight Hunt Art Series",
+          "code": "AMID",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Midnight Hunt Commander Display Commanders",
+          "code": "OMIC",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Modern Horizons 2 Art Series",
+          "code": "AMH2",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Strixhaven Art Series",
+          "code": "ASTX",
+          "releaseYear": 2021
+        },
+        {
+          "name": "30th Anniversary Edition",
+          "code": "30A",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Battle for Baldur's Gate Art Series",
+          "code": "ACLB",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Battle for Baldur's Gate Oversized Cards",
+          "code": "OCLB",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Dominaria United Art Series",
+          "code": "ADMU",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Dominaria United Jumpstart Front Cards",
+          "code": "FDMU",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Jumpstart 2022 Front Cards",
+          "code": "FJ22",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Neon Dynasty Art Series",
+          "code": "ANEO",
+          "releaseYear": 2022
+        },
+        {
+          "name": "New Capenna Art Series",
+          "code": "ASNC",
+          "releaseYear": 2022
+        },
+        {
+          "name": "The Brothers' War Art Series",
+          "code": "ABRO",
+          "releaseYear": 2022
+        },
+        {
+          "name": "The Brothers' War Jumpstart Front Cards",
+          "code": "FBRO",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Commander Masters Art Series",
+          "code": "ACMM",
+          "releaseYear": 2023
+        },
+        {
+          "name": "March of the Machine Art Series",
+          "code": "AMOM",
+          "releaseYear": 2023
+        },
+        {
+          "name": "March of the Machine Jumpstart Front Cards",
+          "code": "FMOM",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Phyrexia: All Will Be One Art Series",
+          "code": "AONE",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Phyrexia: All Will Be One Jumpstart Front Cards",
+          "code": "FONE",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Tales of Middle-earth Art Series",
+          "code": "ALTR",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Tales of Middle-earth Front Cards",
+          "code": "FLTR",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Tales of Middle-earth Scene Box",
+          "code": "ALTC",
+          "releaseYear": 2023
+        },
+        {
+          "name": "The Lost Caverns of Ixalan Art Series",
+          "code": "ALCI",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Wilds of Eldraine Art Series",
+          "code": "AWOE",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Assassin's Creed Art Series",
+          "code": "AACR",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Bloomburrow Art Series",
+          "code": "ABLB",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Duskmourn: House of Horror Art Series",
+          "code": "ADSK",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Foundations Art Series",
+          "code": "AFDN",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Foundations Front Cards",
+          "code": "FFDN",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Foundations Jumpstart Front Cards",
+          "code": "FJ25",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Modern Horizons 3 Art Series",
+          "code": "AMH3",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Murders at Karlov Manor Art Series",
+          "code": "AMKM",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Outlaws of Thunder Junction Art Series",
+          "code": "AOTJ",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Ravnica: Clue Edition Front Cards",
+          "code": "FCLU",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Aetherdrift Art Series",
+          "code": "ADFT",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Avatar: the Last Airbender Art Series",
+          "code": "ATLA",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Avatar: The Last Airbender Beginner Box Front Cards",
+          "code": "FTLA",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Avatar: the Last Airbender Eternal Art Series",
+          "code": "ATLE",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Avatar: The Last Airbender Jumpstart Front Cards",
+          "code": "JTLA",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Edge of Eternities Art Series",
+          "code": "AEOE",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Final Fantasy Art Series",
+          "code": "AFIN",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Final Fantasy Scene Box",
+          "code": "AFIC",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Innistrad Remastered Art Series",
+          "code": "AINR",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Marvel's Spider-Man Art Series",
+          "code": "ASPM",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Secret Lair Showcase Planes",
+          "code": "PSSC",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Tarkir: Dragonstorm Art Series",
+          "code": "ATDM",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Lorwyn Eclipsed Art Series",
+          "code": "AECL",
+          "releaseYear": 2026
+        }
+      ]
+    },
+    {
+      "name": "Other (promo)",
+      "startYear": 1994,
+      "expansions": [
+        {
+          "name": "Dragon Con",
+          "code": "PDRC",
+          "releaseYear": 1994
+        },
+        {
+          "name": "HarperPrism Book Promos",
+          "code": "PHPR",
+          "releaseYear": 1994
+        },
+        {
+          "name": "Media and Collaboration Promos",
+          "code": "PMEI",
+          "releaseYear": 1995
+        },
+        {
+          "name": "Arena League 1996",
+          "code": "PARL",
+          "releaseYear": 1996
+        },
+        {
+          "name": "DCI Legend Membership",
+          "code": "PLGM",
+          "releaseYear": 1996
+        },
+        {
+          "name": "Redemption Program",
+          "code": "PRED",
+          "releaseYear": 1996
+        },
+        {
+          "name": "Tempest Promos",
+          "code": "PTMP",
+          "releaseYear": 1997
+        },
+        {
+          "name": "Asia Pacific Land Program",
+          "code": "PALP",
+          "releaseYear": 1998
+        },
+        {
+          "name": "Exodus Promos",
+          "code": "PEXO",
+          "releaseYear": 1998
+        },
+        {
+          "name": "Judge Gift Cards 1998",
+          "code": "JGP",
+          "releaseYear": 1998
+        },
+        {
+          "name": "Stronghold Promos",
+          "code": "PSTH",
+          "releaseYear": 1998
+        },
+        {
+          "name": "Urza's Saga Promos",
+          "code": "PUSG",
+          "releaseYear": 1998
+        },
+        {
+          "name": "Arena League 1999",
+          "code": "PAL99",
+          "releaseYear": 1999
+        },
+        {
+          "name": "Guru",
+          "code": "PGRU",
+          "releaseYear": 1999
+        },
+        {
+          "name": "Judge Gift Cards 1999",
+          "code": "G99",
+          "releaseYear": 1999
+        },
+        {
+          "name": "Junior Super Series",
+          "code": "PSUS",
+          "releaseYear": 1999
+        },
+        {
+          "name": "Mercadian Masques Promos",
+          "code": "PMMQ",
+          "releaseYear": 1999
+        },
+        {
+          "name": "Portal Three Kingdoms Promos",
+          "code": "PPTK",
+          "releaseYear": 1999
+        },
+        {
+          "name": "Urza's Destiny Promos",
+          "code": "PUDS",
+          "releaseYear": 1999
+        },
+        {
+          "name": "Urza's Legacy Promos",
+          "code": "PULG",
+          "releaseYear": 1999
+        },
+        {
+          "name": "Wizards of the Coast Online Store",
+          "code": "PWOS",
+          "releaseYear": 1999
+        },
+        {
+          "name": "World Championship Promos",
+          "code": "PWOR",
+          "releaseYear": 1999
+        },
+        {
+          "name": "Arena League 2000",
+          "code": "PAL00",
+          "releaseYear": 2000
+        },
+        {
+          "name": "European Land Program",
+          "code": "PELP",
+          "releaseYear": 2000
+        },
+        {
+          "name": "Friday Night Magic 2000",
+          "code": "FNM",
+          "releaseYear": 2000
+        },
+        {
+          "name": "Invasion Promos",
+          "code": "PINV",
+          "releaseYear": 2000
+        },
+        {
+          "name": "Judge Gift Cards 2000",
+          "code": "G00",
+          "releaseYear": 2000
+        },
+        {
+          "name": "Nemesis Promos",
+          "code": "PNEM",
+          "releaseYear": 2000
+        },
+        {
+          "name": "Prophecy Promos",
+          "code": "PPCY",
+          "releaseYear": 2000
+        },
+        {
+          "name": "Apocalypse Promos",
+          "code": "PAPC",
+          "releaseYear": 2001
+        },
+        {
+          "name": "Arena League 2001",
+          "code": "PAL01",
+          "releaseYear": 2001
+        },
+        {
+          "name": "Friday Night Magic 2001",
+          "code": "F01",
+          "releaseYear": 2001
+        },
+        {
+          "name": "Judge Gift Cards 2001",
+          "code": "G01",
+          "releaseYear": 2001
+        },
+        {
+          "name": "Magic Player Rewards 2001",
+          "code": "MPR",
+          "releaseYear": 2001
+        },
+        {
+          "name": "Odyssey Promos",
+          "code": "PODY",
+          "releaseYear": 2001
+        },
+        {
+          "name": "Planeshift Promos",
+          "code": "PPLS",
+          "releaseYear": 2001
+        },
+        {
+          "name": "Arena League 2002",
+          "code": "PAL02",
+          "releaseYear": 2002
+        },
+        {
+          "name": "Friday Night Magic 2002",
+          "code": "F02",
+          "releaseYear": 2002
+        },
+        {
+          "name": "Hobby Japan Promos",
+          "code": "JP1",
+          "releaseYear": 2002
+        },
+        {
+          "name": "Judge Gift Cards 2002",
+          "code": "G02",
+          "releaseYear": 2002
+        },
+        {
+          "name": "Judgment Promos",
+          "code": "PJUD",
+          "releaseYear": 2002
+        },
+        {
+          "name": "Magic Online Promos",
+          "code": "PRM",
+          "releaseYear": 2002
+        },
+        {
+          "name": "Magic Player Rewards 2002",
+          "code": "PR2",
+          "releaseYear": 2002
+        },
+        {
+          "name": "Onslaught Promos",
+          "code": "PONS",
+          "releaseYear": 2002
+        },
+        {
+          "name": "Torment Promos",
+          "code": "PTOR",
+          "releaseYear": 2002
+        },
+        {
+          "name": "Arena League 2003",
+          "code": "PAL03",
+          "releaseYear": 2003
+        },
+        {
+          "name": "Eighth Edition Promos",
+          "code": "P8ED",
+          "releaseYear": 2003
+        },
+        {
+          "name": "Friday Night Magic 2003",
+          "code": "F03",
+          "releaseYear": 2003
+        },
+        {
+          "name": "Japan Junior Tournament",
+          "code": "PJJT",
+          "releaseYear": 2003
+        },
+        {
+          "name": "Judge Gift Cards 2003",
+          "code": "G03",
+          "releaseYear": 2003
+        },
+        {
+          "name": "Legions Promos",
+          "code": "PLGN",
+          "releaseYear": 2003
+        },
+        {
+          "name": "Magic Player Rewards 2003",
+          "code": "P03",
+          "releaseYear": 2003
+        },
+        {
+          "name": "Scourge Promos",
+          "code": "PSCG",
+          "releaseYear": 2003
+        },
+        {
+          "name": "Arena League 2004",
+          "code": "PAL04",
+          "releaseYear": 2004
+        },
+        {
+          "name": "Champions of Kamigawa Promos",
+          "code": "PCHK",
+          "releaseYear": 2004
+        },
+        {
+          "name": "Darksteel Promos",
+          "code": "PDST",
+          "releaseYear": 2004
+        },
+        {
+          "name": "Fifth Dawn Promos",
+          "code": "P5DN",
+          "releaseYear": 2004
+        },
+        {
+          "name": "Friday Night Magic 2004",
+          "code": "F04",
+          "releaseYear": 2004
+        },
+        {
+          "name": "Judge Gift Cards 2004",
+          "code": "G04",
+          "releaseYear": 2004
+        },
+        {
+          "name": "Magic Player Rewards 2004",
+          "code": "P04",
+          "releaseYear": 2004
+        },
+        {
+          "name": "Mirrodin Promos",
+          "code": "PMRD",
+          "releaseYear": 2004
+        },
+        {
+          "name": "Unhinged Promos",
+          "code": "PUNH",
+          "releaseYear": 2004
+        },
+        {
+          "name": "Arena League 2005",
+          "code": "PAL05",
+          "releaseYear": 2005
+        },
+        {
+          "name": "Betrayers of Kamigawa Promos",
+          "code": "PBOK",
+          "releaseYear": 2005
+        },
+        {
+          "name": "Friday Night Magic 2005",
+          "code": "F05",
+          "releaseYear": 2005
+        },
+        {
+          "name": "Judge Gift Cards 2005",
+          "code": "G05",
+          "releaseYear": 2005
+        },
+        {
+          "name": "Junior Series Europe",
+          "code": "PJSE",
+          "releaseYear": 2005
+        },
+        {
+          "name": "Magic Player Rewards 2005",
+          "code": "P05",
+          "releaseYear": 2005
+        },
+        {
+          "name": "Magic Premiere Shop 2005",
+          "code": "PMPS",
+          "releaseYear": 2005
+        },
+        {
+          "name": "Ninth Edition Promos",
+          "code": "P9ED",
+          "releaseYear": 2005
+        },
+        {
+          "name": "Ravnica: City of Guilds Promos",
+          "code": "PRAV",
+          "releaseYear": 2005
+        },
+        {
+          "name": "Saviors of Kamigawa Promos",
+          "code": "PSOK",
+          "releaseYear": 2005
+        },
+        {
+          "name": "Two-Headed Giant Tournament",
+          "code": "P2HG",
+          "releaseYear": 2005
+        },
+        {
+          "name": "Arena League 2006",
+          "code": "PAL06",
+          "releaseYear": 2006
+        },
+        {
+          "name": "Champs and States",
+          "code": "PCMP",
+          "releaseYear": 2006
+        },
+        {
+          "name": "Coldsnap Promos",
+          "code": "PCSP",
+          "releaseYear": 2006
+        },
+        {
+          "name": "DCI Promos",
+          "code": "DCI",
+          "releaseYear": 2006
+        },
+        {
+          "name": "Dissension Promos",
+          "code": "PDIS",
+          "releaseYear": 2006
+        },
+        {
+          "name": "Friday Night Magic 2006",
+          "code": "F06",
+          "releaseYear": 2006
+        },
+        {
+          "name": "Guildpact Promos",
+          "code": "PGPT",
+          "releaseYear": 2006
+        },
+        {
+          "name": "Judge Gift Cards 2006",
+          "code": "G06",
+          "releaseYear": 2006
+        },
+        {
+          "name": "Junior APAC Series",
+          "code": "PJAS",
+          "releaseYear": 2006
+        },
+        {
+          "name": "Magic Player Rewards 2006",
+          "code": "P06",
+          "releaseYear": 2006
+        },
+        {
+          "name": "Magic Premiere Shop 2006",
+          "code": "PMPS06",
+          "releaseYear": 2006
+        },
+        {
+          "name": "Time Spiral Promos",
+          "code": "PTSP",
+          "releaseYear": 2006
+        },
+        {
+          "name": "Friday Night Magic 2007",
+          "code": "F07",
+          "releaseYear": 2007
+        },
+        {
+          "name": "Future Sight Promos",
+          "code": "PFUT",
+          "releaseYear": 2007
+        },
+        {
+          "name": "Grand Prix Promos",
+          "code": "PGPX",
+          "releaseYear": 2007
+        },
+        {
+          "name": "Judge Gift Cards 2007",
+          "code": "G07",
+          "releaseYear": 2007
+        },
+        {
+          "name": "Lorwyn Promos",
+          "code": "PLRW",
+          "releaseYear": 2007
+        },
+        {
+          "name": "Magic Player Rewards 2007",
+          "code": "P07",
+          "releaseYear": 2007
+        },
+        {
+          "name": "Magic Premiere Shop 2007",
+          "code": "PMPS07",
+          "releaseYear": 2007
+        },
+        {
+          "name": "Planar Chaos Promos",
+          "code": "PPLC",
+          "releaseYear": 2007
+        },
+        {
+          "name": "Pro Tour Promos",
+          "code": "PPRO",
+          "releaseYear": 2007
+        },
+        {
+          "name": "Tenth Edition Promos",
+          "code": "P10E",
+          "releaseYear": 2007
+        },
+        {
+          "name": "15th Anniversary Cards",
+          "code": "P15A",
+          "releaseYear": 2008
+        },
+        {
+          "name": "Eventide Promos",
+          "code": "PEVE",
+          "releaseYear": 2008
+        },
+        {
+          "name": "Friday Night Magic 2008",
+          "code": "F08",
+          "releaseYear": 2008
+        },
+        {
+          "name": "Judge Gift Cards 2008",
+          "code": "G08",
+          "releaseYear": 2008
+        },
+        {
+          "name": "Magic Player Rewards 2008",
+          "code": "P08",
+          "releaseYear": 2008
+        },
+        {
+          "name": "Magic Premiere Shop 2008",
+          "code": "PMPS08",
+          "releaseYear": 2008
+        },
+        {
+          "name": "Morningtide Promos",
+          "code": "PMOR",
+          "releaseYear": 2008
+        },
+        {
+          "name": "Shadowmoor Promos",
+          "code": "PSHM",
+          "releaseYear": 2008
+        },
+        {
+          "name": "Shards of Alara Promos",
+          "code": "PALA",
+          "releaseYear": 2008
+        },
+        {
+          "name": "Alara Reborn Promos",
+          "code": "PARB",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Conflux Promos",
+          "code": "PCON",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Duels of the Planeswalkers 2009 Promos",
+          "code": "PDTP",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Friday Night Magic 2009",
+          "code": "F09",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Judge Gift Cards 2009",
+          "code": "G09",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Magic 2010 Promos",
+          "code": "PM10",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Magic Player Rewards 2009",
+          "code": "P09",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Magic Premiere Shop 2009",
+          "code": "PMPS09",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Planechase Promos",
+          "code": "PHOP",
+          "releaseYear": 2009
+        },
+        {
+          "name": "URL/Convention Promos",
+          "code": "PURL",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Zendikar Promos",
+          "code": "PZEN",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Duels of the Planeswalkers 2010 Promos",
+          "code": "PDP10",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Friday Night Magic 2010",
+          "code": "F10",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Judge Gift Cards 2010",
+          "code": "G10",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Magic 2011 Promos",
+          "code": "PM11",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Magic Player Rewards 2010",
+          "code": "P10",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Magic Premiere Shop 2010",
+          "code": "PMPS10",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Rise of the Eldrazi Promos",
+          "code": "PROE",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Scars of Mirrodin Promos",
+          "code": "PSOM",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Worldwake Promos",
+          "code": "PWWK",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Duels of the Planeswalkers 2012 Promos",
+          "code": "PDP12",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Friday Night Magic 2011",
+          "code": "F11",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Innistrad Promos",
+          "code": "PISD",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Judge Gift Cards 2011",
+          "code": "G11",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Magic 2012 Promos",
+          "code": "PM12",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Magic Player Rewards 2011",
+          "code": "P11",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Magic Premiere Shop 2011",
+          "code": "PMPS11",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Mirrodin Besieged Promos",
+          "code": "PMBS",
+          "releaseYear": 2011
+        },
+        {
+          "name": "New Phyrexia Promos",
+          "code": "PNPH",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Wizards Play Network 2011",
+          "code": "PW11",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Avacyn Restored Promos",
+          "code": "PAVR",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Dark Ascension Promos",
+          "code": "PDKA",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Duels of the Planeswalkers 2013 Promos",
+          "code": "PDP13",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Friday Night Magic 2012",
+          "code": "F12",
+          "releaseYear": 2012
+        },
+        {
+          "name": "IDW Comics Inserts",
+          "code": "PIDW",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Judge Gift Cards 2012",
+          "code": "J12",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Magic 2013 Promos",
+          "code": "PM13",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Return to Ravnica Promos",
+          "code": "PRTR",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Wizards Play Network 2012",
+          "code": "PW12",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Dragon's Maze Promos",
+          "code": "PDGM",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Duels of the Planeswalkers 2014 Promos",
+          "code": "PDP14",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Friday Night Magic 2013",
+          "code": "F13",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Gatecrash Promos",
+          "code": "PGTC",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Judge Gift Cards 2013",
+          "code": "J13",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Magic 2014 Promos",
+          "code": "PM14",
+          "releaseYear": 2013
+        },
+        {
+          "name": "San Diego Comic-Con 2013",
+          "code": "PSDC",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Theros Promos",
+          "code": "PTHS",
+          "releaseYear": 2013
+        },
+        {
+          "name": "World Magic Cup Qualifiers",
+          "code": "WMC",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Born of the Gods Promos",
+          "code": "PBNG",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Conspiracy Promos",
+          "code": "PCNS",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Duels of the Planeswalkers 2015 Promos",
+          "code": "PDP15",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Friday Night Magic 2014",
+          "code": "F14",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Journey into Nyx Promos",
+          "code": "PJOU",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Judge Gift Cards 2014",
+          "code": "J14",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Khans of Tarkir Promos",
+          "code": "PKTK",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Magic 2015 Promos",
+          "code": "PM15",
+          "releaseYear": 2014
+        },
+        {
+          "name": "San Diego Comic-Con 2014",
+          "code": "PS14",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Battle for Zendikar Promos",
+          "code": "PBFZ",
+          "releaseYear": 2015
+        },
+        {
+          "name": "BFZ Standard Series",
+          "code": "PSS1",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Dragons of Tarkir Promos",
+          "code": "PDTK",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Fate Reforged Promos",
+          "code": "PFRF",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Friday Night Magic 2015",
+          "code": "F15",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Judge Gift Cards 2015",
+          "code": "J15",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Magic Origins Promos",
+          "code": "PORI",
+          "releaseYear": 2015
+        },
+        {
+          "name": "San Diego Comic-Con 2015",
+          "code": "PS15",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Tarkir Dragonfury",
+          "code": "PTKDF",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Ugin's Fate",
+          "code": "UGIN",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Eldritch Moon Promos",
+          "code": "PEMN",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Friday Night Magic 2016",
+          "code": "F16",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Judge Gift Cards 2016",
+          "code": "J16",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Kaladesh Promos",
+          "code": "PKLD",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Oath of the Gatewatch Promos",
+          "code": "POGW",
+          "releaseYear": 2016
+        },
+        {
+          "name": "San Diego Comic-Con 2016",
+          "code": "PS16",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Shadows over Innistrad Promos",
+          "code": "PSOI",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Aether Revolt Promos",
+          "code": "PAER",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Amonkhet Promos",
+          "code": "PAKH",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Friday Night Magic 2017",
+          "code": "F17",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Friday Night Magic 2018",
+          "code": "F18",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Hour of Devastation Promos",
+          "code": "PHOU",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Ixalan Promos",
+          "code": "PXLN",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Judge Gift Cards 2017",
+          "code": "J17",
+          "releaseYear": 2017
+        },
+        {
+          "name": "San Diego Comic-Con 2017",
+          "code": "PS17",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Unstable Promos",
+          "code": "PUST",
+          "releaseYear": 2017
+        },
+        {
+          "name": "XLN Standard Showdown",
+          "code": "PSS2",
+          "releaseYear": 2017
+        },
+        {
+          "name": "XLN Treasure Chest",
+          "code": "PXTC",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Battlebond Promos",
+          "code": "PBBD",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Core Set 2019 Promos",
+          "code": "PM19",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Dominaria Promos",
+          "code": "PDOM",
+          "releaseYear": 2018
+        },
+        {
+          "name": "GRN Ravnica Weekend",
+          "code": "PRWK",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Guilds of Ravnica Promos",
+          "code": "PGRN",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Judge Gift Cards 2018",
+          "code": "J18",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Lunar New Year 2018",
+          "code": "PLNY",
+          "releaseYear": 2018
+        },
+        {
+          "name": "M19 Standard Showdown",
+          "code": "PSS3",
+          "releaseYear": 2018
+        },
+        {
+          "name": "MTG Arena Promos",
+          "code": "PANA",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Nationals Promos",
+          "code": "PNAT",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Rivals of Ixalan Promos",
+          "code": "PRIX",
+          "releaseYear": 2018
+        },
+        {
+          "name": "San Diego Comic-Con 2018",
+          "code": "PS18",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Core Set 2020 Promos",
+          "code": "PM20",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Judge Gift Cards 2019",
+          "code": "J19",
+          "releaseYear": 2019
+        },
+        {
+          "name": "M20 Promo Packs",
+          "code": "PPP1",
+          "releaseYear": 2019
+        },
+        {
+          "name": "MagicFest 2019",
+          "code": "PF19",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Modern Horizons Promos",
+          "code": "PMH1",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Planeswalker Championship Promos",
+          "code": "PWCS",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Ravnica Allegiance Promos",
+          "code": "PRNA",
+          "releaseYear": 2019
+        },
+        {
+          "name": "RNA Ravnica Weekend",
+          "code": "PRW2",
+          "releaseYear": 2019
+        },
+        {
+          "name": "San Diego Comic-Con 2019",
+          "code": "PS19",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Throne of Eldraine Promos",
+          "code": "PELD",
+          "releaseYear": 2019
+        },
+        {
+          "name": "War of the Spark Promos",
+          "code": "PWAR",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Commander Legends Promos",
+          "code": "PCMR",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Core Set 2021 Promos",
+          "code": "PM21",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Ikoria: Lair of Behemoths Promos",
+          "code": "PIKO",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Judge Gift Cards 2020",
+          "code": "J20",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Love Your LGS 2020",
+          "code": "PLG20",
+          "releaseYear": 2020
+        },
+        {
+          "name": "MagicFest 2020",
+          "code": "PF20",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Theros Beyond Death Promos",
+          "code": "PTHB",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Zendikar Rising Promos",
+          "code": "PZNR",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Adventures in the Forgotten Realms Promos",
+          "code": "PAFR",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Innistrad: Crimson Vow Promos",
+          "code": "PVOW",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Innistrad: Midnight Hunt Promos",
+          "code": "PMID",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Judge Gift Cards 2021",
+          "code": "PJ21",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Kaldheim Promos",
+          "code": "PKHM",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Love Your LGS 2021",
+          "code": "PLG21",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Modern Horizons 2 Promos",
+          "code": "PMH2",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Strixhaven: School of Mages Promos",
+          "code": "PSTX",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Wizards Play Network 2021",
+          "code": "PW21",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Year of the Ox 2021",
+          "code": "PL21",
+          "releaseYear": 2021
+        },
+        {
+          "name": "30th Anniversary History Promos",
+          "code": "P30H",
+          "releaseYear": 2022
+        },
+        {
+          "name": "30th Anniversary Misc Promos",
+          "code": "P30M",
+          "releaseYear": 2022
+        },
+        {
+          "name": "30th Anniversary Play Promos",
+          "code": "P30A",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Battle for Baldur's Gate Promos",
+          "code": "PCLB",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Dominaria United Promos",
+          "code": "PDMU",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Eternal Weekend",
+          "code": "PEWK",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Game Day Promos",
+          "code": "GDY",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Judge Gift Cards 2022",
+          "code": "P22",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Kamigawa: Neon Dynasty Promos",
+          "code": "PNEO",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Love Your LGS 2022",
+          "code": "PLG22",
+          "releaseYear": 2022
+        },
+        {
+          "name": "New Capenna Commander Promos",
+          "code": "PNCC",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Regional Championship Qualifiers 2022",
+          "code": "PRCQ",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Store Championships",
+          "code": "SCH",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Streets of New Capenna Promos",
+          "code": "PSNC",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Streets of New Capenna Southeast Asia Tokens",
+          "code": "PTSNC",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Summer Vacation Promos 2022",
+          "code": "PSVC",
+          "releaseYear": 2022
+        },
+        {
+          "name": "The Brothers' War Promos",
+          "code": "PBRO",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Wizards Play Network 2022",
+          "code": "PW22",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Year of the Tiger 2022",
+          "code": "PL22",
+          "releaseYear": 2022
+        },
+        {
+          "name": "30th Anniversary Celebration Tokyo",
+          "code": "P30T",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Judge Gift Cards 2023",
+          "code": "P23",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Magic × Duel Masters Promos",
+          "code": "PMDA",
+          "releaseYear": 2023
+        },
+        {
+          "name": "MagicFest 2023",
+          "code": "PF23",
+          "releaseYear": 2023
+        },
+        {
+          "name": "March of the Machine Promos",
+          "code": "PMOM",
+          "releaseYear": 2023
+        },
+        {
+          "name": "March of the Machine: The Aftermath Promos",
+          "code": "PMAT",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Phyrexia: All Will Be One Promos",
+          "code": "PONE",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Regional Championship Qualifiers 2023",
+          "code": "PR23",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Secret Lair Promo",
+          "code": "SLP",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Tales of Middle-earth Promos",
+          "code": "PLTR",
+          "releaseYear": 2023
+        },
+        {
+          "name": "The Lost Caverns of Ixalan Promos",
+          "code": "PLCI",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Time Spiral Remastered Promos",
+          "code": "PTSR",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Wilds of Eldraine Promos",
+          "code": "PWOE",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Wizards Play Network 2023",
+          "code": "PW23",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Year of the Rabbit 2023",
+          "code": "PL23",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Bloomburrow Promos",
+          "code": "PBLB",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Cowboy Bebop",
+          "code": "PCBB",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Duskmourn: House of Horror Promos",
+          "code": "PDSK",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Foundations Promos",
+          "code": "PFDN",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Love Your LGS 2024",
+          "code": "PLG24",
+          "releaseYear": 2024
+        },
+        {
+          "name": "MagicFest 2024",
+          "code": "PF24",
+          "releaseYear": 2024
+        },
+        {
+          "name": "MKM Standard Showdown",
+          "code": "PSS4",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Modern Horizons 3 Promos",
+          "code": "PMH3",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Murders at Karlov Manor Promos",
+          "code": "PMKM",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Outlaws of Thunder Junction Promos",
+          "code": "POTJ",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Tales of Middle-earth Deluxe Commander Kit",
+          "code": "PLTC",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Wizards Play Network 2024",
+          "code": "PW24",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Year of the Dragon 2024",
+          "code": "PL24",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Aetherdrift Promos",
+          "code": "PDFT",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Avatar: The Last Airbender Promos",
+          "code": "PTLA",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Edge of Eternities Promos",
+          "code": "PEOE",
+          "releaseYear": 2025
+        },
+        {
+          "name": "FIN Standard Showdown",
+          "code": "PSS5",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Final Fantasy Promos",
+          "code": "PFIN",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Final Fantasy Regional Promos",
+          "code": "RFIN",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Japan Standard Cup",
+          "code": "PJSC",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Love Your LGS 2025",
+          "code": "PLG25",
+          "releaseYear": 2025
+        },
+        {
+          "name": "MagicFest 2025",
+          "code": "PF25",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Marvel Legends Series Inserts",
+          "code": "LMAR",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Marvel's Spider-Man Promos",
+          "code": "PSPM",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Spotlight Series",
+          "code": "PSPL",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Tarkir: Dragonstorm Promos",
+          "code": "PTDM",
+          "releaseYear": 2025
+        },
+        {
+          "name": "The Big Score Promos",
+          "code": "PBIG",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Wizards Play Network 2025",
+          "code": "PW25",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Year of the Snake 2025",
+          "code": "PL25",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Lorwyn Eclipsed Promos",
+          "code": "PECL",
+          "releaseYear": 2026
+        },
+        {
+          "name": "MagicFest 2026",
+          "code": "PF26",
+          "releaseYear": 2026
+        },
+        {
+          "name": "Wizards Play Network 2026",
+          "code": "PW26",
+          "releaseYear": 2026
+        },
+        {
+          "name": "Year of the Horse 2026",
+          "code": "PL26",
+          "releaseYear": 2026
+        }
+      ]
+    },
+    {
+      "name": "Masters",
+      "startYear": 1995,
+      "expansions": [
+        {
+          "name": "Chronicles",
+          "code": "CHR",
+          "releaseYear": 1995
+        },
+        {
+          "name": "Chronicles Foreign Black Border",
+          "code": "BCHR",
+          "releaseYear": 1995
+        },
+        {
+          "name": "Renaissance",
+          "code": "REN",
+          "releaseYear": 1995
+        },
+        {
+          "name": "Rinascimento",
+          "code": "RIN",
+          "releaseYear": 1995
+        },
+        {
+          "name": "Masters Edition",
+          "code": "ME1",
+          "releaseYear": 2007
+        },
+        {
+          "name": "Masters Edition II",
+          "code": "ME2",
+          "releaseYear": 2008
+        },
+        {
+          "name": "Masters Edition III",
+          "code": "ME3",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Masters Edition IV",
+          "code": "ME4",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Modern Masters",
+          "code": "MMA",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Vintage Masters",
+          "code": "VMA",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Modern Masters 2015",
+          "code": "MM2",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Tempest Remastered",
+          "code": "TPR",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Eternal Masters",
+          "code": "EMA",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Iconic Masters",
+          "code": "IMA",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Modern Masters 2017",
+          "code": "MM3",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Masters 25",
+          "code": "A25",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Ultimate Masters",
+          "code": "UMA",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Amonkhet Remastered",
+          "code": "AKR",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Double Masters",
+          "code": "2XM",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Kaladesh Remastered",
+          "code": "KLR",
+          "releaseYear": 2020
+        },
+        {
+          "name": "The List",
+          "code": "PLST",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Time Spiral Remastered",
+          "code": "TSR",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Double Masters 2022",
+          "code": "2X2",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Universes Within",
+          "code": "SLX",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Commander Masters",
+          "code": "CMM",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Dominaria Remastered",
+          "code": "DMR",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Shadows of the Past",
+          "code": "SIS",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Shadows over Innistrad Remastered",
+          "code": "SIR",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Mystery Booster 2",
+          "code": "MB2",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Pioneer Masters",
+          "code": "PIO",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Ravnica Remastered",
+          "code": "RVR",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Innistrad Remastered",
+          "code": "INR",
+          "releaseYear": 2025
+        }
+      ]
+    },
+    {
+      "name": "Boxed Sets",
+      "startYear": 1996,
+      "expansions": [
+        {
+          "name": "Multiverse Gift Box",
+          "code": "MGB",
+          "releaseYear": 1996
+        },
+        {
+          "name": "Rivals Quick Start Set",
+          "code": "RQS",
+          "releaseYear": 1996
+        },
+        {
+          "name": "Astral Cards",
+          "code": "PAST",
+          "releaseYear": 1997
+        },
+        {
+          "name": "Anthologies",
+          "code": "ATH",
+          "releaseYear": 1998
+        },
+        {
+          "name": "Battle Royale Box Set",
+          "code": "BRB",
+          "releaseYear": 1999
+        },
+        {
+          "name": "Beatdown Box Set",
+          "code": "BTD",
+          "releaseYear": 2000
+        },
+        {
+          "name": "Deckmasters",
+          "code": "DKM",
+          "releaseYear": 2001
+        },
+        {
+          "name": "Sega Dreamcast Cards",
+          "code": "PSDG",
+          "releaseYear": 2001
+        },
+        {
+          "name": "Salvat 2005",
+          "code": "PSAL",
+          "releaseYear": 2005
+        },
+        {
+          "name": "Coldsnap Theme Decks",
+          "code": "CST",
+          "releaseYear": 2006
+        },
+        {
+          "name": "Hachette UK",
+          "code": "PHUK",
+          "releaseYear": 2006
+        },
+        {
+          "name": "Duels of the Planeswalkers",
+          "code": "DPA",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Magic Online Theme Decks",
+          "code": "TD0",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Salvat 2011",
+          "code": "PS11",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Modern Event Deck 2014",
+          "code": "MD1",
+          "releaseYear": 2014
+        },
+        {
+          "name": "2017 Gift Pack",
+          "code": "G17",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Explorers of Ixalan",
+          "code": "E02",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Game Night",
+          "code": "GNT",
+          "releaseYear": 2018
+        },
+        {
+          "name": "GRN Guild Kit",
+          "code": "GK1",
+          "releaseYear": 2018
+        },
+        {
+          "name": "M19 Gift Pack",
+          "code": "G18",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Game Night 2019",
+          "code": "GN2",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Historic Anthology 1",
+          "code": "HA1",
+          "releaseYear": 2019
+        },
+        {
+          "name": "RNA Guild Kit",
+          "code": "GK2",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Secret Lair Drop",
+          "code": "SLD",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Historic Anthology 2",
+          "code": "HA2",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Historic Anthology 3",
+          "code": "HA3",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Secret Lair: Ultimate Edition",
+          "code": "SLU",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Historic Anthology 4",
+          "code": "HA4",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Historic Anthology 5",
+          "code": "HA5",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Pioneer Challenger Decks 2021",
+          "code": "Q06",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Challenger Decks 2022",
+          "code": "Q07",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Explorer Anthology 1",
+          "code": "EA1",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Explorer Anthology 2",
+          "code": "EA2",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Game Night: Free-for-All",
+          "code": "GN3",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Historic Anthology 6",
+          "code": "HA6",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Secret Lair Countdown",
+          "code": "SLC",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Explorer Anthology 3",
+          "code": "EA3",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Historic Anthology 7",
+          "code": "HA7",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Arena Anthology 1",
+          "code": "AA1",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Arena Anthology 2",
+          "code": "AA2",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Arena Anthology 3",
+          "code": "AA3",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Arena Anthology 4",
+          "code": "AA4",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Pioneer Anthology 1",
+          "code": "PA1",
+          "releaseYear": 2025
+        }
+      ]
+    },
+    {
+      "name": "Starter",
+      "startYear": 1996,
+      "expansions": [
+        {
+          "name": "Introductory Two-Player Set",
+          "code": "ITP",
+          "releaseYear": 1996
+        },
+        {
+          "name": "Portal",
+          "code": "POR",
+          "releaseYear": 1997
+        },
+        {
+          "name": "Portal Second Age",
+          "code": "P02",
+          "releaseYear": 1998
+        },
+        {
+          "name": "Portal Three Kingdoms",
+          "code": "PTK",
+          "releaseYear": 1999
+        },
+        {
+          "name": "Starter 1999",
+          "code": "S99",
+          "releaseYear": 1999
+        },
+        {
+          "name": "Starter 2000",
+          "code": "S00",
+          "releaseYear": 2000
+        },
+        {
+          "name": "Magic 2015 Clash Pack",
+          "code": "CP1",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Fate Reforged Clash Pack",
+          "code": "CP2",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Magic Origins Clash Pack",
+          "code": "CP3",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Welcome Deck 2016",
+          "code": "W16",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Welcome Deck 2017",
+          "code": "W17",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Arena New Player Experience",
+          "code": "ANA",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Arena New Player Experience Cards",
+          "code": "OANA",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Arena Beginner Set",
+          "code": "ANB",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Jumpstart Arena Exclusives",
+          "code": "AJMP",
+          "releaseYear": 2020
+        }
+      ]
+    },
+    {
+      "name": "Vanguard",
+      "startYear": 1997,
+      "expansions": [
+        {
+          "name": "Vanguard Series",
+          "code": "PVAN",
+          "releaseYear": 1997
+        },
+        {
+          "name": "Magic Online Avatars",
+          "code": "PMOA",
+          "releaseYear": 2003
+        }
+      ]
+    },
+    {
+      "name": "Tokens",
+      "startYear": 1998,
+      "expansions": [
+        {
+          "name": "Unglued Tokens",
+          "code": "TUGL",
+          "releaseYear": 1998
+        },
+        {
+          "name": "Duel Decks: Elves vs. Goblins Tokens",
+          "code": "TDD1",
+          "releaseYear": 2007
+        },
+        {
+          "name": "Lorwyn Tokens",
+          "code": "TLRW",
+          "releaseYear": 2007
+        },
+        {
+          "name": "Tenth Edition Tokens",
+          "code": "T10E",
+          "releaseYear": 2007
+        },
+        {
+          "name": "Duel Decks: Jace vs. Chandra Tokens",
+          "code": "TDD2",
+          "releaseYear": 2008
+        },
+        {
+          "name": "Eventide Tokens",
+          "code": "TEVE",
+          "releaseYear": 2008
+        },
+        {
+          "name": "Morningtide Tokens",
+          "code": "TMOR",
+          "releaseYear": 2008
+        },
+        {
+          "name": "Shadowmoor Tokens",
+          "code": "TSHM",
+          "releaseYear": 2008
+        },
+        {
+          "name": "Shards of Alara Tokens",
+          "code": "TALA",
+          "releaseYear": 2008
+        },
+        {
+          "name": "Alara Reborn Tokens",
+          "code": "TARB",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Conflux Tokens",
+          "code": "TCON",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Duel Decks: Divine vs. Demonic Tokens",
+          "code": "TDDC",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Duel Decks: Garruk vs. Liliana Tokens",
+          "code": "TDDD",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Magic 2010 Tokens",
+          "code": "TM10",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Zendikar Tokens",
+          "code": "TZEN",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Duel Decks: Elspeth vs. Tezzeret Tokens",
+          "code": "TDDF",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Duel Decks: Phyrexia vs. the Coalition Tokens",
+          "code": "TDDE",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Magic 2011 Tokens",
+          "code": "TM11",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Rise of the Eldrazi Tokens",
+          "code": "TROE",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Scars of Mirrodin Tokens",
+          "code": "TSOM",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Worldwake Tokens",
+          "code": "TWWK",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Duel Decks: Ajani vs. Nicol Bolas Tokens",
+          "code": "TDDH",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Duel Decks: Knights vs. Dragons Tokens",
+          "code": "TDDG",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Innistrad Tokens",
+          "code": "TISD",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Magic 2012 Tokens",
+          "code": "TM12",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Mirrodin Besieged Tokens",
+          "code": "TMBS",
+          "releaseYear": 2011
+        },
+        {
+          "name": "New Phyrexia Tokens",
+          "code": "TNPH",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Avacyn Restored Tokens",
+          "code": "TAVR",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Dark Ascension Tokens",
+          "code": "TDKA",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Duel Decks: Izzet vs. Golgari Tokens",
+          "code": "TDDJ",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Duel Decks: Venser vs. Koth Tokens",
+          "code": "TDDI",
+          "releaseYear": 2012
+        },
+        {
+          "name": "League Tokens 2012",
+          "code": "L12",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Magic 2013 Tokens",
+          "code": "TM13",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Return to Ravnica Tokens",
+          "code": "TRTR",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Dragon's Maze Tokens",
+          "code": "TDGM",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Duel Decks: Heroes vs. Monsters Tokens",
+          "code": "TDDL",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Duel Decks: Sorin vs. Tibalt Tokens",
+          "code": "TDDK",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Gatecrash Tokens",
+          "code": "TGTC",
+          "releaseYear": 2013
+        },
+        {
+          "name": "League Tokens 2013",
+          "code": "L13",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Magic 2014 Tokens",
+          "code": "TM14",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Modern Masters Tokens",
+          "code": "TMMA",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Theros Tokens",
+          "code": "TTHS",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Born of the Gods Tokens",
+          "code": "TBNG",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Commander 2014 Tokens",
+          "code": "TC14",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Conspiracy Tokens",
+          "code": "TCNS",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Duel Decks Anthology: Divine vs. Demonic Tokens",
+          "code": "TDVD",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Duel Decks Anthology: Elves vs. Goblins Tokens",
+          "code": "TEVG",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Duel Decks Anthology: Garruk vs. Liliana Tokens",
+          "code": "TGVL",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Duel Decks Anthology: Jace vs. Chandra Tokens",
+          "code": "TJVC",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Duel Decks: Jace vs. Vraska Tokens",
+          "code": "TDDM",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Journey into Nyx Tokens",
+          "code": "TJOU",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Khans of Tarkir Tokens",
+          "code": "TKTK",
+          "releaseYear": 2014
+        },
+        {
+          "name": "League Tokens 2014",
+          "code": "L14",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Magic 2015 Tokens",
+          "code": "TM15",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Modern Event Deck 2014 Tokens",
+          "code": "TMD1",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Battle for Zendikar Tokens",
+          "code": "TBFZ",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Commander 2015 Tokens",
+          "code": "TC15",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Dragons of Tarkir Tokens",
+          "code": "TDTK",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Fate Reforged Tokens",
+          "code": "TFRF",
+          "releaseYear": 2015
+        },
+        {
+          "name": "League Tokens 2015",
+          "code": "L15",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Magic Origins Tokens",
+          "code": "TORI",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Modern Masters 2015 Tokens",
+          "code": "TMM2",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Commander 2016 Tokens",
+          "code": "TC16",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Conspiracy: Take the Crown Tokens",
+          "code": "TCN2",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Eldritch Moon Tokens",
+          "code": "TEMN",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Eternal Masters Tokens",
+          "code": "TEMA",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Kaladesh Tokens",
+          "code": "TKLD",
+          "releaseYear": 2016
+        },
+        {
+          "name": "League Tokens 2016",
+          "code": "L16",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Oath of the Gatewatch Tokens",
+          "code": "TOGW",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Planechase Anthology Tokens",
+          "code": "TPCA",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Shadows over Innistrad Tokens",
+          "code": "TSOI",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Aether Revolt Tokens",
+          "code": "TAER",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Amonkhet Tokens",
+          "code": "TAKH",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Archenemy: Nicol Bolas Tokens",
+          "code": "TE01",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Commander 2017 Tokens",
+          "code": "TC17",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Commander Anthology Tokens",
+          "code": "TCMA",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Duel Decks: Merfolk vs. Goblins Tokens",
+          "code": "TDDT",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Duel Decks: Mind vs. Might Tokens",
+          "code": "TDDS",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Hour of Devastation Tokens",
+          "code": "THOU",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Iconic Masters Tokens",
+          "code": "TIMA",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Ixalan Tokens",
+          "code": "TXLN",
+          "releaseYear": 2017
+        },
+        {
+          "name": "League Tokens 2017",
+          "code": "L17",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Modern Masters 2017 Tokens",
+          "code": "TMM3",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Unstable Tokens",
+          "code": "TUST",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Battlebond Tokens",
+          "code": "TBBD",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Commander 2018 Tokens",
+          "code": "TC18",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Commander Anthology Volume II Tokens",
+          "code": "TCM2",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Core Set 2019 Tokens",
+          "code": "TM19",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Dominaria Tokens",
+          "code": "TDOM",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Duel Decks: Elves vs. Inventors Tokens",
+          "code": "TDDU",
+          "releaseYear": 2018
+        },
+        {
+          "name": "GRN Guild Kit Tokens",
+          "code": "TGK1",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Guilds of Ravnica Tokens",
+          "code": "TGRN",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Masters 25 Tokens",
+          "code": "TA25",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Mythic Edition Tokens",
+          "code": "TMED",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Rivals of Ixalan Tokens",
+          "code": "TRIX",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Ultimate Masters Tokens",
+          "code": "TUMA",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Commander 2019 Tokens",
+          "code": "TC19",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Core Set 2020 Tokens",
+          "code": "TM20",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Game Night 2019 Tokens",
+          "code": "TGN2",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Modern Horizons Tokens",
+          "code": "TMH1",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Ravnica Allegiance Tokens",
+          "code": "TRNA",
+          "releaseYear": 2019
+        },
+        {
+          "name": "RNA Guild Kit Tokens",
+          "code": "TGK2",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Throne of Eldraine Tokens",
+          "code": "TELD",
+          "releaseYear": 2019
+        },
+        {
+          "name": "War of the Spark Tokens",
+          "code": "TWAR",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Commander 2020 Tokens",
+          "code": "TC20",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Commander Legends Tokens",
+          "code": "TCMR",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Core Set 2021 Tokens",
+          "code": "TM21",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Double Masters Tokens",
+          "code": "T2XM",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Ikoria: Lair of Behemoths Tokens",
+          "code": "TIKO",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Theros Beyond Death Tokens",
+          "code": "TTHB",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Unsanctioned Tokens",
+          "code": "TUND",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Zendikar Rising Commander Tokens",
+          "code": "TZNC",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Zendikar Rising Substitute Cards",
+          "code": "SZNR",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Zendikar Rising Tokens",
+          "code": "TZNR",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Adventures in the Forgotten Realms Tokens",
+          "code": "TAFR",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Commander 2021 Tokens",
+          "code": "TC21",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Crimson Vow Commander Tokens",
+          "code": "TVOC",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Forgotten Realms Commander Tokens",
+          "code": "TAFC",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Innistrad: Crimson Vow Substitute Cards",
+          "code": "SVOW",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Innistrad: Crimson Vow Tokens",
+          "code": "TVOW",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Innistrad: Midnight Hunt Substitute Cards",
+          "code": "SMID",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Innistrad: Midnight Hunt Tokens",
+          "code": "TMID",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Kaldheim Commander Tokens",
+          "code": "TKHC",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Kaldheim Substitute Cards",
+          "code": "SKHM",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Kaldheim Tokens",
+          "code": "TKHM",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Midnight Hunt Commander Tokens",
+          "code": "TMIC",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Modern Horizons 2 Tokens",
+          "code": "TMH2",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Strixhaven: School of Mages Substitute Cards",
+          "code": "SSTX",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Strixhaven: School of Mages Tokens",
+          "code": "TSTX",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Time Spiral Remastered Tokens",
+          "code": "TTSR",
+          "releaseYear": 2021
+        },
+        {
+          "name": "30th Anniversary Tokens",
+          "code": "T30A",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Battle for Baldur's Gate Tokens",
+          "code": "TCLB",
+          "releaseYear": 2022
+        },
+        {
+          "name": "DMU Japanese Promo Tokens",
+          "code": "WDMU",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Dominaria United Commander Tokens",
+          "code": "TDMC",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Dominaria United Southeast Asia Tokens",
+          "code": "PTDMU",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Dominaria United Tokens",
+          "code": "TDMU",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Double Masters 2022 Tokens",
+          "code": "T2X2",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Game Night: Free-for-All Tokens",
+          "code": "TGN3",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Kamigawa: Neon Dynasty Substitute Cards",
+          "code": "SNEO",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Kamigawa: Neon Dynasty Tokens",
+          "code": "TNEO",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Neon Dynasty Commander Tokens",
+          "code": "TNEC",
+          "releaseYear": 2022
+        },
+        {
+          "name": "New Capenna Commander Tokens",
+          "code": "TNCC",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Starter Commander Deck Tokens",
+          "code": "TSCD",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Streets of New Capenna Tokens",
+          "code": "TSNC",
+          "releaseYear": 2022
+        },
+        {
+          "name": "The Brothers' War Commander Tokens",
+          "code": "TBRC",
+          "releaseYear": 2022
+        },
+        {
+          "name": "The Brothers' War Southeast Asia Tokens",
+          "code": "PTBRO",
+          "releaseYear": 2022
+        },
+        {
+          "name": "The Brothers' War Substitute Cards",
+          "code": "SBRO",
+          "releaseYear": 2022
+        },
+        {
+          "name": "The Brothers' War Tokens",
+          "code": "TBRO",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Transformers Tokens",
+          "code": "TBOT",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Unfinity Tokens",
+          "code": "TUNF",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Warhammer 40,000 Tokens",
+          "code": "T40K",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Commander Masters Tokens",
+          "code": "TCMM",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Doctor Who Tokens",
+          "code": "TWHO",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Dominaria Remastered Tokens",
+          "code": "TDMR",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Jurassic World Collection Tokens",
+          "code": "TREX",
+          "releaseYear": 2023
+        },
+        {
+          "name": "March of the Machine Commander Tokens",
+          "code": "TMOC",
+          "releaseYear": 2023
+        },
+        {
+          "name": "March of the Machine Substitute Cards",
+          "code": "SMOM",
+          "releaseYear": 2023
+        },
+        {
+          "name": "March of the Machine Tokens",
+          "code": "TMOM",
+          "releaseYear": 2023
+        },
+        {
+          "name": "MOM Japanese Promo Tokens",
+          "code": "WMOM",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Multiverse Legends Tokens",
+          "code": "TMUL",
+          "releaseYear": 2023
+        },
+        {
+          "name": "ONE Japanese Promo Tokens",
+          "code": "WONE",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Phyrexia: All Will Be One Commander Tokens",
+          "code": "TONC",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Phyrexia: All Will Be One Tokens",
+          "code": "TONE",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Tales of Middle-earth Commander Tokens",
+          "code": "TLTC",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Tales of Middle-earth Tokens",
+          "code": "TLTR",
+          "releaseYear": 2023
+        },
+        {
+          "name": "The Lost Caverns of Ixalan Commander Tokens",
+          "code": "TLCC",
+          "releaseYear": 2023
+        },
+        {
+          "name": "The Lost Caverns of Ixalan Substitute Cards",
+          "code": "SLCI",
+          "releaseYear": 2023
+        },
+        {
+          "name": "The Lost Caverns of Ixalan Tokens",
+          "code": "TLCI",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Wilds of Eldraine Commander Tokens",
+          "code": "TWOC",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Wilds of Eldraine Tokens",
+          "code": "TWOE",
+          "releaseYear": 2023
+        },
+        {
+          "name": "WOE Japanese Promo Tokens",
+          "code": "WWOE",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Assassin's Creed Tokens",
+          "code": "TACR",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Bloomburrow Commander Tokens",
+          "code": "TBLC",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Bloomburrow Tokens",
+          "code": "TBLB",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Breaking News Tokens",
+          "code": "TOTP",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Duskmourn Commander Tokens",
+          "code": "TDSC",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Duskmourn: House of Horror Tokens",
+          "code": "TDSK",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Fallout Tokens",
+          "code": "TPIP",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Foundations Tokens",
+          "code": "TFDN",
+          "releaseYear": 2024
+        },
+        {
+          "name": "MKM Japanese Promo Tokens",
+          "code": "WMKM",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Modern Horizons 3 Commander Tokens",
+          "code": "TM3C",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Modern Horizons 3 Substitute Cards",
+          "code": "SMH3",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Modern Horizons 3 Tokens",
+          "code": "TMH3",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Murders at Karlov Manor Commander Tokens",
+          "code": "TMKC",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Murders at Karlov Manor Tokens",
+          "code": "TMKM",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Outlaws of Thunder Junction Commander Tokens",
+          "code": "TOTC",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Outlaws of Thunder Junction Tokens",
+          "code": "TOTJ",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Ravnica Remastered Tokens",
+          "code": "TRVR",
+          "releaseYear": 2024
+        },
+        {
+          "name": "The Big Score Tokens",
+          "code": "TBIG",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Aetherdrift Commander Tokens",
+          "code": "TDRC",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Aetherdrift Tokens",
+          "code": "TDFT",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Avatar: The Last Airbender Eternal Tokens",
+          "code": "TTLE",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Avatar: The Last Airbender Tokens",
+          "code": "TTLA",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Edge of Eternities Commander Tokens",
+          "code": "TEOC",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Edge of Eternities Tokens",
+          "code": "TEOE",
+          "releaseYear": 2025
+        },
+        {
+          "name": "FIN Asia WPN Promo Tokens",
+          "code": "WFIN",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Final Fantasy Commander Tokens",
+          "code": "TFIC",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Final Fantasy Tokens",
+          "code": "TFIN",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Innistrad Remastered Tokens",
+          "code": "TINR",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Marvel's Spider-Man Tokens",
+          "code": "TSPM",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Tarkir: Dragonstorm Commander Tokens",
+          "code": "TTDC",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Tarkir: Dragonstorm Tokens",
+          "code": "TTDM",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Lorwyn Eclipsed Commander Tokens",
+          "code": "TECC",
+          "releaseYear": 2026
+        },
+        {
+          "name": "Lorwyn Eclipsed Tokens",
+          "code": "TECL",
+          "releaseYear": 2026
+        },
+        {
+          "name": "Marvel Super Heroes Tokens",
+          "code": "TMSH",
+          "releaseYear": 2026
+        },
+        {
+          "name": "Teenage Mutant Ninja Turtles Eternal Tokens",
+          "code": "TTMC",
+          "releaseYear": 2026
+        },
+        {
+          "name": "Teenage Mutant Ninja Turtles Tokens",
+          "code": "TTMT",
+          "releaseYear": 2026
+        }
+      ]
+    },
+    {
+      "name": "Un-sets & Funny",
+      "startYear": 1998,
+      "expansions": [
+        {
+          "name": "Unglued",
+          "code": "UGL",
+          "releaseYear": 1998
+        },
+        {
+          "name": "Unhinged",
+          "code": "UNH",
+          "releaseYear": 2004
+        },
+        {
+          "name": "Happy Holidays",
+          "code": "HHO",
+          "releaseYear": 2006
+        },
+        {
+          "name": "2016 Heroes of the Realm",
+          "code": "PHTR",
+          "releaseYear": 2017
+        },
+        {
+          "name": "HasCon 2017",
+          "code": "H17",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Unstable",
+          "code": "UST",
+          "releaseYear": 2017
+        },
+        {
+          "name": "2017 Heroes of the Realm",
+          "code": "PH17",
+          "releaseYear": 2018
+        },
+        {
+          "name": "2018 Heroes of the Realm",
+          "code": "PH18",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Mystery Booster Playtest Cards 2019",
+          "code": "CMB1",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Ponies: The Galloping",
+          "code": "PTG",
+          "releaseYear": 2019
+        },
+        {
+          "name": "2019 Heroes of the Realm",
+          "code": "PH19",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Unsanctioned",
+          "code": "UND",
+          "releaseYear": 2020
+        },
+        {
+          "name": "2020 Heroes of the Realm",
+          "code": "PH20",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Mystery Booster Playtest Cards 2021",
+          "code": "CMB2",
+          "releaseYear": 2021
+        },
+        {
+          "name": "2021 Heroes of the Realm",
+          "code": "PH21",
+          "releaseYear": 2022
+        },
+        {
+          "name": "The List (Unfinity Foil Edition)",
+          "code": "ULST",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Unfinity",
+          "code": "UNF",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Unfinity Sticker Sheets",
+          "code": "SUNF",
+          "releaseYear": 2022
+        },
+        {
+          "name": "2022 Heroes of the Realm",
+          "code": "PH22",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Unknown Event",
+          "code": "UNK",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Black Lotus Unknown Planechase",
+          "code": "PUNK",
+          "releaseYear": 2024
+        },
+        {
+          "name": "2023 Heroes of the Realm",
+          "code": "PH23",
+          "releaseYear": 2025
+        }
+      ]
+    },
+    {
+      "name": "Duel Decks",
+      "startYear": 2007,
+      "expansions": [
+        {
+          "name": "Duel Decks: Elves vs. Goblins",
+          "code": "DD1",
+          "releaseYear": 2007
+        },
+        {
+          "name": "Duel Decks: Jace vs. Chandra",
+          "code": "DD2",
+          "releaseYear": 2008
+        },
+        {
+          "name": "Duel Decks: Divine vs. Demonic",
+          "code": "DDC",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Duel Decks: Garruk vs. Liliana",
+          "code": "DDD",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Duel Decks: Elspeth vs. Tezzeret",
+          "code": "DDF",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Duel Decks: Phyrexia vs. the Coalition",
+          "code": "DDE",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Duel Decks: Ajani vs. Nicol Bolas",
+          "code": "DDH",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Duel Decks: Knights vs. Dragons",
+          "code": "DDG",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Duel Decks: Mirrodin Pure vs. New Phyrexia",
+          "code": "TD2",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Duel Decks: Izzet vs. Golgari",
+          "code": "DDJ",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Duel Decks: Venser vs. Koth",
+          "code": "DDI",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Duel Decks: Heroes vs. Monsters",
+          "code": "DDL",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Duel Decks: Sorin vs. Tibalt",
+          "code": "DDK",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Duel Decks Anthology: Divine vs. Demonic",
+          "code": "DVD",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Duel Decks Anthology: Elves vs. Goblins",
+          "code": "EVG",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Duel Decks Anthology: Garruk vs. Liliana",
+          "code": "GVL",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Duel Decks Anthology: Jace vs. Chandra",
+          "code": "JVC",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Duel Decks: Jace vs. Vraska",
+          "code": "DDM",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Duel Decks: Speed vs. Cunning",
+          "code": "DDN",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Duel Decks: Elspeth vs. Kiora",
+          "code": "DDO",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Duel Decks: Zendikar vs. Eldrazi",
+          "code": "DDP",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Duel Decks: Blessed vs. Cursed",
+          "code": "DDQ",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Duel Decks: Nissa vs. Ob Nixilis",
+          "code": "DDR",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Duel Decks: Merfolk vs. Goblins",
+          "code": "DDT",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Duel Decks: Mind vs. Might",
+          "code": "DDS",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Duel Decks: Elves vs. Inventors",
+          "code": "DDU",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Global Series Jiang Yanggu & Mu Yanling",
+          "code": "GS1",
+          "releaseYear": 2018
+        }
+      ]
+    },
+    {
+      "name": "From the Vault",
+      "startYear": 2008,
+      "expansions": [
+        {
+          "name": "From the Vault: Dragons",
+          "code": "DRB",
+          "releaseYear": 2008
+        },
+        {
+          "name": "From the Vault: Exiled",
+          "code": "V09",
+          "releaseYear": 2009
+        },
+        {
+          "name": "From the Vault: Relics",
+          "code": "V10",
+          "releaseYear": 2010
+        },
+        {
+          "name": "From the Vault: Legends",
+          "code": "V11",
+          "releaseYear": 2011
+        },
+        {
+          "name": "From the Vault: Realms",
+          "code": "V12",
+          "releaseYear": 2012
+        },
+        {
+          "name": "From the Vault: Twenty",
+          "code": "V13",
+          "releaseYear": 2013
+        },
+        {
+          "name": "From the Vault: Annihilation",
+          "code": "V14",
+          "releaseYear": 2014
+        },
+        {
+          "name": "From the Vault: Angels",
+          "code": "V15",
+          "releaseYear": 2015
+        },
+        {
+          "name": "From the Vault: Lore",
+          "code": "V16",
+          "releaseYear": 2016
+        },
+        {
+          "name": "From the Vault: Transform",
+          "code": "V17",
+          "releaseYear": 2017
+        }
+      ]
+    },
+    {
+      "name": "Planechase",
+      "startYear": 2009,
+      "expansions": [
+        {
+          "name": "Planechase",
+          "code": "HOP",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Planechase Planes",
+          "code": "OHOP",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Planechase 2012",
+          "code": "PC2",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Planechase 2012 Planes",
+          "code": "OPC2",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Planechase Anthology",
+          "code": "PCA",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Planechase Anthology Planes",
+          "code": "OPCA",
+          "releaseYear": 2016
+        }
+      ]
+    },
+    {
+      "name": "Premium Deck",
+      "startYear": 2009,
+      "expansions": [
+        {
+          "name": "Premium Deck Series: Slivers",
+          "code": "H09",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Premium Deck Series: Fire and Lightning",
+          "code": "PD2",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Premium Deck Series: Graveborn",
+          "code": "PD3",
+          "releaseYear": 2011
+        }
+      ]
+    },
+    {
+      "name": "Archenemy",
+      "startYear": 2010,
+      "expansions": [
+        {
+          "name": "Archenemy",
+          "code": "ARC",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Archenemy Schemes",
+          "code": "OARC",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Archenemy: Nicol Bolas",
+          "code": "E01",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Archenemy: Nicol Bolas Schemes",
+          "code": "OE01",
+          "releaseYear": 2017
+        }
+      ]
+    },
+    {
+      "name": "Commander",
+      "startYear": 2011,
+      "expansions": [
+        {
+          "name": "Commander 2011",
+          "code": "CMD",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Commander 2013",
+          "code": "C13",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Commander 2014",
+          "code": "C14",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Commander 2015",
+          "code": "C15",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Commander 2016",
+          "code": "C16",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Commander 2017",
+          "code": "C17",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Commander Anthology",
+          "code": "CMA",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Commander 2018",
+          "code": "C18",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Commander Anthology Volume II",
+          "code": "CM2",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Commander 2019",
+          "code": "C19",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Commander 2020",
+          "code": "C20",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Zendikar Rising Commander",
+          "code": "ZNC",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Commander 2021",
+          "code": "C21",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Crimson Vow Commander",
+          "code": "VOC",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Forgotten Realms Commander",
+          "code": "AFC",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Kaldheim Commander",
+          "code": "KHC",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Midnight Hunt Commander",
+          "code": "MIC",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Dominaria United Commander",
+          "code": "DMC",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Neon Dynasty Commander",
+          "code": "NEC",
+          "releaseYear": 2022
+        },
+        {
+          "name": "New Capenna Commander",
+          "code": "NCC",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Starter Commander Decks",
+          "code": "SCD",
+          "releaseYear": 2022
+        },
+        {
+          "name": "The Brothers' War Commander",
+          "code": "BRC",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Warhammer 40,000 Commander",
+          "code": "40K",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Doctor Who",
+          "code": "WHO",
+          "releaseYear": 2023
+        },
+        {
+          "name": "March of the Machine Commander",
+          "code": "MOC",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Phyrexia: All Will Be One Commander",
+          "code": "ONC",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Tales of Middle-earth Commander",
+          "code": "LTC",
+          "releaseYear": 2023
+        },
+        {
+          "name": "The Lost Caverns of Ixalan Commander",
+          "code": "LCC",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Wilds of Eldraine Commander",
+          "code": "WOC",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Bloomburrow Commander",
+          "code": "BLC",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Duskmourn: House of Horror Commander",
+          "code": "DSC",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Fallout",
+          "code": "PIP",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Foundations Commander",
+          "code": "FDC",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Modern Horizons 3 Commander",
+          "code": "M3C",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Murders at Karlov Manor Commander",
+          "code": "MKC",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Outlaws of Thunder Junction Commander",
+          "code": "OTC",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Aetherdrift Commander",
+          "code": "DRC",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Edge of Eternities Commander",
+          "code": "EOC",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Final Fantasy Commander",
+          "code": "FIC",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Tarkir: Dragonstorm Commander",
+          "code": "TDC",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Lorwyn Eclipsed Commander",
+          "code": "ECC",
+          "releaseYear": 2026
+        },
+        {
+          "name": "Marvel Super Heroes Commander",
+          "code": "MSC",
+          "releaseYear": 2026
+        },
+        {
+          "name": "Secrets of Strixhaven Commander",
+          "code": "SOC",
+          "releaseYear": 2026
+        }
+      ]
+    },
+    {
+      "name": "Other (arsenal)",
+      "startYear": 2012,
+      "expansions": [
+        {
+          "name": "Commander's Arsenal",
+          "code": "CM1",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Commander Collection: Green",
+          "code": "CC1",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Commander Collection: Black",
+          "code": "CC2",
+          "releaseYear": 2022
+        }
+      ]
+    },
+    {
+      "name": "Draft Innovation",
+      "startYear": 2014,
+      "expansions": [
+        {
+          "name": "Conspiracy",
+          "code": "CNS",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Conspiracy: Take the Crown",
+          "code": "CN2",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Battlebond",
+          "code": "BBD",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Modern Horizons",
+          "code": "MH1",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Commander Legends",
+          "code": "CMR",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Jumpstart",
+          "code": "JMP",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Jumpstart: Historic Horizons",
+          "code": "J21",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Modern Horizons 1 Timeshifts",
+          "code": "H1R",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Modern Horizons 2",
+          "code": "MH2",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Commander Legends: Battle for Baldur's Gate",
+          "code": "CLB",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Innistrad: Double Feature",
+          "code": "DBL",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Jumpstart 2022",
+          "code": "J22",
+          "releaseYear": 2022
+        },
+        {
+          "name": "The Lord of the Rings: Tales of Middle-earth",
+          "code": "LTR",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Assassin's Creed",
+          "code": "ACR",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Foundations Jumpstart",
+          "code": "J25",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Modern Horizons 2 Timeshifts",
+          "code": "H2R",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Modern Horizons 3",
+          "code": "MH3",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Ravnica: Clue Edition",
+          "code": "CLU",
+          "releaseYear": 2024
+        }
+      ]
+    },
+    {
+      "name": "Other (masterpiece)",
+      "startYear": 2015,
+      "expansions": [
+        {
+          "name": "Zendikar Expeditions",
+          "code": "EXP",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Kaladesh Inventions",
+          "code": "MPS",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Amonkhet Invocations",
+          "code": "MP2",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Mythic Edition",
+          "code": "MED",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Ultimate Box Topper",
+          "code": "PUMA",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Zendikar Rising Expeditions",
+          "code": "ZNE",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Strixhaven Mystical Archive",
+          "code": "STA",
+          "releaseYear": 2021
+        },
+        {
+          "name": "The Brothers' War Retro Artifacts",
+          "code": "BRR",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Multiverse Legends",
+          "code": "MUL",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Special Guests",
+          "code": "SPG",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Wilds of Eldraine: Enchanting Tales",
+          "code": "WOT",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Breaking News",
+          "code": "OTP",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Edge of Eternities: Stellar Sights",
+          "code": "EOS",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Final Fantasy: Through the Ages",
+          "code": "FCA",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Marvel Universe",
+          "code": "MAR",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Through the Omenpaths Bonus Sheet",
+          "code": "OMB",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Secrets of Strixhaven Mystical Archive",
+          "code": "SOA",
+          "releaseYear": 2026
+        },
+        {
+          "name": "Teenage Mutant Ninja Turtles Source Material",
+          "code": "PZA",
+          "releaseYear": 2026
+        }
+      ]
+    },
+    {
+      "name": "Other (treasure_chest)",
+      "startYear": 2015,
+      "expansions": [
+        {
+          "name": "Legendary Cube Prize Pack",
+          "code": "PZ1",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Treasure Chest",
+          "code": "PZ2",
+          "releaseYear": 2016
+        }
+      ]
+    },
+    {
+      "name": "Other (spellbook)",
+      "startYear": 2018,
+      "expansions": [
+        {
+          "name": "Signature Spellbook: Jace",
+          "code": "SS1",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Signature Spellbook: Gideon",
+          "code": "SS2",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Signature Spellbook: Chandra",
+          "code": "SS3",
+          "releaseYear": 2020
+        }
+      ]
+    },
+    {
+      "name": "Minigame",
+      "startYear": 2020,
+      "expansions": [
+        {
+          "name": "Zendikar Rising Minigames",
+          "code": "MZNR",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Adventures in the Forgotten Realms Minigames",
+          "code": "MAFR",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Innistrad: Crimson Vow Minigames",
+          "code": "MVOW",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Innistrad: Midnight Hunt Minigames",
+          "code": "MMID",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Kaldheim Minigames",
+          "code": "MKHM",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Modern Horizons 2 Minigames",
+          "code": "MMH2",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Strixhaven: School of Mages Minigames",
+          "code": "MSTX",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Commander Legends: Battle for Baldur's Gate Minigames",
+          "code": "MCLB",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Dominaria United Minigames",
+          "code": "MDMU",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Kamigawa: Neon Dynasty Minigames",
+          "code": "MNEO",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Streets of New Capenna Minigames",
+          "code": "MSNC",
+          "releaseYear": 2022
+        },
+        {
+          "name": "The Brothers' War Minigames",
+          "code": "MBRO",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Phyrexia: All Will Be One Minigames",
+          "code": "MONE",
+          "releaseYear": 2023
+        },
+        {
+          "name": "The Lord of the Rings: Tales of Middle-earth Minigames",
+          "code": "MLTR",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Assassin's Creed Minigames",
+          "code": "MACR",
+          "releaseYear": 2024
+        }
+      ]
+    },
+    {
+      "name": "Alchemy",
+      "startYear": 2021,
+      "expansions": [
+        {
+          "name": "Alchemy: Innistrad",
+          "code": "YMID",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Alchemy Horizons: Baldur's Gate",
+          "code": "HBG",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Alchemy: Dominaria",
+          "code": "YDMU",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Alchemy: Kamigawa",
+          "code": "YNEO",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Alchemy: New Capenna",
+          "code": "YSNC",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Alchemy: The Brothers' War",
+          "code": "YBRO",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Alchemy: Ixalan",
+          "code": "YLCI",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Alchemy: Phyrexia",
+          "code": "YONE",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Alchemy: Wilds of Eldraine",
+          "code": "YWOE",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Alchemy: Bloomburrow",
+          "code": "YBLB",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Alchemy: Duskmourn",
+          "code": "YDSK",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Alchemy: Murders at Karlov Manor ",
+          "code": "YMKM",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Alchemy: Outlaws of Thunder Junction",
+          "code": "YOTJ",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Alchemy: Aetherdrift",
+          "code": "YDFT",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Alchemy: Edge of Eternities",
+          "code": "YEOE",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Alchemy: Tarkir",
+          "code": "YTDM",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Alchemy: Lorwyn Eclipsed",
+          "code": "YECL",
+          "releaseYear": 2026
+        }
+      ]
+    },
+    {
+      "name": "Other (eternal)",
+      "startYear": 2022,
+      "expansions": [
+        {
+          "name": "Transformers",
+          "code": "BOT",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Jurassic World Collection",
+          "code": "REX",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Avatar: The Last Airbender Eternal",
+          "code": "TLE",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Marvel's Spider-Man Eternal",
+          "code": "SPE",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Teenage Mutant Ninja Turtles Eternal",
+          "code": "TMC",
+          "releaseYear": 2026
+        }
       ]
     }
   ]

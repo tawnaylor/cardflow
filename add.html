@@ -86,25 +86,31 @@
 
         <hr class="sep" />
 
-        <!-- Image capture/upload -->
+        <!-- Image capture/upload + scan UI -->
         <section class="panel soft">
           <h2 class="h2">Card image</h2>
           <div class="grid-2">
             <div class="field">
               <label for="cardImage">Upload or scan (phone camera)</label>
-              <input
-                id="cardImage"
-                type="file"
-                accept="image/*"
-                capture="environment"
-              />
-              <p class="hint">On mobile, this will offer camera capture in many browsers.</p>
+              <input id="cardImage" type="file" accept="image/*" capture="environment" />
+              <div class="inline" style="margin-top:10px; gap:10px; flex-wrap:wrap;">
+                <button class="btn btn-small" id="startScanBtn" type="button">Start Scan</button>
+                <button class="btn btn-small btn-ghost" id="captureBtn" type="button" disabled>Capture</button>
+                <button class="btn btn-small btn-ghost" id="useScanBtn" type="button" disabled>Use Scanned Image</button>
+                <button class="btn btn-small btn-ghost" id="stopScanBtn" type="button" disabled>Stop</button>
+              </div>
+              <p class="hint">Local-only scan: camera → edge detect → crop. Works best in good lighting.</p>
             </div>
 
-            <div class="preview" aria-label="Image preview">
+            <div class="preview" aria-label="Scan preview">
+              <video id="scanVideo" playsinline class="hidden" style="width:100%; border-radius:14px;"></video>
+              <canvas id="scanCanvas" class="hidden" style="width:100%; border-radius:14px;"></canvas>
               <img id="imagePreview" alt="Selected card preview" src="./assets/placeholder-card.png" />
             </div>
           </div>
+
+          <!-- Load OpenCV locally -->
+          <script src="./vendor/opencv/opencv.js"></script>
         </section>
 
         <hr class="sep" />

@@ -50,16 +50,9 @@ function buildSleeve(card){
   meta.append(left, right);
   sleeve.appendChild(meta);
 
-  // Quick “peek” alert for now (upgrade later to modal/details page)
+  // Navigate to full card details when clicked
   sleeve.addEventListener("click", () => {
-    const info = [
-      `Binder: ${card.binderName || ""}`,
-      `Game: ${card.game}`,
-      `Name: ${cardTitle(card)}`,
-      `Set: ${card.setName || ""}`,
-      `Rarity: ${card.rarity || ""}`
-    ].filter(Boolean).join("\n");
-    alert(info);
+    window.location.href = `./card.html?id=${encodeURIComponent(card.id)}`;
   });
 
   return sleeve;

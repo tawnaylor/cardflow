@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CardFlow — Card Details</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">CF</div>
+      <div class="brand-text">
+        <div class="brand-title">CardFlow</div>
+        <div class="brand-sub">Card Details</div>
+      </div>
+    </div>
+
+    <nav class="top-actions" aria-label="Primary">
+      <a class="btn btn-primary" href="./add.html">Add Cards</a>
+      <a class="btn btn-ghost" href="./index.html">Home</a>
+
+      <div class="theme-toggle" role="group" aria-label="Theme">
+        <span class="theme-label">Neon</span>
+        <label class="switch" aria-label="Toggle theme">
+          <input id="themeSwitch" type="checkbox" />
+          <span class="slider" aria-hidden="true"></span>
+        </label>
+        <span class="theme-label">Fantasy</span>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main" class="container">
+    <section class="panel" id="cardPanel" aria-live="polite">
+      <!-- card.mjs renders here -->
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>CardFlow stores everything locally in your browser.</small>
+  </footer>
+
+  <script type="module" src="./js/card.mjs"></script>
+</body>
+</html>

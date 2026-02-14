@@ -1,6 +1,7 @@
 import { getBinders, createBinder, addCard } from "./storage.mjs";
 import { initThemeSwitch, fillSelect } from "./ui.mjs";
 import { loadSets, flattenSets } from "./data.mjs";
+import { startCamera, stopCamera, captureAndWarp } from "./scan.mjs";
 
 const themeSwitch = document.querySelector("#themeSwitch");
 
@@ -17,6 +18,16 @@ const setError = document.querySelector("#setError");
 const imageInput = document.querySelector("#cardImage");
 const imagePreview = document.querySelector("#imagePreview");
 const saveHint = document.querySelector("#saveHint");
+
+// Scan UI elements
+const startScanBtn = document.querySelector("#startScanBtn");
+const stopScanBtn = document.querySelector("#stopScanBtn");
+const captureBtn = document.querySelector("#captureBtn");
+const useScanBtn = document.querySelector("#useScanBtn");
+const scanVideo = document.querySelector("#scanVideo");
+const scanCanvas = document.querySelector("#scanCanvas");
+
+let lastScanDataUrl = null;
 
 const pokemonFields = document.querySelector("#pokemonFields");
 const mtgFields = document.querySelector("#mtgFields");
@@ -155,6 +166,57 @@ imageInput.addEventListener("change", async () => {
   imagePreview.src = dataUrl;
 });
 
+startScanBtn?.addEventListener("click", async () => {
+  try{
+    scanVideo.classList.remove("hidden");
+    scanCanvas.classList.add("hidden");
+    imagePreview.classList.add("hidden");
+
+    await startCamera(scanVideo);
+    captureBtn.disabled = false;
+    stopScanBtn.disabled = false;
+    startScanBtn.disabled = true;
+  }catch(err){
+    alert("Camera permission denied or unavailable.");
+  }
+});
+
+stopScanBtn?.addEventListener("click", () => {
+  stopCamera(scanVideo);
+  scanVideo.classList.add("hidden");
+  scanCanvas.classList.add("hidden");
+  imagePreview.classList.remove("hidden");
+
+  captureBtn.disabled = true;
+  useScanBtn.disabled = true;
+  stopScanBtn.disabled = true;
+  startScanBtn.disabled = false;
+});
+
+captureBtn?.addEventListener("click", () => {
+  try{
+    const { dataUrl } = captureAndWarp(scanVideo, scanCanvas);
+    lastScanDataUrl = dataUrl;
+
+    scanCanvas.classList.remove("hidden");
+    scanVideo.classList.add("hidden");
+    useScanBtn.disabled = false;
+  }catch(err){
+    alert("Could not capture. Try better lighting and keep the card fully in frame.");
+  }
+});
+
+useScanBtn?.addEventListener("click", () => {
+  if (!lastScanDataUrl) return;
+  imagePreview.src = lastScanDataUrl;
+
+  scanCanvas.classList.add("hidden");
+  imagePreview.classList.remove("hidden");
+
+  imageInput.value = "";
+  useScanBtn.disabled = true;
+});
+
 createBinderBtn.addEventListener("click", () => {
   const res = createBinder(newBinderName.value);
   if (!res.ok){
@@ -187,7 +249,9 @@ form.addEventListener("submit", async (e) => {
   const setMeta = getSelectedSetMeta();
 
   const file = imageInput.files?.[0] || null;
-  const imageDataUrl = file ? await fileToDataUrl(file) : null;
+  const imageDataUrl =
+    lastScanDataUrl ? lastScanDataUrl :
+    (file ? await fileToDataUrl(file) : null);
 
   const base = {
     id: `card_${crypto.randomUUID()}`,
@@ -253,4 +317,6 @@ form.addEventListener("submit", async (e) => {
   setTimeout(() => {
     window.location.href = "./index.html";
   }, 400);
+  // reset scan state
+  lastScanDataUrl = null;
 });
