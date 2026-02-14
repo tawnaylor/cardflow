@@ -1,3 +1,177 @@
 {
-  "sets": []
+  "pokemon": {
+    "label": "Pokémon",
+    "series": [
+      {
+        "name": "Scarlet & Violet",
+        "expansions": [
+          "Scarlet & Violet Base",
+          "Paldea Evolved",
+          "Obsidian Flames",
+          "Paradox Rift",
+          "Temporal Forces",
+          "Twilight Masquerade",
+          "Shrouded Fable",
+          "Stellar Crown",
+          "Surging Sparks"
+        ]
+      },
+      {
+        "name": "Sword & Shield",
+        "expansions": [
+          "Sword & Shield Base",
+          "Rebel Clash",
+          "Darkness Ablaze",
+          "Champion’s Path",
+          "Vivid Voltage",
+          "Shining Fates",
+          "Battle Styles",
+          "Chilling Reign",
+          "Evolving Skies",
+          "Celebrations",
+          "Fusion Strike",
+          "Brilliant Stars",
+          "Astral Radiance",
+          "Pokémon GO",
+          "Lost Origin",
+          "Silver Tempest",
+          "Crown Zenith"
+        ]
+      },
+      {
+        "name": "Sun & Moon",
+        "expansions": [
+          "Sun & Moon Base",
+          "Guardians Rising",
+          "Burning Shadows",
+          "Shining Legends",
+          "Crimson Invasion",
+          "Ultra Prism",
+          "Forbidden Light",
+          "Celestial Storm",
+          "Dragon Majesty",
+          "Lost Thunder",
+          "Team Up",
+          "Detective Pikachu",
+          "Unbroken Bonds",
+          "Unified Minds",
+          "Hidden Fates",
+          "Cosmic Eclipse"
+        ]
+      },
+      {
+        "name": "XY",
+        "expansions": [
+          "XY Base",
+          "Flashfire",
+          "Furious Fists",
+          "Phantom Forces",
+          "Primal Clash",
+          "Roaring Skies",
+          "Ancient Origins",
+          "BREAKthrough",
+          "BREAKpoint",
+          "Generations",
+          "Fates Collide",
+          "Steam Siege",
+          "Evolutions"
+        ]
+      },
+      {
+        "name": "Black & White",
+        "expansions": [
+          "Black & White Base",
+          "Emerging Powers",
+          "Noble Victories",
+          "Next Destinies",
+          "Dark Explorers",
+          "Dragons Exalted",
+          "Boundaries Crossed",
+          "Plasma Storm",
+          "Plasma Freeze",
+          "Plasma Blast",
+          "Legendary Treasures"
+        ]
+      },
+      {
+        "name": "Classic (WotC)",
+        "expansions": [
+          "Base Set",
+          "Jungle",
+          "Fossil",
+          "Base Set 2",
+          "Team Rocket",
+          "Gym Heroes",
+          "Gym Challenge",
+          "Neo Genesis",
+          "Neo Discovery",
+          "Neo Revelation",
+          "Neo Destiny"
+        ]
+      }
+    ]
+  },
+  "mtg": {
+    "label": "Magic: The Gathering",
+    "series": [
+      {
+        "name": "Standard (Recent)",
+        "expansions": [
+          "Dominaria United",
+          "The Brothers’ War",
+          "Phyrexia: All Will Be One",
+          "March of the Machine",
+          "Wilds of Eldraine",
+          "The Lost Caverns of Ixalan",
+          "Murders at Karlov Manor",
+          "Outlaws of Thunder Junction",
+          "Bloomburrow",
+          "Duskmourn: House of Horror"
+        ]
+      },
+      {
+        "name": "Modern Horizons",
+        "expansions": [
+          "Modern Horizons",
+          "Modern Horizons 2",
+          "Modern Horizons 3"
+        ]
+      },
+      {
+        "name": "Commander",
+        "expansions": [
+          "Commander Legends",
+          "Commander Legends: Battle for Baldur’s Gate",
+          "Commander Masters",
+          "Doctor Who",
+          "Fallout"
+        ]
+      },
+      {
+        "name": "Universes Beyond",
+        "expansions": [
+          "The Lord of the Rings: Tales of Middle-earth",
+          "Warhammer 40,000",
+          "Doctor Who",
+          "Fallout"
+        ]
+      },
+      {
+        "name": "Classic",
+        "expansions": [
+          "Alpha",
+          "Beta",
+          "Unlimited",
+          "Revised",
+          "Ice Age",
+          "Mirage",
+          "Tempest",
+          "Urza’s Saga",
+          "Invasion",
+          "Odyssey",
+          "Onslaught"
+        ]
+      }
+    ]
+  }
 }
