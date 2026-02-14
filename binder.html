@@ -1,18 +1,154 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CardFlow — Binder</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Browse your CardFlow binder with page flip navigation." />
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
-  <main id="app">
-    <h1>Binder</h1>
-    <section id="setsShell"></section>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="bg" aria-hidden="true">
+    <div class="bg__grid"></div>
+    <div class="bg__noise"></div>
+    <div class="bg__glow bg__glow--pink"></div>
+    <div class="bg__glow bg__glow--blue"></div>
+    <div class="bg__glow bg__glow--gold"></div>
+  </div>
+
+  <header class="topbar" aria-label="Top navigation">
+    <div class="topbar__inner">
+      <a class="brand" href="index.html#home" aria-label="CardFlow home">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <span class="brand__name">CardFlow</span>
+        <span class="brand__tag">Neon Binder • Modern Vault</span>
+      </a>
+
+      <nav class="topbar__nav" aria-label="Primary">
+        <a class="navlink" href="index.html#home">Home</a>
+        <a class="navlink" href="index.html#fresh-pulls">Fresh Pulls</a>
+        <a class="navlink" href="add-card.html">Add Card</a>
+        <a class="navlink is-active" href="binder.html">Binder</a>
+      </nav>
+
+      <div class="topbar__actions">
+        <a class="btn btn--ghost" href="add-card.html">+ Add</a>
+        <button class="btn btn--primary" id="flipNextTop" type="button">Next Page</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="main" tabindex="-1">
+    <section class="section">
+      <header class="section__header">
+        <div>
+          <h1 class="section__title">Binder</h1>
+          <p class="section__subtitle">Flip through your collection like a real 9-pocket binder—now with 12-slot mode too.</p>
+        </div>
+
+        <div class="section__controls" role="group" aria-label="Binder controls">
+          <label class="field">
+            <span class="field__label">Layout</span>
+            <select id="layoutSelect" class="select" aria-label="Binder layout">
+              <option value="9">9-pocket</option>
+              <option value="12">12-pocket</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Filter</span>
+            <select id="binderFilter" class="select" aria-label="Filter by game">
+              <option value="all">All</option>
+              <option value="pokemon">Pokémon</option>
+              <option value="mtg">Magic</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Sort</span>
+            <select id="binderSort" class="select" aria-label="Sort">
+              <option value="setThenNumber">Set → Number</option>
+              <option value="newest">Newest</option>
+              <option value="value">Value</option>
+              <option value="rarity">Rarity</option>
+            </select>
+          </label>
+        </div>
+      </header>
+
+      <div class="binderBook">
+        <div class="binderBook__top">
+          <button class="btn btn--ghost" id="flipPrev" type="button" aria-label="Previous page">← Prev</button>
+
+          <div class="pageInfo" aria-live="polite">
+            <span class="pageInfo__label">Page</span>
+            <strong id="pageIndicator">1</strong>
+            <span class="pageInfo__sep">/</span>
+            <strong id="pageTotal">1</strong>
+          </div>
+
+          <button class="btn btn--primary" id="flipNext" type="button" aria-label="Next page">Next →</button>
+        </div>
+
+        <!-- Flip viewport -->
+        <div class="flipBook" aria-label="Binder pages">
+          <div class="flipBook__spread">
+            <div class="sheet sheet--left" aria-hidden="true"></div>
+            <div class="sheet sheet--right" id="sheetRight" aria-hidden="true"></div>
+
+            <div class="binderPage binderPage--current" id="binderPage">
+              <!-- grid injected -->
+            </div>
+          </div>
+        </div>
+
+        <div class="binderBook__bottom">
+          <p class="binder__hint" id="binderHint">Tip: Use URL params like <code>?id=pk-001</code> to open a card.</p>
+          <button class="btn btn--ghost" id="goHomeBtn" type="button">Back to Home</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__card">
+        <div class="footer__line1">CardFlow™</div>
+        <div class="footer__line2">Track Smart. Trade Smarter.</div>
+        <div class="footer__line3">© <span id="year"></span> CardFlow</div>
+      </div>
+    </footer>
   </main>
 
-  <script type="module" src="js/sets.js"></script>
+  <!-- Inspect Modal (same as homepage) -->
+  <dialog class="modal" id="inspectModal" aria-label="Card inspector">
+    <form method="dialog" class="modal__panel">
+      <div class="modal__top">
+        <h2 class="modal__title">Card Details</h2>
+        <button class="iconBtn" value="cancel" aria-label="Close">✕</button>
+      </div>
+
+      <div class="modal__body">
+        <div class="modal__preview" id="modalPreview" aria-hidden="true"></div>
+
+        <div class="modal__info">
+          <div class="kv"><span>Game</span><strong id="mGame"></strong></div>
+          <div class="kv"><span>Name</span><strong id="mName"></strong></div>
+          <div class="kv"><span>Set</span><strong id="mSet"></strong></div>
+          <div class="kv"><span>Number</span><strong id="mNum"></strong></div>
+          <div class="kv"><span>Rarity</span><strong id="mRarity"></strong></div>
+          <div class="kv"><span>Value</span><strong id="mValue"></strong></div>
+          <p class="modal__hint">Next: add “Edit” and “Delete” actions here.</p>
+        </div>
+      </div>
+
+      <div class="modal__bottom">
+        <button class="btn btn--ghost" value="cancel">Close</button>
+      </div>
+    </form>
+  </dialog>
+
   <script type="module" src="js/binder.js"></script>
 </body>
 </html>
