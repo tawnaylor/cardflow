@@ -1,4 +1,4 @@
-import { getBinders, createBinder, getCards } from "./storage.mjs";
+import { getBinders, createBinder, getCards, addCard } from "./storage.mjs";
 import { initThemeSwitch } from "./ui.mjs";
 import { renderBinder } from "./binder.mjs";
 
@@ -79,6 +79,37 @@ function clampPage(){
 initThemeSwitch(themeSwitch);
 fillBinders();
 render();
+
+// If there are no cards yet, try to auto-seed a demo card from data/demo_cards.json
+async function seedDemoIfEmpty(){
+  try{
+    const existing = getCards();
+    if (existing.length > 0) return;
+
+    const res = await fetch("./data/demo_cards.json");
+    if (!res.ok) return;
+    const demo = await res.json();
+    if (!Array.isArray(demo) || demo.length === 0) return;
+
+    const binders = getBinders();
+    const targetBinderId = binders[0]?.id || "";
+
+    for (const c of demo){
+      // ensure binderId exists
+      const card = { ...c, binderId: c.binderId || targetBinderId };
+      addCard(card);
+    }
+
+    // refresh UI
+    fillBinders();
+    render();
+  }catch(err){
+    // ignore failures — demo is optional
+    console.warn("Demo seed failed:", err.message);
+  }
+}
+
+seedDemoIfEmpty();
 
 binderSelect.addEventListener("change", () => {
   state.binderId = binderSelect.value;
