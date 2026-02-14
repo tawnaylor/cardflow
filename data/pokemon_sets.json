@@ -1,54 +1,962 @@
 {
   "game": "pokemon",
-  "range": "1996-2026",
+  "range": "1992-2026",
   "series": [
     {
-      "name": "Scarlet & Violet",
-      "startYear": 2023,
+      "name": "Base",
+      "startYear": 1999,
       "expansions": [
-        { "name": "Scarlet & Violet Base", "code": "SV1", "releaseYear": 2023 },
-        { "name": "Paldea Evolved", "code": "SV2", "releaseYear": 2023 },
-        { "name": "Obsidian Flames", "code": "SV3", "releaseYear": 2023 },
-        { "name": "Paradox Rift", "code": "SV4", "releaseYear": 2023 },
-        { "name": "Temporal Forces", "code": "SV5", "releaseYear": 2024 },
-        { "name": "Twilight Masquerade", "code": "SV6", "releaseYear": 2024 },
-        { "name": "Shrouded Fable", "code": "SV7", "releaseYear": 2024 }
+        {
+          "name": "Base",
+          "code": "BS",
+          "releaseYear": 1999
+        },
+        {
+          "name": "Fossil",
+          "code": "FO",
+          "releaseYear": 1999
+        },
+        {
+          "name": "Jungle",
+          "code": "JU",
+          "releaseYear": 1999
+        },
+        {
+          "name": "Wizards Black Star Promos",
+          "code": "PR",
+          "releaseYear": 1999
+        },
+        {
+          "name": "Base Set 2",
+          "code": "B2",
+          "releaseYear": 2000
+        },
+        {
+          "name": "Team Rocket",
+          "code": "TR",
+          "releaseYear": 2000
+        }
       ]
     },
     {
-      "name": "Sword & Shield",
-      "startYear": 2020,
+      "name": "Gym",
+      "startYear": 2000,
       "expansions": [
-        { "name": "Sword & Shield Base", "code": "SSH", "releaseYear": 2020 },
-        { "name": "Rebel Clash", "code": "RCL", "releaseYear": 2020 },
-        { "name": "Darkness Ablaze", "code": "DAA", "releaseYear": 2020 },
-        { "name": "Vivid Voltage", "code": "VIV", "releaseYear": 2020 },
-        { "name": "Battle Styles", "code": "BST", "releaseYear": 2021 },
-        { "name": "Chilling Reign", "code": "CRE", "releaseYear": 2021 },
-        { "name": "Evolving Skies", "code": "EVS", "releaseYear": 2021 },
-        { "name": "Fusion Strike", "code": "FST", "releaseYear": 2021 },
-        { "name": "Brilliant Stars", "code": "BRS", "releaseYear": 2022 },
-        { "name": "Astral Radiance", "code": "ASR", "releaseYear": 2022 },
-        { "name": "Lost Origin", "code": "LOR", "releaseYear": 2022 },
-        { "name": "Silver Tempest", "code": "SIT", "releaseYear": 2022 }
+        {
+          "name": "Gym Challenge",
+          "code": "G2",
+          "releaseYear": 2000
+        },
+        {
+          "name": "Gym Heroes",
+          "code": "G1",
+          "releaseYear": 2000
+        }
+      ]
+    },
+    {
+      "name": "Neo",
+      "startYear": 2000,
+      "expansions": [
+        {
+          "name": "Neo Genesis",
+          "code": "N1",
+          "releaseYear": 2000
+        },
+        {
+          "name": "Neo Discovery",
+          "code": "N2",
+          "releaseYear": 2001
+        },
+        {
+          "name": "Neo Revelation",
+          "code": "N3",
+          "releaseYear": 2001
+        },
+        {
+          "name": "Neo Destiny",
+          "code": "N4",
+          "releaseYear": 2002
+        }
+      ]
+    },
+    {
+      "name": "Other",
+      "startYear": 2001,
+      "expansions": [
+        {
+          "name": "Southern Islands",
+          "code": "SI1",
+          "releaseYear": 2001
+        },
+        {
+          "name": "Best of Game",
+          "code": "BP",
+          "releaseYear": 2002
+        },
+        {
+          "name": "Legendary Collection",
+          "code": "LC",
+          "releaseYear": 2002
+        },
+        {
+          "name": "Pokémon Rumble",
+          "code": "RU1",
+          "releaseYear": 2009
+        },
+        {
+          "name": "McDonald's Collection 2011",
+          "code": "MCD11",
+          "releaseYear": 2011
+        },
+        {
+          "name": "McDonald's Collection 2012",
+          "code": "MCD12",
+          "releaseYear": 2012
+        },
+        {
+          "name": "McDonald's Collection 2014",
+          "code": "MCD14",
+          "releaseYear": 2014
+        },
+        {
+          "name": "McDonald's Collection 2015",
+          "code": "MCD15",
+          "releaseYear": 2015
+        },
+        {
+          "name": "McDonald's Collection 2016",
+          "code": "MCD16",
+          "releaseYear": 2016
+        },
+        {
+          "name": "McDonald's Collection 2017",
+          "code": "MCD17",
+          "releaseYear": 2017
+        },
+        {
+          "name": "McDonald's Collection 2018",
+          "code": "MCD18",
+          "releaseYear": 2018
+        },
+        {
+          "name": "McDonald's Collection 2019",
+          "code": "MCD19",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Pokémon Futsal Collection",
+          "code": "FUT20",
+          "releaseYear": 2020
+        },
+        {
+          "name": "McDonald's Collection 2021",
+          "code": "MCD21",
+          "releaseYear": 2021
+        },
+        {
+          "name": "McDonald's Collection 2022",
+          "code": "MCD22",
+          "releaseYear": 2022
+        }
+      ]
+    },
+    {
+      "name": "E-Card",
+      "startYear": 2002,
+      "expansions": [
+        {
+          "name": "Expedition Base Set",
+          "code": "EX",
+          "releaseYear": 2002
+        },
+        {
+          "name": "Aquapolis",
+          "code": "AQ",
+          "releaseYear": 2003
+        },
+        {
+          "name": "Skyridge",
+          "code": "SK",
+          "releaseYear": 2003
+        }
+      ]
+    },
+    {
+      "name": "EX",
+      "startYear": 2003,
+      "expansions": [
+        {
+          "name": "Dragon",
+          "code": "DR",
+          "releaseYear": 2003
+        },
+        {
+          "name": "Ruby & Sapphire",
+          "code": "RS",
+          "releaseYear": 2003
+        },
+        {
+          "name": "Sandstorm",
+          "code": "SS",
+          "releaseYear": 2003
+        },
+        {
+          "name": "EX Trainer Kit Latias",
+          "code": "TK1A",
+          "releaseYear": 2004
+        },
+        {
+          "name": "EX Trainer Kit Latios",
+          "code": "TK1B",
+          "releaseYear": 2004
+        },
+        {
+          "name": "FireRed & LeafGreen",
+          "code": "RG",
+          "releaseYear": 2004
+        },
+        {
+          "name": "Hidden Legends",
+          "code": "HL",
+          "releaseYear": 2004
+        },
+        {
+          "name": "Team Magma vs Team Aqua",
+          "code": "MA",
+          "releaseYear": 2004
+        },
+        {
+          "name": "Team Rocket Returns",
+          "code": "TRR",
+          "releaseYear": 2004
+        },
+        {
+          "name": "Delta Species",
+          "code": "DS",
+          "releaseYear": 2005
+        },
+        {
+          "name": "Deoxys",
+          "code": "DX",
+          "releaseYear": 2005
+        },
+        {
+          "name": "Emerald",
+          "code": "EM",
+          "releaseYear": 2005
+        },
+        {
+          "name": "Unseen Forces",
+          "code": "UF",
+          "releaseYear": 2005
+        },
+        {
+          "name": "Crystal Guardians",
+          "code": "CG",
+          "releaseYear": 2006
+        },
+        {
+          "name": "Dragon Frontiers",
+          "code": "DF",
+          "releaseYear": 2006
+        },
+        {
+          "name": "EX Trainer Kit 2 Minun",
+          "code": "TK2B",
+          "releaseYear": 2006
+        },
+        {
+          "name": "EX Trainer Kit 2 Plusle",
+          "code": "TK2A",
+          "releaseYear": 2006
+        },
+        {
+          "name": "Holon Phantoms",
+          "code": "HP",
+          "releaseYear": 2006
+        },
+        {
+          "name": "Legend Maker",
+          "code": "LM",
+          "releaseYear": 2006
+        },
+        {
+          "name": "Power Keepers",
+          "code": "PK",
+          "releaseYear": 2007
+        }
+      ]
+    },
+    {
+      "name": "NP",
+      "startYear": 2003,
+      "expansions": [
+        {
+          "name": "Nintendo Black Star Promos",
+          "code": "PR-NP",
+          "releaseYear": 2003
+        }
+      ]
+    },
+    {
+      "name": "POP",
+      "startYear": 2004,
+      "expansions": [
+        {
+          "name": "POP Series 1",
+          "code": "POP1",
+          "releaseYear": 2004
+        },
+        {
+          "name": "POP Series 2",
+          "code": "POP2",
+          "releaseYear": 2005
+        },
+        {
+          "name": "POP Series 3",
+          "code": "POP3",
+          "releaseYear": 2006
+        },
+        {
+          "name": "POP Series 4",
+          "code": "POP4",
+          "releaseYear": 2006
+        },
+        {
+          "name": "POP Series 5",
+          "code": "POP5",
+          "releaseYear": 2007
+        },
+        {
+          "name": "POP Series 6",
+          "code": "POP6",
+          "releaseYear": 2007
+        },
+        {
+          "name": "POP Series 7",
+          "code": "POP7",
+          "releaseYear": 2008
+        },
+        {
+          "name": "POP Series 8",
+          "code": "POP8",
+          "releaseYear": 2008
+        },
+        {
+          "name": "POP Series 9",
+          "code": "POP9",
+          "releaseYear": 2009
+        }
+      ]
+    },
+    {
+      "name": "Diamond & Pearl",
+      "startYear": 2007,
+      "expansions": [
+        {
+          "name": "Diamond & Pearl",
+          "code": "DP",
+          "releaseYear": 2007
+        },
+        {
+          "name": "DP Black Star Promos",
+          "code": "PR-DPP",
+          "releaseYear": 2007
+        },
+        {
+          "name": "Mysterious Treasures",
+          "code": "MT",
+          "releaseYear": 2007
+        },
+        {
+          "name": "Secret Wonders",
+          "code": "SW",
+          "releaseYear": 2007
+        },
+        {
+          "name": "Great Encounters",
+          "code": "GE",
+          "releaseYear": 2008
+        },
+        {
+          "name": "Legends Awakened",
+          "code": "LA",
+          "releaseYear": 2008
+        },
+        {
+          "name": "Majestic Dawn",
+          "code": "MD",
+          "releaseYear": 2008
+        },
+        {
+          "name": "Stormfront",
+          "code": "SF",
+          "releaseYear": 2008
+        }
+      ]
+    },
+    {
+      "name": "Platinum",
+      "startYear": 2009,
+      "expansions": [
+        {
+          "name": "Arceus",
+          "code": "AR",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Platinum",
+          "code": "PL",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Rising Rivals",
+          "code": "RR",
+          "releaseYear": 2009
+        },
+        {
+          "name": "Supreme Victors",
+          "code": "SV",
+          "releaseYear": 2009
+        }
+      ]
+    },
+    {
+      "name": "HeartGold & SoulSilver",
+      "startYear": 2010,
+      "expansions": [
+        {
+          "name": "HeartGold & SoulSilver",
+          "code": "HS",
+          "releaseYear": 2010
+        },
+        {
+          "name": "HGSS Black Star Promos",
+          "code": "PR-HS",
+          "releaseYear": 2010
+        },
+        {
+          "name": "HS—Triumphant",
+          "code": "TM",
+          "releaseYear": 2010
+        },
+        {
+          "name": "HS—Undaunted",
+          "code": "UD",
+          "releaseYear": 2010
+        },
+        {
+          "name": "HS—Unleashed",
+          "code": "UL",
+          "releaseYear": 2010
+        },
+        {
+          "name": "Call of Legends",
+          "code": "CL",
+          "releaseYear": 2011
+        }
+      ]
+    },
+    {
+      "name": "Black & White",
+      "startYear": 2011,
+      "expansions": [
+        {
+          "name": "Black & White",
+          "code": "BLW",
+          "releaseYear": 2011
+        },
+        {
+          "name": "BW Black Star Promos",
+          "code": "PR-BLW",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Emerging Powers",
+          "code": "EPO",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Noble Victories",
+          "code": "NVI",
+          "releaseYear": 2011
+        },
+        {
+          "name": "Boundaries Crossed",
+          "code": "BCR",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Dark Explorers",
+          "code": "DEX",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Dragon Vault",
+          "code": "DRV",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Dragons Exalted",
+          "code": "DRX",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Next Destinies",
+          "code": "NXD",
+          "releaseYear": 2012
+        },
+        {
+          "name": "Legendary Treasures",
+          "code": "LTR",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Plasma Blast",
+          "code": "PLB",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Plasma Freeze",
+          "code": "PLF",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Plasma Storm",
+          "code": "PLS",
+          "releaseYear": 2013
+        }
+      ]
+    },
+    {
+      "name": "XY",
+      "startYear": 2013,
+      "expansions": [
+        {
+          "name": "Kalos Starter Set",
+          "code": "KSS",
+          "releaseYear": 2013
+        },
+        {
+          "name": "XY Black Star Promos",
+          "code": "PR-XY",
+          "releaseYear": 2013
+        },
+        {
+          "name": "Flashfire",
+          "code": "FLF",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Furious Fists",
+          "code": "FFI",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Phantom Forces",
+          "code": "PHF",
+          "releaseYear": 2014
+        },
+        {
+          "name": "XY",
+          "code": "XY",
+          "releaseYear": 2014
+        },
+        {
+          "name": "Ancient Origins",
+          "code": "AOR",
+          "releaseYear": 2015
+        },
+        {
+          "name": "BREAKthrough",
+          "code": "BKT",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Double Crisis",
+          "code": "DCR",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Primal Clash",
+          "code": "PRC",
+          "releaseYear": 2015
+        },
+        {
+          "name": "Roaring Skies",
+          "code": "ROS",
+          "releaseYear": 2015
+        },
+        {
+          "name": "BREAKpoint",
+          "code": "BKP",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Evolutions",
+          "code": "EVO",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Fates Collide",
+          "code": "FCO",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Generations",
+          "code": "GEN",
+          "releaseYear": 2016
+        },
+        {
+          "name": "Steam Siege",
+          "code": "STS",
+          "releaseYear": 2016
+        }
       ]
     },
     {
       "name": "Sun & Moon",
       "startYear": 2017,
       "expansions": [
-        { "name": "Sun & Moon Base", "code": "SUM", "releaseYear": 2017 },
-        { "name": "Guardians Rising", "code": "GRI", "releaseYear": 2017 },
-        { "name": "Burning Shadows", "code": "BUS", "releaseYear": 2017 },
-        { "name": "Crimson Invasion", "code": "CIN", "releaseYear": 2017 },
-        { "name": "Ultra Prism", "code": "UPR", "releaseYear": 2018 },
-        { "name": "Forbidden Light", "code": "FLI", "releaseYear": 2018 },
-        { "name": "Celestial Storm", "code": "CES", "releaseYear": 2018 },
-        { "name": "Lost Thunder", "code": "LOT", "releaseYear": 2018 },
-        { "name": "Team Up", "code": "TEU", "releaseYear": 2019 },
-        { "name": "Unbroken Bonds", "code": "UNB", "releaseYear": 2019 },
-        { "name": "Unified Minds", "code": "UNM", "releaseYear": 2019 },
-        { "name": "Cosmic Eclipse", "code": "CEC", "releaseYear": 2019 }
+        {
+          "name": "Burning Shadows",
+          "code": "BUS",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Crimson Invasion",
+          "code": "CIN",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Guardians Rising",
+          "code": "GRI",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Shining Legends",
+          "code": "SLG",
+          "releaseYear": 2017
+        },
+        {
+          "name": "SM Black Star Promos",
+          "code": "PR-SM",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Sun & Moon",
+          "code": "SUM",
+          "releaseYear": 2017
+        },
+        {
+          "name": "Celestial Storm",
+          "code": "CES",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Dragon Majesty",
+          "code": "DRM",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Forbidden Light",
+          "code": "FLI",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Lost Thunder",
+          "code": "LOT",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Ultra Prism",
+          "code": "UPR",
+          "releaseYear": 2018
+        },
+        {
+          "name": "Cosmic Eclipse",
+          "code": "CEC",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Detective Pikachu",
+          "code": "DET",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Hidden Fates",
+          "code": "HIF",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Hidden Fates Shiny Vault",
+          "code": "HIF",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Team Up",
+          "code": "TEU",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Unbroken Bonds",
+          "code": "UNB",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Unified Minds",
+          "code": "UNM",
+          "releaseYear": 2019
+        }
+      ]
+    },
+    {
+      "name": "Sword & Shield",
+      "startYear": 2019,
+      "expansions": [
+        {
+          "name": "SWSH Black Star Promos",
+          "code": "PR-SW",
+          "releaseYear": 2019
+        },
+        {
+          "name": "Champion's Path",
+          "code": "CPA",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Darkness Ablaze",
+          "code": "DAA",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Rebel Clash",
+          "code": "RCL",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Sword & Shield",
+          "code": "SSH",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Vivid Voltage",
+          "code": "VIV",
+          "releaseYear": 2020
+        },
+        {
+          "name": "Battle Styles",
+          "code": "BST",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Celebrations",
+          "code": "CEL",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Celebrations: Classic Collection",
+          "code": "CEL",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Chilling Reign",
+          "code": "CRE",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Evolving Skies",
+          "code": "EVS",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Fusion Strike",
+          "code": "FST",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Shining Fates",
+          "code": "SHF",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Shining Fates Shiny Vault",
+          "code": "SHF",
+          "releaseYear": 2021
+        },
+        {
+          "name": "Astral Radiance",
+          "code": "ASR",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Astral Radiance Trainer Gallery",
+          "code": "ASR",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Brilliant Stars",
+          "code": "BRS",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Brilliant Stars Trainer Gallery",
+          "code": "BRS",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Lost Origin",
+          "code": "LOR",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Lost Origin Trainer Gallery",
+          "code": "LOR",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Pokémon GO",
+          "code": "PGO",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Silver Tempest",
+          "code": "SIT",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Silver Tempest Trainer Gallery",
+          "code": "SIT",
+          "releaseYear": 2022
+        },
+        {
+          "name": "Crown Zenith",
+          "code": "CRZ",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Crown Zenith Galarian Gallery",
+          "code": "CRZ",
+          "releaseYear": 2023
+        }
+      ]
+    },
+    {
+      "name": "Scarlet & Violet",
+      "startYear": 2023,
+      "expansions": [
+        {
+          "name": "151",
+          "code": "MEW",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Obsidian Flames",
+          "code": "OBF",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Paldea Evolved",
+          "code": "PAL",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Paradox Rift",
+          "code": "PAR",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Scarlet & Violet",
+          "code": "SVI",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Scarlet & Violet Black Star Promos",
+          "code": "PR-SV",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Scarlet & Violet Energies",
+          "code": "SVE",
+          "releaseYear": 2023
+        },
+        {
+          "name": "Paldean Fates",
+          "code": "PAF",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Shrouded Fable",
+          "code": "SFA",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Stellar Crown",
+          "code": "SCR",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Surging Sparks",
+          "code": "SSP",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Temporal Forces",
+          "code": "TEF",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Twilight Masquerade",
+          "code": "TWM",
+          "releaseYear": 2024
+        },
+        {
+          "name": "Black Bolt",
+          "code": "BLK",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Destined Rivals",
+          "code": "DRI",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Journey Together",
+          "code": "JTG",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Prismatic Evolutions",
+          "code": "PRE",
+          "releaseYear": 2025
+        },
+        {
+          "name": "White Flare",
+          "code": "WHT",
+          "releaseYear": 2025
+        }
+      ]
+    },
+    {
+      "name": "Mega Evolution",
+      "startYear": 2025,
+      "expansions": [
+        {
+          "name": "Mega Evolution",
+          "code": "MEG",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Phantasmal Flames",
+          "code": "PFL",
+          "releaseYear": 2025
+        },
+        {
+          "name": "Ascended Heroes",
+          "code": "ASC",
+          "releaseYear": 2026
+        }
       ]
     }
   ]

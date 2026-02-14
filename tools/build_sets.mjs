@@ -217,9 +217,23 @@ async function main() {
   console.log(`Wrote: ${OUT_MTG}`);
 
   console.log("Building Pokémon sets from pokemontcg.io…");
-  const pokemon = await buildPokemon();
-  await fs.writeFile(OUT_POKEMON, JSON.stringify(pokemon, null, 2), "utf8");
-  console.log(`Wrote: ${OUT_POKEMON}`);
+  try {
+    const pokemon = await buildPokemon();
+    await fs.writeFile(OUT_POKEMON, JSON.stringify(pokemon, null, 2), "utf8");
+    console.log(`Wrote: ${OUT_POKEMON}`);
+  } catch (err) {
+    console.warn("Failed to build Pokémon sets:", err.message);
+    // If a file already exists from a manual download, keep it instead of overwriting.
+    try {
+      await fs.access(OUT_POKEMON);
+      console.warn(`${OUT_POKEMON} exists — leaving existing file in place. If you want to regenerate, provide a working network or remove the file and retry.`);
+    } catch {
+      // No existing file — write a minimal placeholder to keep tooling working
+      const placeholder = { game: "pokemon", range: `${YEAR_MIN}-${YEAR_MAX}`, series: [] };
+      await fs.writeFile(OUT_POKEMON, JSON.stringify(placeholder, null, 2), "utf8");
+      console.warn(`Wrote placeholder ${OUT_POKEMON}. You can replace it with a full file downloaded manually.`);
+    }
+  }
 
   console.log("Done.");
 }
