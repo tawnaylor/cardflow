@@ -2,272 +2,78 @@
   "pokemon": {
     "label": "Pokémon",
     "series": [
-
       {
-        "name": "Wizards of the Coast Era (1999–2002)",
+        "name": "Mega Evolution Era",
+        "current": true,
         "expansions": [
-          "Base Set",
-          "Jungle",
-          "Fossil",
-          "Base Set 2",
-          "Team Rocket",
-          "Gym Heroes",
-          "Gym Challenge",
-          "Neo Genesis",
-          "Neo Discovery",
-          "Neo Revelation",
-          "Neo Destiny"
+          {
+            "name": "Perfect Order",
+            "code": "ME04",
+            "year": 2026,
+            "rarities": ["Common", "Uncommon", "Rare", "Ultra Rare", "Secret Rare"]
+          },
+          {
+            "name": "Ascended Heroes",
+            "code": "ME03",
+            "year": 2026,
+            "rarities": ["Common", "Uncommon", "Rare", "Ultra Rare", "Secret Rare"]
+          },
+          {
+            "name": "Mega Evolution – Phantasmal Flames",
+            "code": "ME02",
+            "year": 2025,
+            "rarities": ["Common", "Uncommon", "Rare", "Ultra Rare", "Secret Rare"]
+          },
+          {
+            "name": "Mega Evolution",
+            "code": "ME01",
+            "year": 2025,
+            "rarities": ["Common", "Uncommon", "Rare", "Ultra Rare", "Secret Rare"]
+          }
         ]
       },
-
       {
-        "name": "e-Card / EX Era (2003–2007)",
+        "name": "Scarlet & Violet Era",
+        "current": false,
         "expansions": [
-          "Expedition Base Set",
-          "Aquapolis",
-          "Skyridge",
-          "EX Ruby & Sapphire",
-          "EX Sandstorm",
-          "EX Dragon",
-          "EX Team Magma vs Team Aqua",
-          "EX Hidden Legends",
-          "EX FireRed & LeafGreen",
-          "EX Team Rocket Returns",
-          "EX Deoxys",
-          "EX Emerald",
-          "EX Unseen Forces",
-          "EX Delta Species",
-          "EX Legend Maker",
-          "EX Holon Phantoms",
-          "EX Crystal Guardians",
-          "EX Dragon Frontiers",
-          "EX Power Keepers"
-        ]
-      },
-
-      {
-        "name": "Diamond & Pearl Era (2007–2009)",
-        "expansions": [
-          "Diamond & Pearl",
-          "Mysterious Treasures",
-          "Secret Wonders",
-          "Great Encounters",
-          "Majestic Dawn",
-          "Legends Awakened",
-          "Stormfront",
-          "Platinum",
-          "Rising Rivals",
-          "Supreme Victors",
-          "Arceus"
-        ]
-      },
-
-      {
-        "name": "HeartGold & SoulSilver Era (2010–2011)",
-        "expansions": [
-          "HeartGold & SoulSilver",
-          "Unleashed",
-          "Undaunted",
-          "Triumphant",
-          "Call of Legends"
-        ]
-      },
-
-      {
-        "name": "Black & White Era (2011–2013)",
-        "expansions": [
-          "Black & White",
-          "Emerging Powers",
-          "Noble Victories",
-          "Next Destinies",
-          "Dark Explorers",
-          "Dragons Exalted",
-          "Boundaries Crossed",
-          "Plasma Storm",
-          "Plasma Freeze",
-          "Plasma Blast",
-          "Legendary Treasures"
-        ]
-      },
-
-      {
-        "name": "XY Era (2014–2017)",
-        "expansions": [
-          "XY",
-          "Flashfire",
-          "Furious Fists",
-          "Phantom Forces",
-          "Primal Clash",
-          "Roaring Skies",
-          "Ancient Origins",
-          "BREAKthrough",
-          "BREAKpoint",
-          "Generations",
-          "Fates Collide",
-          "Steam Siege",
-          "Evolutions"
-        ]
-      },
-
-      {
-        "name": "Sun & Moon Era (2017–2020)",
-        "expansions": [
-          "Sun & Moon",
-          "Guardians Rising",
-          "Burning Shadows",
-          "Crimson Invasion",
-          "Ultra Prism",
-          "Forbidden Light",
-          "Celestial Storm",
-          "Lost Thunder",
-          "Team Up",
-          "Unbroken Bonds",
-          "Unified Minds",
-          "Cosmic Eclipse"
-        ]
-      },
-
-      {
-        "name": "Sword & Shield Era (2020–2023)",
-        "expansions": [
-          "Sword & Shield",
-          "Rebel Clash",
-          "Darkness Ablaze",
-          "Vivid Voltage",
-          "Battle Styles",
-          "Chilling Reign",
-          "Evolving Skies",
-          "Fusion Strike",
-          "Brilliant Stars",
-          "Astral Radiance",
-          "Lost Origin",
-          "Silver Tempest",
-          "Crown Zenith"
-        ]
-      },
-
-      {
-        "name": "Scarlet & Violet Era (2023–2025)",
-        "expansions": [
-          "Scarlet & Violet",
-          "Paldea Evolved",
-          "Obsidian Flames",
-          "Paradox Rift",
-          "Temporal Forces",
-          "Twilight Masquerade",
-          "Shrouded Fable",
-          "Stellar Crown",
-          "Surging Sparks",
-          "Prismatic Evolutions",
-          "Journey Together",
-          "Destined Rivals",
-          "Black Bolt",
-          "White Flare"
-        ]
-      },
-
-      {
-        "name": "Mega Evolution Era (2025–2026)",
-        "expansions": [
-          "Mega Evolution",
-          "Mega Evolution – Phantasmal Flames",
-          "Ascended Heroes",
-          "Perfect Order"
+          {
+            "name": "Surging Sparks",
+            "code": "SV09",
+            "year": 2025,
+            "rarities": ["Common", "Uncommon", "Rare", "Double Rare", "Illustration Rare", "Special Illustration Rare", "Hyper Rare"]
+          },
+          {
+            "name": "Stellar Crown",
+            "code": "SV08",
+            "year": 2024,
+            "rarities": ["Common", "Uncommon", "Rare", "Double Rare", "Illustration Rare", "Special Illustration Rare", "Hyper Rare"]
+          }
         ]
       }
-
     ]
   },
 
   "mtg": {
     "label": "Magic: The Gathering",
     "series": [
-
       {
-        "name": "Early Sets (1993–1996)",
+        "name": "Premier Sets",
+        "current": true,
         "expansions": [
-          "Alpha",
-          "Beta",
-          "Unlimited",
-          "Arabian Nights",
-          "Antiquities",
-          "Legends",
-          "The Dark",
-          "Fallen Empires",
-          "Ice Age",
-          "Alliances"
-        ]
-      },
-
-      {
-        "name": "Classic Block Era (1997–2003)",
-        "expansions": [
-          "Mirage",
-          "Visions",
-          "Weatherlight",
-          "Tempest",
-          "Stronghold",
-          "Exodus",
-          "Urza’s Saga",
-          "Urza’s Legacy",
-          "Urza’s Destiny",
-          "Invasion",
-          "Planeshift",
-          "Apocalypse",
-          "Odyssey",
-          "Torment",
-          "Judgment",
-          "Onslaught",
-          "Legions",
-          "Scourge"
-        ]
-      },
-
-      {
-        "name": "Modern Block Era (2003–2019)",
-        "expansions": [
-          "Mirrodin",
-          "Darksteel",
-          "Fifth Dawn",
-          "Champions of Kamigawa",
-          "Ravnica: City of Guilds",
-          "Zendikar",
-          "Innistrad",
-          "Return to Ravnica",
-          "Theros",
-          "Khans of Tarkir",
-          "Battle for Zendikar",
-          "Shadows over Innistrad",
-          "Kaladesh",
-          "Amonkhet",
-          "Ixalan",
-          "Dominaria"
-        ]
-      },
-
-      {
-        "name": "Premier Set Era (2020–2026)",
-        "expansions": [
-          "Throne of Eldraine",
-          "Theros Beyond Death",
-          "Ikoria: Lair of Behemoths",
-          "Zendikar Rising",
-          "Kaldheim",
-          "Strixhaven",
-          "Adventures in the Forgotten Realms",
-          "Kamigawa: Neon Dynasty",
-          "Streets of New Capenna",
-          "Dominaria United",
-          "The Brothers’ War",
-          "Wilds of Eldraine",
-          "The Lost Caverns of Ixalan",
-          "Murders at Karlov Manor",
-          "Outlaws of Thunder Junction",
-          "Bloomburrow",
-          "Duskmourn: House of Horror"
+          {
+            "name": "Duskmourn: House of Horror",
+            "code": "DSK",
+            "year": 2025,
+            "rarities": ["Common", "Uncommon", "Rare", "Mythic Rare", "Special"]
+          },
+          {
+            "name": "Bloomburrow",
+            "code": "BLB",
+            "year": 2025,
+            "rarities": ["Common", "Uncommon", "Rare", "Mythic Rare", "Special"]
+          }
         ]
       }
-
     ]
   }
 }

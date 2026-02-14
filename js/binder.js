@@ -69,7 +69,11 @@ function filteredCards(b){
       return (a.series||"").localeCompare(b2.series||"");
     }
     if(sort === "expansion"){
-      return (a.expansion||"").localeCompare(b2.expansion||"");
+  const ax = (a.expansionName || a.expansionCode || "");
+  const bx = (b2.expansionName || b2.expansionCode || "");
+  return ax.localeCompare(bx);
+}
+
     }
     return (b2.createdAt||0) - (a.createdAt||0);
   });
@@ -132,7 +136,12 @@ function tileFor(card){
   meta.className = "meta";
   meta.innerHTML = `
     <h3>${escapeHtml(card.fields?.name || "Untitled")}</h3>
-    <p>${escapeHtml(card.series || "—")} • ${escapeHtml(card.expansion || "—")}</p>
+   <p>
+  ${escapeHtml(card.series || "—")} •
+  ${escapeHtml(card.expansionName || card.expansionCode || "—")}
+  ${card.expansionYear ? ` • ${card.expansionYear}` : ""}
+</p>
+
     <p class="muted small">${formatGame(card.game)}</p>
   `;
 

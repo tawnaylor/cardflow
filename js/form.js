@@ -49,12 +49,60 @@ function applyBinderTheme(){
 }
 
 function bindDependentDropdowns(dataset){
-  const series = dataset[game]?.series ?? [];
-// Auto pick first series & populate expansions
-if (series.length) {
-  seriesSel.value = series[0].name;
-  seriesSel.dispatchEvent(new Event("change"));
+  const seriesArr = dataset[game]?.series ?? [];
+
+  // NEW: Sort series with current=true first, then alpha by name
+  const sortedSeries = [...seriesArr].sort((a, b) => {
+    const ac = a.current ? 1 : 0;
+    const bc = b.current ? 1 : 0;
+    if (bc !== ac) return bc - ac;
+    return (a.name || "").localeCompare(b.name || "");
+  });
+
+  seriesSel.innerHTML =
+    `<option value="">Choose…</option>` +
+    sortedSeries.map(s => {
+      const tag = s.current ? " (Current)" : "";
+      return `<option value="${escapeAttr(s.name)}">${s.name}${tag}</option>`;
+    }).join("");
+
+  expSel.innerHTML = `<option value="">Choose a series first…</option>`;
+
+  seriesSel.addEventListener("change", ()=>{
+    const pick = sortedSeries.find(s => s.name === seriesSel.value);
+    const rawExps = pick?.expansions ?? [];
+
+    // Backward compatible: allow expansions to be strings OR objects
+    const exps = rawExps.map(x => {
+      if (typeof x === "string") {
+        return { name: x, code: x, year: 0, rarities: [] };
+      }
+      return {
+        name: x.name || "",
+        code: x.code || x.name || "",
+        year: Number(x.year || 0),
+        rarities: Array.isArray(x.rarities) ? x.rarities : []
+      };
+    });
+
+    // NEW: Sort newest-first (year desc, then name)
+    exps.sort((a, b) => {
+      if ((b.year || 0) !== (a.year || 0)) return (b.year || 0) - (a.year || 0);
+      return (a.name || "").localeCompare(b.name || "");
+    });
+
+    expSel.innerHTML =
+      `<option value="">Choose…</option>` +
+      exps.map(e => {
+        const yearTag = e.year ? ` • ${e.year}` : "";
+        return `<option value="${escapeAttr(e.code)}" data-name="${escapeAttr(e.name)}" data-year="${e.year}">${e.name}${yearTag}</option>`;
+      }).join("");
+
+    // Optional: auto-select first expansion after series pick
+    if (exps.length) expSel.value = exps[0].code;
+  });
 }
+
 
   seriesSel.innerHTML = `<option value="">Choose…</option>` + series.map(s => `<option value="${escapeAttr(s.name)}">${s.name}</option>`).join("");
   expSel.innerHTML = `<option value="">Choose a series first…</option>`;
@@ -72,17 +120,28 @@ function buildCardObject(imageDataUrl){
     data[el.name] = el.value.trim();
   });
 
+  const selectedOpt = expSel.selectedOptions?.[0];
+  const expansionCode = expSel.value;
+  const expansionName = selectedOpt?.dataset?.name || selectedOpt?.textContent?.split("•")[0]?.trim() || "";
+  const expansionYear = Number(selectedOpt?.dataset?.year || 0);
+
   return {
     id: crypto.randomUUID?.() || `${Date.now()}_${Math.random().toString(16).slice(2)}`,
     binderId,
     game,
     series: seriesSel.value,
-    expansion: expSel.value,
+
+    // NEW: expansion fields
+    expansionCode,
+    expansionName,
+    expansionYear,
+
     fields: data,
     imageDataUrl: imageDataUrl || "",
     createdAt: Date.now()
   };
 }
+
 
 async function fileToDataUrl(file){
   return new Promise((resolve, reject)=>{
