@@ -50,6 +50,11 @@ function applyBinderTheme(){
 
 function bindDependentDropdowns(dataset){
   const series = dataset[game]?.series ?? [];
+// Auto pick first series & populate expansions
+if (series.length) {
+  seriesSel.value = series[0].name;
+  seriesSel.dispatchEvent(new Event("change"));
+}
 
   seriesSel.innerHTML = `<option value="">Choose…</option>` + series.map(s => `<option value="${escapeAttr(s.name)}">${s.name}</option>`).join("");
   expSel.innerHTML = `<option value="">Choose a series first…</option>`;
