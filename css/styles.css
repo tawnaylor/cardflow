@@ -1,0 +1,5 @@
+/* Minimal starter styles for Cardflow */
+:root{--bg:#f7f7f7;--accent:#2b6cb0}
+html,body{height:100%;margin:0;font-family:Segoe UI,Arial,sans-serif;background:var(--bg);color:#222}
+header{background:var(--accent);color:#fff;padding:1rem}
+main{padding:1rem}
