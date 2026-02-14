@@ -103,17 +103,6 @@ function bindDependentDropdowns(dataset){
   });
 }
 
-
-  seriesSel.innerHTML = `<option value="">Choose…</option>` + series.map(s => `<option value="${escapeAttr(s.name)}">${s.name}</option>`).join("");
-  expSel.innerHTML = `<option value="">Choose a series first…</option>`;
-
-  seriesSel.addEventListener("change", ()=>{
-    const pick = series.find(s => s.name === seriesSel.value);
-    const exps = pick?.expansions ?? [];
-    expSel.innerHTML = `<option value="">Choose…</option>` + exps.map(x => `<option value="${escapeAttr(x)}">${x}</option>`).join("");
-  });
-}
-
 function buildCardObject(imageDataUrl){
   const data = {};
   qsa("#dynamicFields input, #dynamicFields textarea, #dynamicFields select").forEach(el=>{
