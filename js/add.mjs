@@ -2,6 +2,8 @@ import { getBinders, createBinder, addCard } from "./storage.mjs";
 import { initThemeSwitch, fillSelect } from "./ui.mjs";
 import { loadSets, flattenSets } from "./data.mjs";
 import { startCamera, stopCamera, captureAndWarp } from "./scan.mjs";
+import { ocrImageDataUrl } from "./ocr.mjs";
+import { recognizeCardFromText } from "./recognize.mjs";
 
 const themeSwitch = document.querySelector("#themeSwitch");
 
@@ -26,6 +28,7 @@ const captureBtn = document.querySelector("#captureBtn");
 const useScanBtn = document.querySelector("#useScanBtn");
 const scanVideo = document.querySelector("#scanVideo");
 const scanCanvas = document.querySelector("#scanCanvas");
+const autoFillBtn = document.querySelector("#autoFillBtn");
 
 let lastScanDataUrl = null;
 
@@ -215,6 +218,68 @@ useScanBtn?.addEventListener("click", () => {
 
   imageInput.value = "";
   useScanBtn.disabled = true;
+});
+
+autoFillBtn?.addEventListener("click", async () => {
+  try {
+    autoFillBtn.disabled = true;
+    saveHint.textContent = "Reading card…";
+
+    const imgDataUrl = (lastScanDataUrl || (imagePreview?.src || "")).startsWith("data:")
+      ? (lastScanDataUrl || imagePreview.src)
+      : null;
+
+    if (!imgDataUrl) {
+      alert("Scan or upload an image first.");
+      return;
+    }
+
+    const text = await ocrImageDataUrl(imgDataUrl);
+    const result = await recognizeCardFromText(text, { allowOnlineLookup: true });
+
+    // Set game and show fields
+    gameSelect.value = result.game;
+    showGameFields();
+    populateSetDropdown();
+
+    if (result.game === "mtg") {
+      const r = result.resolved || result.extracted;
+      document.querySelector("#m_name").value = r.name || "";
+      document.querySelector("#m_manaCost").value = r.manaCost || "";
+      document.querySelector("#m_cardType").value = r.cardType || "";
+      document.querySelector("#m_rulesText").value = r.rulesText || "";
+      document.querySelector("#m_flavorText").value = r.flavorText || "";
+      document.querySelector("#m_powerToughness").value = r.powerToughness || "";
+      document.querySelector("#m_artist").value = r.artist || "";
+      document.querySelector("#m_collectorNumber").value = r.collectorNumber || "";
+      document.querySelector("#m_setCode").value = r.setCode || "";
+
+      if (r.setCode) {
+        const opt = [...setSelect.options].find(o => o.value.startsWith(`${r.setCode}::`));
+        if (opt) setSelect.value = opt.value;
+      }
+
+    } else {
+      const r = result.resolved || result.extracted;
+      document.querySelector("#p_name").value = r.name || "";
+      document.querySelector("#p_hp").value = r.hp || "";
+      document.querySelector("#p_cardNumber").value = r.cardNumber || "";
+      document.querySelector("#p_type").value = r.type || "";
+      document.querySelector("#p_illustrator").value = r.illustrator || "";
+
+      if (r.setCode) {
+        const opt = [...setSelect.options].find(o => o.value.startsWith(`${r.setCode}::`));
+        if (opt) setSelect.value = opt.value;
+      }
+    }
+
+    saveHint.textContent = "Auto-fill complete. Please review fields for accuracy.";
+  } catch (e) {
+    console.error(e);
+    alert("Auto-fill failed. Try a cleaner scan with better lighting.");
+  } finally {
+    autoFillBtn.disabled = false;
+  }
 });
 
 createBinderBtn.addEventListener("click", () => {

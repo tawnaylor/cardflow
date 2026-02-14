@@ -18,4 +18,24 @@
     },
     "mtg": null
   }
+  ,
+  {
+    "id": "card_demo_pikachu",
+    "createdAt": 1707868800000,
+    "binderId": null,
+    "binderName": "Main Binder",
+    "game": "pokemon",
+    "rarity": "holo",
+    "setCode": "SM-25",
+    "setName": "Sun & Moon — Pikachu Collection",
+    "imageDataUrl": "./assets/placeholder-card.png",
+    "pokemon": {
+      "name": "Pikachu",
+      "hp": "60",
+      "type": "Electric",
+      "cardNumber": "25/111",
+      "illustrator": "Mitsuhiro Arita"
+    },
+    "mtg": null
+  }
 ]

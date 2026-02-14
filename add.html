@@ -97,6 +97,7 @@
                 <button class="btn btn-small" id="startScanBtn" type="button">Start Scan</button>
                 <button class="btn btn-small btn-ghost" id="captureBtn" type="button" disabled>Capture</button>
                 <button class="btn btn-small btn-ghost" id="useScanBtn" type="button" disabled>Use Scanned Image</button>
+                <button class="btn btn-small" id="autoFillBtn" type="button">Auto-Fill From Image</button>
                 <button class="btn btn-small btn-ghost" id="stopScanBtn" type="button" disabled>Stop</button>
               </div>
               <p class="hint">Local-only scan: camera → edge detect → crop. Works best in good lighting.</p>
@@ -111,6 +112,8 @@
 
           <!-- Load OpenCV locally -->
           <script src="./vendor/opencv/opencv.js"></script>
+          <!-- Load Tesseract locally (for OCR) -->
+          <script src="./vendor/tesseract/tesseract.min.js"></script>
         </section>
 
         <hr class="sep" />
