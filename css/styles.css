@@ -1,0 +1,7 @@
+/* Basic styles for CardFlow */
+:root{--bg:#fff;--fg:#111;--muted:#666}
+html,body{height:100%;}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial;line-height:1.4;margin:24px;color:var(--fg);background:var(--bg)}
+h1{font-size:1.5rem;margin:0 0 1rem}
+nav ul{list-style:none;padding:0;display:flex;gap:1rem}
+a{color:inherit}
