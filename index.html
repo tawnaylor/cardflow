@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CardFlow — Your Collection. In Motion.</title>
+  <meta name="description" content="CardFlow is a neon-vault digital binder for trading cards—modern UX with nostalgic energy." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Ambient background -->
+  <div class="bg" aria-hidden="true">
+    <div class="bg__grid"></div>
+    <div class="bg__noise"></div>
+    <div class="bg__glow bg__glow--pink"></div>
+    <div class="bg__glow bg__glow--blue"></div>
+    <div class="bg__glow bg__glow--gold"></div>
+  </div>
+
+  <!-- Top Nav (startup clean) -->
+  <header class="topbar" aria-label="Top navigation">
+    <div class="topbar__inner">
+      <a class="brand" href="#home" aria-label="CardFlow home">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <span class="brand__name">CardFlow</span>
+        <span class="brand__tag">Neon Binder • Modern Vault</span>
+      </a>
+
+      <nav class="topbar__nav" aria-label="Primary">
+        <a class="navlink is-active" href="#home">Home</a>
+        <a class="navlink" href="#fresh-pulls">Fresh Pulls</a>
+        <a class="navlink" href="#abilities">Abilities</a>
+        <a class="navlink" href="#market">Market</a>
+      </nav>
+
+      <div class="topbar__actions">
+        <button class="btn btn--ghost" id="scanBtn" type="button">Scan</button>
+        <button class="btn btn--primary" id="openBinderBtn" type="button">Open Binder</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="main" tabindex="-1">
+
+    <!-- HERO -->
+    <section id="home" class="hero" aria-labelledby="heroTitle">
+      <div class="hero__shell">
+        <div class="hero__panel">
+          <div class="hero__left">
+            <p class="kicker">CARD FLOW</p>
+            <h1 id="heroTitle" class="hero__title">
+              Your Collection. <span class="neon">In Motion.</span>
+            </h1>
+            <p class="hero__subtitle">
+              The nostalgia of a 9-pocket binder — with the speed and clarity of modern software.
+              Scan, organize, track value, and show off your newest pulls.
+            </p>
+
+            <div class="hero__cta">
+              <button class="btn btn--primary btn--big" id="openBinderBtn2" type="button">
+                Open My Binder
+              </button>
+              <a class="btn btn--ghost btn--big" href="#fresh-pulls">See Fresh Pulls</a>
+            </div>
+
+            <div class="hero__meta" role="list" aria-label="Highlights">
+              <div class="pill" role="listitem">
+                <span class="pill__icon pill__icon--blue" aria-hidden="true"></span>
+                Local-first (auto saves)
+              </div>
+              <div class="pill" role="listitem">
+                <span class="pill__icon pill__icon--pink" aria-hidden="true"></span>
+                Neon rarity glows
+              </div>
+              <div class="pill" role="listitem">
+                <span class="pill__icon pill__icon--gold" aria-hidden="true"></span>
+                Market-ready data
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: “Binder cover + floating cards” -->
+          <div class="hero__right" aria-hidden="true">
+            <div class="binderCover" id="binderCover">
+              <div class="binderCover__shine"></div>
+              <div class="binderCover__sticker">
+                <div class="sticker__top">CARD FLOW</div>
+                <div class="sticker__mid">Vault Edition</div>
+                <div class="sticker__bot">Open • Collect • Track</div>
+              </div>
+              <div class="binderCover__rings">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="floaters" id="floaters"></div>
+            </div>
+
+            <!-- Page flip stage -->
+            <div class="flipStage">
+              <div class="page page--left"></div>
+              <div class="page page--right" id="flipPage"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick stats strip -->
+        <div class="stats">
+          <div class="stat">
+            <div class="stat__label">Cards</div>
+            <div class="stat__value" id="statCards">—</div>
+          </div>
+          <div class="stat">
+            <div class="stat__label">Total Value</div>
+            <div class="stat__value" id="statValue">—</div>
+          </div>
+          <div class="stat">
+            <div class="stat__label">Newest Pull</div>
+            <div class="stat__value" id="statNewest">—</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FRESH PULLS -->
+    <section id="fresh-pulls" class="section" aria-labelledby="freshTitle">
+      <header class="section__header">
+        <div>
+          <h2 id="freshTitle" class="section__title">Fresh Pulls</h2>
+          <p class="section__subtitle">Your newest cards displayed like a real 9-pocket page.</p>
+        </div>
+
+        <div class="section__controls" role="group" aria-label="Fresh Pull controls">
+          <label class="field">
+            <span class="field__label">Filter</span>
+            <select id="filterSelect" class="select" aria-label="Filter by game">
+              <option value="all">All</option>
+              <option value="pokemon">Pokémon</option>
+              <option value="mtg">Magic</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Sort</span>
+            <select id="sortSelect" class="select" aria-label="Sort">
+              <option value="newest">Newest first</option>
+              <option value="value">Highest value</option>
+              <option value="rarity">Rarest first</option>
+            </select>
+          </label>
+
+          <button class="btn btn--ghost" id="resetDemoBtn" type="button">Reset Demo</button>
+        </div>
+      </header>
+
+      <div class="binder">
+        <div class="binder__page">
+          <div class="grid9" id="grid9" role="list" aria-label="Fresh Pulls grid"></div>
+        </div>
+        <div class="binder__footer">
+          <p class="binder__hint">
+            Hover to preview value • Click to inspect • (Later: link to binder.html?id=...)
+          </p>
+          <div class="binder__chipRow" aria-label="Rarity legend">
+            <span class="chip chip--common">Common</span>
+            <span class="chip chip--rare">Rare</span>
+            <span class="chip chip--holo">Holo</span>
+            <span class="chip chip--secret">Secret</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABILITIES -->
+    <section id="abilities" class="section" aria-labelledby="abilitiesTitle">
+      <header class="section__header">
+        <div>
+          <h2 id="abilitiesTitle" class="section__title">Abilities</h2>
+          <p class="section__subtitle">Modern features presented with collectible flavor.</p>
+        </div>
+      </header>
+
+      <div class="cardsRow">
+        <article class="ability">
+          <div class="ability__icon ability__icon--blue" aria-hidden="true"></div>
+          <h3 class="ability__title">Scan Ability</h3>
+          <p class="ability__desc">Capture a card, crop it cleanly, and add it to your vault fast.</p>
+          <ul class="ability__list">
+            <li>Crop UI + edge assist (next)</li>
+            <li>Auto-fill name / set / number (next)</li>
+            <li>Confidence meter (next)</li>
+          </ul>
+        </article>
+
+        <article class="ability">
+          <div class="ability__icon ability__icon--pink" aria-hidden="true"></div>
+          <h3 class="ability__title">Binder Sorting</h3>
+          <p class="ability__desc">Organize by set, number, rarity—then filter instantly.</p>
+          <ul class="ability__list">
+            <li>Set codes + years</li>
+            <li>Newest-first homepage</li>
+            <li>Rarity tracking</li>
+          </ul>
+        </article>
+
+        <article class="ability">
+          <div class="ability__icon ability__icon--gold" aria-hidden="true"></div>
+          <h3 class="ability__title">Market Vision</h3>
+          <p class="ability__desc">See value at a glance and highlight top cards and movers.</p>
+          <ul class="ability__list">
+            <li>Top cards panel</li>
+            <li>Wishlist alerts (next)</li>
+            <li>Export-ready data</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- MARKET -->
+    <section id="market" class="section section--market" aria-labelledby="marketTitle">
+      <header class="section__header">
+        <div>
+          <h2 id="marketTitle" class="section__title">Market Case</h2>
+          <p class="section__subtitle">A glass display for top value cards and trending pulls.</p>
+        </div>
+      </header>
+
+      <div class="market">
+        <div class="market__case" aria-hidden="true">
+          <div class="market__shine"></div>
+          <div class="market__badge">TOP MOVERS</div>
+        </div>
+
+        <div class="market__panel">
+          <h3 class="market__headline">Top Cards (Demo)</h3>
+          <p class="market__text">
+            Wire this to real pricing later. For now it calculates from your saved cards.
+          </p>
+
+          <div class="market__cta">
+            <button class="btn btn--primary" type="button" id="mockMarketBtn">Show Top Cards</button>
+            <button class="btn btn--ghost" type="button" id="exportBtn">Export JSON</button>
+          </div>
+
+          <p class="market__note" id="marketNote" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__card">
+        <div class="footer__line1">CardFlow™</div>
+        <div class="footer__line2">Track Smart. Trade Smarter.</div>
+        <div class="footer__line3">© <span id="year"></span> CardFlow</div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Inspect Modal -->
+  <dialog class="modal" id="inspectModal" aria-label="Card inspector">
+    <form method="dialog" class="modal__panel">
+      <div class="modal__top">
+        <h2 class="modal__title">Card Details</h2>
+        <button class="iconBtn" value="cancel" aria-label="Close">✕</button>
+      </div>
+
+      <div class="modal__body">
+        <div class="modal__preview" id="modalPreview" aria-hidden="true"></div>
+
+        <div class="modal__info">
+          <div class="kv"><span>Game</span><strong id="mGame"></strong></div>
+          <div class="kv"><span>Name</span><strong id="mName"></strong></div>
+          <div class="kv"><span>Set</span><strong id="mSet"></strong></div>
+          <div class="kv"><span>Number</span><strong id="mNum"></strong></div>
+          <div class="kv"><span>Rarity</span><strong id="mRarity"></strong></div>
+          <div class="kv"><span>Value</span><strong id="mValue"></strong></div>
+          <p class="modal__hint">Next: link to binder.html?id=... with URL parameters.</p>
+        </div>
+      </div>
+
+      <div class="modal__bottom">
+        <button class="btn btn--ghost" value="cancel">Close</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
