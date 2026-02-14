@@ -1,1 +1,45 @@
-[]
+{
+  "game": "mtg",
+  "range": "1993-2026",
+  "series": [
+    {
+      "name": "Foundations",
+      "startYear": 1993,
+      "expansions": [
+        { "name": "Limited Edition Alpha", "code": "LEA", "releaseYear": 1993 },
+        { "name": "Limited Edition Beta", "code": "LEB", "releaseYear": 1993 },
+        { "name": "Unlimited Edition", "code": "2ED", "releaseYear": 1993 },
+        { "name": "Revised Edition", "code": "3ED", "releaseYear": 1994 },
+        { "name": "Fourth Edition", "code": "4ED", "releaseYear": 1995 },
+        { "name": "Fifth Edition", "code": "5ED", "releaseYear": 1997 }
+      ]
+    },
+    {
+      "name": "Modern Era (sample)",
+      "startYear": 2019,
+      "expansions": [
+        { "name": "Throne of Eldraine", "code": "ELD", "releaseYear": 2019 },
+        { "name": "Theros Beyond Death", "code": "THB", "releaseYear": 2020 },
+        { "name": "Ikoria: Lair of Behemoths", "code": "IKO", "releaseYear": 2020 },
+        { "name": "Zendikar Rising", "code": "ZNR", "releaseYear": 2020 },
+        { "name": "Kaldheim", "code": "KHM", "releaseYear": 2021 },
+        { "name": "Strixhaven", "code": "STX", "releaseYear": 2021 },
+        { "name": "Adventures in the Forgotten Realms", "code": "AFR", "releaseYear": 2021 },
+        { "name": "Innistrad: Midnight Hunt", "code": "MID", "releaseYear": 2021 },
+        { "name": "Innistrad: Crimson Vow", "code": "VOW", "releaseYear": 2021 },
+        { "name": "Kamigawa: Neon Dynasty", "code": "NEO", "releaseYear": 2022 },
+        { "name": "Streets of New Capenna", "code": "SNC", "releaseYear": 2022 },
+        { "name": "Dominaria United", "code": "DMU", "releaseYear": 2022 },
+        { "name": "The Brothers' War", "code": "BRO", "releaseYear": 2022 },
+        { "name": "Phyrexia: All Will Be One", "code": "ONE", "releaseYear": 2023 },
+        { "name": "March of the Machine", "code": "MOM", "releaseYear": 2023 },
+        { "name": "Wilds of Eldraine", "code": "WOE", "releaseYear": 2023 },
+        { "name": "The Lost Caverns of Ixalan", "code": "LCI", "releaseYear": 2023 },
+        { "name": "Murders at Karlov Manor", "code": "MKM", "releaseYear": 2024 },
+        { "name": "Outlaws of Thunder Junction", "code": "OTJ", "releaseYear": 2024 },
+        { "name": "Bloomburrow", "code": "BLB", "releaseYear": 2024 },
+        { "name": "Duskmourn: House of Horror", "code": "DSK", "releaseYear": 2024 }
+      ]
+    }
+  ]
+}

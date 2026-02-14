@@ -1,1 +1,55 @@
-[]
+{
+  "game": "pokemon",
+  "range": "1996-2026",
+  "series": [
+    {
+      "name": "Scarlet & Violet",
+      "startYear": 2023,
+      "expansions": [
+        { "name": "Scarlet & Violet Base", "code": "SV1", "releaseYear": 2023 },
+        { "name": "Paldea Evolved", "code": "SV2", "releaseYear": 2023 },
+        { "name": "Obsidian Flames", "code": "SV3", "releaseYear": 2023 },
+        { "name": "Paradox Rift", "code": "SV4", "releaseYear": 2023 },
+        { "name": "Temporal Forces", "code": "SV5", "releaseYear": 2024 },
+        { "name": "Twilight Masquerade", "code": "SV6", "releaseYear": 2024 },
+        { "name": "Shrouded Fable", "code": "SV7", "releaseYear": 2024 }
+      ]
+    },
+    {
+      "name": "Sword & Shield",
+      "startYear": 2020,
+      "expansions": [
+        { "name": "Sword & Shield Base", "code": "SSH", "releaseYear": 2020 },
+        { "name": "Rebel Clash", "code": "RCL", "releaseYear": 2020 },
+        { "name": "Darkness Ablaze", "code": "DAA", "releaseYear": 2020 },
+        { "name": "Vivid Voltage", "code": "VIV", "releaseYear": 2020 },
+        { "name": "Battle Styles", "code": "BST", "releaseYear": 2021 },
+        { "name": "Chilling Reign", "code": "CRE", "releaseYear": 2021 },
+        { "name": "Evolving Skies", "code": "EVS", "releaseYear": 2021 },
+        { "name": "Fusion Strike", "code": "FST", "releaseYear": 2021 },
+        { "name": "Brilliant Stars", "code": "BRS", "releaseYear": 2022 },
+        { "name": "Astral Radiance", "code": "ASR", "releaseYear": 2022 },
+        { "name": "Lost Origin", "code": "LOR", "releaseYear": 2022 },
+        { "name": "Silver Tempest", "code": "SIT", "releaseYear": 2022 }
+      ]
+    },
+    {
+      "name": "Sun & Moon",
+      "startYear": 2017,
+      "expansions": [
+        { "name": "Sun & Moon Base", "code": "SUM", "releaseYear": 2017 },
+        { "name": "Guardians Rising", "code": "GRI", "releaseYear": 2017 },
+        { "name": "Burning Shadows", "code": "BUS", "releaseYear": 2017 },
+        { "name": "Crimson Invasion", "code": "CIN", "releaseYear": 2017 },
+        { "name": "Ultra Prism", "code": "UPR", "releaseYear": 2018 },
+        { "name": "Forbidden Light", "code": "FLI", "releaseYear": 2018 },
+        { "name": "Celestial Storm", "code": "CES", "releaseYear": 2018 },
+        { "name": "Lost Thunder", "code": "LOT", "releaseYear": 2018 },
+        { "name": "Team Up", "code": "TEU", "releaseYear": 2019 },
+        { "name": "Unbroken Bonds", "code": "UNB", "releaseYear": 2019 },
+        { "name": "Unified Minds", "code": "UNM", "releaseYear": 2019 },
+        { "name": "Cosmic Eclipse", "code": "CEC", "releaseYear": 2019 }
+      ]
+    }
+  ]
+}

@@ -1,16 +1,89 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="css/styles.css">
-    <title>Cardflow</title>
-  </head>
-  <body>
-    <header>
-      <h1>Cardflow</h1>
-    </header>
-    <main id="app"></main>
-    <script type="module" src="js/app.mjs"></script>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CardFlow — Digital Trading Card Binder</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">CF</div>
+      <div class="brand-text">
+        <div class="brand-title">CardFlow</div>
+        <div class="brand-sub">Digital Trading Card Binder</div>
+      </div>
+    </div>
+
+    <nav class="top-actions" aria-label="Primary">
+      <!-- Only two main buttons as requested -->
+      <a class="btn btn-primary" href="./add.html" id="addBtn">Add Cards</a>
+      <a class="btn btn-ghost" href="./index.html" aria-current="page">Home</a>
+
+      <!-- Theme is a switch (not a button) -->
+      <div class="theme-toggle" role="group" aria-label="Theme">
+        <span class="theme-label" id="themeLabelLeft">Neon</span>
+        <label class="switch" aria-label="Toggle theme">
+          <input id="themeSwitch" type="checkbox" />
+          <span class="slider" aria-hidden="true"></span>
+        </label>
+        <span class="theme-label" id="themeLabelRight">Fantasy</span>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main" class="container">
+    <section class="panel controls" aria-label="Binder controls">
+      <div class="field">
+        <label for="binderSelect">Binder</label>
+        <select id="binderSelect"></select>
+      </div>
+
+      <div class="field">
+        <label for="newBinderName">Create binder</label>
+        <div class="inline">
+          <input id="newBinderName" type="text" placeholder="e.g., Base Set / Commander / Trades" autocomplete="off" />
+          <button class="btn btn-small" id="createBinderBtn" type="button">Create</button>
+        </div>
+        <p class="hint">Binders are stored locally in your browser.</p>
+      </div>
+
+      <div class="field">
+        <label for="searchInput">Search cards</label>
+        <input id="searchInput" type="search" placeholder="Name, set, type, rarity, number…" />
+      </div>
+
+      <div class="field inline inline-gap">
+        <button class="btn btn-small btn-ghost" id="prevPageBtn" type="button">◀ Prev Page</button>
+        <div class="page-indicator" aria-live="polite"><span id="pageLabel">Page 1</span></div>
+        <button class="btn btn-small btn-ghost" id="nextPageBtn" type="button">Next Page ▶</button>
+      </div>
+    </section>
+
+    <section class="binder-wrap" aria-label="Binder">
+      <div class="binder" id="binder" aria-live="polite">
+        <!-- binder.mjs renders pages + cards -->
+      </div>
+    </section>
+
+    <section class="panel tips" aria-label="Tips">
+      <h2 class="h2">How it works</h2>
+      <ul class="bullets">
+        <li>Use <strong>Add Cards</strong> to enter Pokémon or MTG details (and upload/scan an image).</li>
+        <li>Cards save to <strong>localStorage</strong> automatically (no server).</li>
+        <li>Flip pages like a real binder. Rarity changes sleeve animation.</li>
+        <li>Use the toggle to swap Neon ↔ Fantasy styling.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>CardFlow stores everything locally in your browser. Clear site data to reset.</small>
+  </footer>
+
+  <script type="module" src="./js/app.mjs"></script>
+</body>
 </html>
