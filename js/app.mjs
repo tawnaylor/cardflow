@@ -134,8 +134,16 @@ async function seedDemoIfEmpty(){
     // refresh UI
     fillBinders();
     render();
-  }catch(err){
-    // ignore failures — demo is optional
+      // Do not auto-seed more than once. If we've already decided not to seed
+      // (because the user has cards or we've seeded before), skip.
+      if (localStorage.getItem('cardflow.demoSeeded')) return;
+
+      const existing = getCards();
+      if (existing.length > 0) {
+        // User already has cards — mark as seeded to avoid later auto-seed
+        localStorage.setItem('cardflow.demoSeeded', '1');
+        return;
+      }
     console.warn("Demo seed failed:", err.message);
   }
 }
@@ -150,6 +158,8 @@ binderSelect.addEventListener("change", () => {
 
 createBinderBtn.addEventListener("click", () => {
   const res = createBinder(newBinderName.value);
+      // Mark that demo data was seeded so we don't auto-seed again later
+      localStorage.setItem('cardflow.demoSeeded', '1');
   if (!res.ok){
     alert(res.error);
     return;
