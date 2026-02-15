@@ -287,7 +287,15 @@ autoFillBtn?.addEventListener("click", async () => {
       document.querySelector("#p_name").value = r.name || "";
       document.querySelector("#p_hp").value = r.hp || "";
       document.querySelector("#p_cardNumber").value = r.cardNumber || "";
-      document.querySelector("#p_type").value = r.type || "";
+      // Match Pokémon type case-insensitively against the select options
+      if (r.type && pTypeSelect) {
+        const want = String(r.type).toLowerCase();
+        const opt = [...pTypeSelect.options].find(o => (o.value||"").toLowerCase() === want || (o.textContent||"").toLowerCase().includes(want));
+        if (opt) pTypeSelect.value = opt.value;
+        else pTypeSelect.value = "";
+      } else {
+        document.querySelector("#p_type").value = r.type || "";
+      }
       document.querySelector("#p_illustrator").value = r.illustrator || "";
 
       if (r.setCode) {

@@ -2,15 +2,15 @@
 export async function ocrImageDataUrl(dataUrl) {
   if (!window.Tesseract) throw new Error("Tesseract not loaded.");
 
-  // If Tesseract.recognize is present (older builds), use it
-  if (typeof window.Tesseract.recognize === "function") {
-    const res = await window.Tesseract.recognize(dataUrl, "eng", { logger: () => {} });
-    return String(res?.data?.text || "").trim();
-  }
+  // Prefer worker API when available and point to local vendor files if present.
+  const local = {
+    workerPath: './vendor/tesseract/worker.min.js',
+    corePath: './vendor/tesseract/tesseract-core.wasm.js',
+    langPath: './vendor/tesseract/'
+  };
 
-  // Otherwise try worker API
   if (typeof window.Tesseract.createWorker === "function") {
-    const worker = window.Tesseract.createWorker({ logger: () => {} });
+    const worker = window.Tesseract.createWorker({ logger: () => {}, ...local });
     try {
       await worker.load();
       await worker.loadLanguage("eng");
@@ -20,6 +20,12 @@ export async function ocrImageDataUrl(dataUrl) {
     } finally {
       try { await worker.terminate(); } catch (_) {}
     }
+  }
+
+  // Fallback to bundled recognize (older bundle); pass local paths so it doesn't fetch CDN.
+  if (typeof window.Tesseract.recognize === "function") {
+    const res = await window.Tesseract.recognize(dataUrl, "eng", { logger: () => {}, ...local });
+    return String(res?.data?.text || "").trim();
   }
 
   throw new Error("Unsupported Tesseract API in vendor script.");
