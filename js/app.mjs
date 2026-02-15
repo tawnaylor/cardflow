@@ -114,8 +114,14 @@ render();
 // If there are no cards yet, try to auto-seed a demo card from data/demo_cards.json
 async function seedDemoIfEmpty(){
   try{
+    // Do not auto-seed more than once.
+    if (localStorage.getItem('cardflow.demoSeeded')) return;
+
     const existing = getCards();
-    if (existing.length > 0) return;
+    if (existing.length > 0) {
+      localStorage.setItem('cardflow.demoSeeded', '1');
+      return;
+    }
 
     const res = await fetch("./data/demo_cards.json");
     if (!res.ok) return;
@@ -126,24 +132,17 @@ async function seedDemoIfEmpty(){
     const targetBinderId = binders[0]?.id || "";
 
     for (const c of demo){
-      // ensure binderId exists
       const card = { ...c, binderId: c.binderId || targetBinderId };
       addCard(card);
     }
 
+    // Mark that demo data was seeded so we don't auto-seed again later
+    localStorage.setItem('cardflow.demoSeeded', '1');
+
     // refresh UI
     fillBinders();
     render();
-      // Do not auto-seed more than once. If we've already decided not to seed
-      // (because the user has cards or we've seeded before), skip.
-      if (localStorage.getItem('cardflow.demoSeeded')) return;
-
-      const existing = getCards();
-      if (existing.length > 0) {
-        // User already has cards — mark as seeded to avoid later auto-seed
-        localStorage.setItem('cardflow.demoSeeded', '1');
-        return;
-      }
+  }catch(err){
     console.warn("Demo seed failed:", err.message);
   }
 }

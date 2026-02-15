@@ -4,6 +4,7 @@ import { loadSets, flattenSets } from "./data.mjs";
 import { startCamera, stopCamera, captureAndWarp } from "./scan.mjs";
 import { ocrImageDataUrl } from "./ocr.mjs";
 import { recognizeCardFromText } from "./recognize.mjs";
+import { pokemontcgFetch } from "./api.mjs";
 import { POKEMON_TYPES, RARITIES, SET_SYMBOL_PRESETS } from "./symbols.mjs";
 
 const themeSwitch = document.querySelector("#themeSwitch");
@@ -30,6 +31,9 @@ const useScanBtn = document.querySelector("#useScanBtn");
 const scanVideo = document.querySelector("#scanVideo");
 const scanCanvas = document.querySelector("#scanCanvas");
 const autoFillBtn = document.querySelector("#autoFillBtn");
+// Search UI (search by name / number)
+const pSearchInput = document.querySelector("#p_search");
+const pSearchBtn = document.querySelector("#p_searchBtn");
 
 // New selects
 const pTypeSelect = document.querySelector("#p_type");
@@ -248,14 +252,15 @@ autoFillBtn?.addEventListener("click", async () => {
     autoFillBtn.disabled = true;
     saveHint.textContent = "Reading card…";
 
-    // Only allow Auto-Fill from an uploaded file (not from camera scans)
+    // Allow Auto-Fill from either an uploaded file or the last scanned capture
+    let imgDataUrl = null;
     const file = imageInput.files?.[0] || null;
-    if (!file) {
-      alert("Please upload an image file from your computer for Auto-Fill (scanned captures are not supported).");
+    if (lastScanDataUrl) imgDataUrl = lastScanDataUrl;
+    else if (file) imgDataUrl = await fileToDataUrl(file);
+    else {
+      alert("Please upload an image or capture a scan first for Auto-Fill.");
       return;
     }
-
-    const imgDataUrl = await fileToDataUrl(file);
 
     const text = await ocrImageDataUrl(imgDataUrl);
     const result = await recognizeCardFromText(text, { allowOnlineLookup: true });
@@ -312,6 +317,63 @@ autoFillBtn?.addEventListener("click", async () => {
     autoFillBtn.disabled = false;
   }
 });
+
+  async function fillPokemonFromApi(card) {
+    if (!card) return;
+    // card is an API card object
+    document.querySelector("#p_name").value = card.name || "";
+    document.querySelector("#p_hp").value = card.hp || "";
+    document.querySelector("#p_cardNumber").value = card.number ? `${card.number}/${card.set?.printedTotal || ""}`.replace(/\/$/, "") : "";
+    document.querySelector("#p_illustrator").value = card.artist || "";
+    // set type
+    if (card.types && card.types.length && pTypeSelect) {
+      const want = (card.types[0] || "").toLowerCase();
+      const opt = [...pTypeSelect.options].find(o => (o.value||"").toLowerCase() === want || (o.textContent||"").toLowerCase().includes(want));
+      if (opt) pTypeSelect.value = opt.value;
+    }
+    // set set dropdown if possible
+    if (card.set && card.set.id) {
+      const wantCode = (card.set.ptcgoCode || card.set.id || "").toUpperCase();
+      const opt = [...setSelect.options].find(o => o.value.startsWith(`${wantCode}::`));
+      if (opt) setSelect.value = opt.value;
+    }
+    // set image preview
+    const img = card.images?.large || card.images?.small || null;
+    if (img) imagePreview.src = img;
+  }
+
+  async function searchPokemonAndFill(query){
+    if (!query || !query.trim()) return null;
+    saveHint.textContent = "Searching online…";
+    try{
+      // simple name search; the API uses q=NAME query
+      const q = `name:"${query.replaceAll('"','')}"`;
+      const res = await pokemontcgFetch(`cards?q=${encodeURIComponent(q)}&orderBy=releasedAt&order=desc&pageSize=10`);
+      const card = res?.data?.[0] || null;
+      if (card){
+        gameSelect.value = "pokemon";
+        showGameFields();
+        populateSetDropdown();
+        await fillPokemonFromApi(card);
+        saveHint.textContent = "Found and filled from API. Review fields.";
+        return card;
+      }
+      saveHint.textContent = "No results found.";
+      return null;
+    }catch(err){
+      console.error(err);
+      saveHint.textContent = "Search failed.";
+      return null;
+    }
+  }
+
+  pSearchBtn?.addEventListener('click', async () => {
+    const q = pSearchInput?.value || "";
+    if (!q.trim()) { alert('Enter a Pokémon name or card number to search.'); return; }
+    pSearchBtn.disabled = true;
+    await searchPokemonAndFill(q.trim());
+    pSearchBtn.disabled = false;
+  });
 
 createBinderBtn.addEventListener("click", () => {
   const res = createBinder(newBinderName.value);

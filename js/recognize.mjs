@@ -43,18 +43,18 @@ export async function lookupMtgByName(name) {
   }
 }
 
+import { pokemontcgFetch } from "./api.mjs";
+
 export async function lookupPokemonByNameAndNumber(name, number) {
   if (!name) return null;
   try {
     const numOnly = String(number || "").split("/")[0] || "";
     const q = [`name:"${String(name).replaceAll('"','') }"`];
     if (numOnly) q.push(`number:"${numOnly}"`);
-    const url = `https://api.pokemontcg.io/v2/cards?q=${encodeURIComponent(q.join(" "))}`;
-    const res = await fetch(url);
-    if (!res.ok) return null;
-    const json = await res.json();
+    const path = `cards?q=${encodeURIComponent(q.join(" "))}`;
+    const json = await pokemontcgFetch(path);
     return json?.data?.[0] || null;
-  } catch {
+  } catch (e) {
     return null;
   }
 }
