@@ -33,11 +33,13 @@ function extractPokemonNumber(text) {
 
 export async function lookupMtgByName(name) {
   if (!name) return null;
+  // Local-only lookup: check for a developer-provided local_cards.json
   try {
-    const url = `https://api.scryfall.com/cards/named?fuzzy=${encodeURIComponent(name)}`;
-    const res = await fetch(url);
+    const res = await fetch('./data/local_cards.json');
     if (!res.ok) return null;
-    return res.json();
+    const db = await res.json();
+    const found = (db.mtg || []).find(c => String(c.name || "").toLowerCase() === String(name).toLowerCase());
+    return found || null;
   } catch {
     return null;
   }
@@ -45,21 +47,22 @@ export async function lookupMtgByName(name) {
 
 export async function lookupPokemonByNameAndNumber(name, number) {
   if (!name) return null;
+  // Local-only lookup: use developer-provided local_cards.json if present
   try {
-    const numOnly = String(number || "").split("/")[0] || "";
-    const q = [`name:"${String(name).replaceAll('"','') }"`];
-    if (numOnly) q.push(`number:"${numOnly}"`);
-    const url = `https://api.pokemontcg.io/v2/cards?q=${encodeURIComponent(q.join(" "))}`;
-    const res = await fetch(url);
+    const res = await fetch('./data/local_cards.json');
     if (!res.ok) return null;
-    const json = await res.json();
-    return json?.data?.[0] || null;
+    const db = await res.json();
+    const candidates = (db.pokemon || []).filter(c => String(c.name || "").toLowerCase() === String(name).toLowerCase());
+    if (!candidates.length) return null;
+    if (!number) return candidates[0];
+    const found = candidates.find(c => String(c.cardNumber || "") === String(number));
+    return found || candidates[0] || null;
   } catch {
     return null;
   }
 }
 
-export async function recognizeCardFromText(ocrText, { allowOnlineLookup = true } = {}) {
+export async function recognizeCardFromText(ocrText, { allowOnlineLookup = false } = {}) {
   const lines = cleanLines(ocrText);
   const gameGuess = guessGame(ocrText) || "pokemon";
 

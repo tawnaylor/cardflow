@@ -1,3 +1,54 @@
+import { getCards, deleteCard } from "./storage.mjs";
+
+function qs(name){
+  return new URLSearchParams(location.search).get(name);
+}
+
+function renderCard(card){
+  if (!card) return `<div class="panel"><p class="hint">Card not found.</p></div>`;
+  const img = card.imageDataUrl || './assets/placeholder-card.png';
+  const title = card.game === 'pokemon' ? (card.pokemon?.name || '') : (card.mtg?.name || '');
+  return `
+    <div class="panel">
+      <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start">
+        <div style="min-width:240px;flex:0 0 240px">
+          <div class="preview"><img alt="${title}" src="${img}" style="width:100%;border-radius:12px" /></div>
+        </div>
+        <div style="flex:1;min-width:220px">
+          <h1 class="h1">${title}</h1>
+          <p class="small">Binder: ${card.binderName || ''}</p>
+          <p class="hint">Set: ${card.setName || card.setCode || ''} — Rarity: ${card.rarity || ''}</p>
+          <div style="margin-top:12px">
+            <pre style="white-space:pre-wrap">${JSON.stringify(card, null, 2)}</pre>
+          </div>
+          <div style="margin-top:12px;display:flex;gap:8px">
+            <a class="btn btn-ghost" href="./index.html">Back</a>
+            <button id="deleteBtn" class="btn btn-small">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function init(){
+  const id = qs('id');
+  const cards = getCards();
+  const card = cards.find(c => c.id === id);
+  const panel = document.querySelector('#cardPanel');
+  panel.innerHTML = renderCard(card);
+
+  const del = document.querySelector('#deleteBtn');
+  if (del){
+    del.addEventListener('click', () => {
+      if (!confirm('Delete this card?')) return;
+      deleteCard(id);
+      window.location.href = './index.html';
+    });
+  }
+}
+
+init();
 import { getCards } from "./storage.mjs";
 import { initThemeSwitch, escapeText } from "./ui.mjs";
 

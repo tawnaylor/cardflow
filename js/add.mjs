@@ -258,7 +258,7 @@ autoFillBtn?.addEventListener("click", async () => {
     }
 
     const text = await ocrImageDataUrl(imgDataUrl);
-    const result = await recognizeCardFromText(text, { allowOnlineLookup: true });
+    const result = await recognizeCardFromText(text, { allowOnlineLookup: false });
 
     // Set game and show fields
     gameSelect.value = result.game;
