@@ -56,6 +56,40 @@
         <input id="searchInput" type="search" placeholder="Name, set, type, rarity, number…" />
       </div>
 
+      <div class="grid-2">
+        <div class="field">
+          <label for="rarityFilter">Filter by rarity</label>
+          <select id="rarityFilter">
+            <option value="">All rarities</option>
+            <option value="common">Common</option>
+            <option value="uncommon">Uncommon</option>
+            <option value="rare">Rare</option>
+            <option value="holo">Holo</option>
+            <option value="ultra">Ultra Rare</option>
+            <option value="secret">Secret Rare</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="energyFilter">Filter by Pokémon energy/type</label>
+          <select id="energyFilter">
+            <option value="">All types</option>
+            <option value="Colorless">Colorless</option>
+            <option value="Darkness">Darkness</option>
+            <option value="Dragon">Dragon</option>
+            <option value="Fairy">Fairy</option>
+            <option value="Fighting">Fighting</option>
+            <option value="Fire">Fire</option>
+            <option value="Grass">Grass</option>
+            <option value="Lightning">Lightning</option>
+            <option value="Metal">Metal</option>
+            <option value="Psychic">Psychic</option>
+            <option value="Water">Water</option>
+          </select>
+          <p class="hint">Only applies to Pokémon cards (MTG cards ignore this filter).</p>
+        </div>
+      </div>
+
       <div class="field inline inline-gap">
         <button class="btn btn-small btn-ghost" id="prevPageBtn" type="button">◀ Prev Page</button>
         <div class="page-indicator" aria-live="polite"><span id="pageLabel">Page 1</span></div>

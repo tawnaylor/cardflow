@@ -1,6 +1,7 @@
 import { getBinders, createBinder, getCards, addCard } from "./storage.mjs";
 import { initThemeSwitch } from "./ui.mjs";
 import { renderBinder } from "./binder.mjs";
+import { iconForEnergy, iconForRarity } from "./symbols.mjs";
 
 const binderEl = document.querySelector("#binder");
 const binderSelect = document.querySelector("#binderSelect");
@@ -11,12 +12,16 @@ const prevPageBtn = document.querySelector("#prevPageBtn");
 const nextPageBtn = document.querySelector("#nextPageBtn");
 const pageLabel = document.querySelector("#pageLabel");
 const themeSwitch = document.querySelector("#themeSwitch");
+const rarityFilter = document.querySelector("#rarityFilter");
+const energyFilter = document.querySelector("#energyFilter");
 
 let state = {
   binderId: "",
   pageIndex: 0,
   totalPages: 1,
-  query: ""
+  query: "",
+  rarity: "",
+  energy: ""
 };
 
 function fillBinders(){
@@ -39,26 +44,52 @@ function activeBinderName(){
 
 function filterCards(){
   const all = getCards();
-  const inBinder = all.filter(c => c.binderId === state.binderId);
+  let list = all.filter(c => c.binderId === state.binderId);
 
   const q = state.query.trim().toLowerCase();
-  if (!q) return inBinder;
+  if (q){
+    list = list.filter(c => {
+      const parts = [
+        c.game,
+        c.rarity,
+        c.setName,
+        c.setCode,
+        c.pokemon?.name,
+        c.pokemon?.type,
+        c.pokemon?.cardNumber,
+        c.mtg?.name,
+        c.mtg?.cardType,
+        c.mtg?.collectorNumber
+      ].filter(Boolean).join(" ").toLowerCase();
+      return parts.includes(q);
+    });
+  }
 
-  return inBinder.filter(c => {
-    const parts = [
-      c.game,
-      c.rarity,
-      c.setName,
-      c.setCode,
-      c.pokemon?.name,
-      c.pokemon?.type,
-      c.pokemon?.cardNumber,
-      c.mtg?.name,
-      c.mtg?.cardType,
-      c.mtg?.collectorNumber
-    ].filter(Boolean).join(" ").toLowerCase();
-    return parts.includes(q);
+  if (state.rarity){
+    list = list.filter(c => (c.rarity || "") === state.rarity);
+  }
+
+  if (state.energy){
+    list = list.filter(c => {
+      if (c.game !== "pokemon") return true;
+      return (c.pokemon?.type || "").toLowerCase() === state.energy.toLowerCase();
+    });
+  }
+
+  const rarityRank = { common: 1, uncommon: 2, rare: 3, holo: 4, ultra: 5, secret: 6 };
+  list.sort((a,b) => {
+    const ra = rarityRank[a.rarity] || 99;
+    const rb = rarityRank[b.rarity] || 99;
+    if (ra !== rb) return rb - ra;
+    const ea = (a.pokemon?.type || "").toLowerCase();
+    const eb = (b.pokemon?.type || "").toLowerCase();
+    if (ea !== eb) return ea.localeCompare(eb);
+    const na = (a.game === "pokemon" ? a.pokemon?.name : a.mtg?.name) || "";
+    const nb = (b.game === "pokemon" ? b.pokemon?.name : b.mtg?.name) || "";
+    return na.localeCompare(nb);
   });
+
+  return list;
 }
 
 function render(flipDir){
@@ -132,6 +163,18 @@ createBinderBtn.addEventListener("click", () => {
 
 searchInput.addEventListener("input", () => {
   state.query = searchInput.value;
+  state.pageIndex = 0;
+  render();
+});
+
+rarityFilter?.addEventListener("change", () => {
+  state.rarity = rarityFilter.value;
+  state.pageIndex = 0;
+  render();
+});
+
+energyFilter?.addEventListener("change", () => {
+  state.energy = energyFilter.value;
   state.pageIndex = 0;
   render();
 });

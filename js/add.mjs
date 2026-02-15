@@ -4,6 +4,7 @@ import { loadSets, flattenSets } from "./data.mjs";
 import { startCamera, stopCamera, captureAndWarp } from "./scan.mjs";
 import { ocrImageDataUrl } from "./ocr.mjs";
 import { recognizeCardFromText } from "./recognize.mjs";
+import { POKEMON_TYPES, RARITIES, SET_SYMBOL_PRESETS } from "./symbols.mjs";
 
 const themeSwitch = document.querySelector("#themeSwitch");
 
@@ -29,6 +30,12 @@ const useScanBtn = document.querySelector("#useScanBtn");
 const scanVideo = document.querySelector("#scanVideo");
 const scanCanvas = document.querySelector("#scanCanvas");
 const autoFillBtn = document.querySelector("#autoFillBtn");
+
+// New selects
+const pTypeSelect = document.querySelector("#p_type");
+const pSetSymbolSelect = document.querySelector("#p_setSymbol");
+const pRaritySymbolSelect = document.querySelector("#p_raritySymbol");
+const mRaritySymbolSelect = document.querySelector("#m_raritySymbol");
 
 let lastScanDataUrl = null;
 
@@ -63,6 +70,22 @@ function getSelectedSetMeta(){
   if (!val) return null;
   const [code, name] = val.split("::");
   return { code, name };
+}
+
+function fillSimpleSelect(selectEl, items, { placeholder = "Select…" } = {}) {
+  if (!selectEl) return;
+  selectEl.innerHTML = "";
+  const opt0 = document.createElement("option");
+  opt0.value = "";
+  opt0.textContent = placeholder;
+  selectEl.appendChild(opt0);
+
+  for (const it of items) {
+    const opt = document.createElement("option");
+    opt.value = it.key ?? it.value ?? it.label;
+    opt.textContent = it.label;
+    selectEl.appendChild(opt);
+  }
 }
 
 async function loadAndPopulateSets(){
@@ -298,9 +321,49 @@ gameSelect.addEventListener("change", () => {
   populateSetDropdown();
 });
 
+// Auto-sync rarity symbol when main rarity changes
+rarity?.addEventListener("change", () => {
+  const map = {
+    common: "●",
+    uncommon: "◆",
+    rare: "★",
+    holo: "✦",
+    ultra: "✷",
+    secret: "✹"
+  };
+  const sym = map[rarity.value] || "";
+  if (pRaritySymbolSelect) pRaritySymbolSelect.value = sym;
+  if (mRaritySymbolSelect) mRaritySymbolSelect.value = sym;
+});
+
 initThemeSwitch(themeSwitch);
 fillBinders();
 showGameFields();
+// Initialize simple selects before loading sets
+fillSimpleSelect(
+  pTypeSelect,
+  POKEMON_TYPES.map(t => ({ key: t.key, label: t.label })),
+  { placeholder: "Select a type…" }
+);
+
+fillSimpleSelect(
+  pSetSymbolSelect,
+  SET_SYMBOL_PRESETS.map(s => ({ key: s.key, label: s.label })),
+  { placeholder: "Choose set symbol…" }
+);
+
+fillSimpleSelect(
+  pRaritySymbolSelect,
+  RARITIES.map(r => ({ key: r.symbol, label: `${r.label} (${r.symbol})` })),
+  { placeholder: "Choose rarity symbol…" }
+);
+
+fillSimpleSelect(
+  mRaritySymbolSelect,
+  RARITIES.map(r => ({ key: r.symbol, label: `${r.label} (${r.symbol})` })),
+  { placeholder: "Choose rarity symbol…" }
+);
+
 await loadAndPopulateSets();
 
 form.addEventListener("submit", async (e) => {
@@ -365,6 +428,7 @@ form.addEventListener("submit", async (e) => {
     setCode: document.querySelector("#m_setCode").value.trim(),
     language: document.querySelector("#m_language").value.trim(),
     expansionSymbol: document.querySelector("#m_expansionSymbol").value.trim(),
+    raritySymbol: document.querySelector("#m_raritySymbol")?.value.trim() || "",
     backNotes: document.querySelector("#m_backNotes").value.trim()
   } : null;
 
