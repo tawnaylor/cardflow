@@ -332,21 +332,6 @@ input:focus,select:focus,textarea:focus{
 }
 .small{font-size:.78rem; color:var(--muted)}
 
-/* Icon badges inside sleeve meta */
-.icon-wrap{display:flex;gap:8px;align-items:center}
-.icon{width:22px;height:22px;display:inline-grid;place-items:center;border-radius:6px;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.06);font-size:12px}
-
-/* Stronger rarity sleeve shimmer for ultra/secret */
-.sleeve[data-rarity="ultra"]{animation: ultraShimmer 1.2s linear infinite}
-.sleeve[data-rarity="secret"]{animation: secretPrism 0.9s linear infinite}
-
-/* Responsive form improvements */
-@media (max-width:520px){
-  .grid-2{grid-template-columns:1fr}
-  .preview img{width:100%}
-  .top-actions{justify-content:center}
-}
-
 .sleeve:hover{
   transform: translateY(-2px);
   transition: transform .12s ease;

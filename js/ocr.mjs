@@ -1,9 +1,6 @@
 // Simple wrapper for in-browser Tesseract.js OCR
 export async function ocrImageDataUrl(dataUrl) {
-  if (!window.Tesseract) {
-    console.warn("Tesseract not found; OCR disabled. Place vendor/tesseract files to enable OCR.");
-    return ""; // graceful fallback: return empty text so recognition continues without throwing
-  }
+  if (!window.Tesseract) throw new Error("Tesseract not loaded.");
 
   // If Tesseract.recognize is present (older builds), use it
   if (typeof window.Tesseract.recognize === "function") {
@@ -25,6 +22,5 @@ export async function ocrImageDataUrl(dataUrl) {
     }
   }
 
-  console.warn("Unsupported Tesseract API in vendor script; OCR disabled.");
-  return "";
+  throw new Error("Unsupported Tesseract API in vendor script.");
 }
