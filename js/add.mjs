@@ -195,12 +195,9 @@ imageInput.addEventListener("change", async () => {
   }
   const dataUrl = await fileToDataUrl(file);
   imagePreview.src = dataUrl;
-  // Offer to auto-fill the form from the uploaded image
+  // Auto-fill immediately from the uploaded image
   try{
-    const want = confirm('Auto-fill form from this uploaded image?');
-    if (want){
-      await autoFillFromDataUrl(dataUrl);
-    }
+    await autoFillFromDataUrl(dataUrl);
   }catch(e){
     console.error(e);
   }
@@ -442,6 +439,22 @@ async function searchPokemonCandidates(query){
     }
 
     candidates = res?.data || [];
+    // If API returned nothing, fall back to local demo file (useful offline or when API times out)
+    if (!candidates.length){
+      try{
+        const localRes = await fetch('./data/demo_cards.json');
+        if (localRes.ok){
+          const local = await localRes.json();
+          // map demo card shape to API-like card objects
+          candidates = (local || []).map(c => ({
+            name: c.pokemon?.name || c.mtg?.name || '',
+            number: c.pokemon?.cardNumber || c.mtg?.collectorNumber || '',
+            set: { name: c.setName || '', ptcgoCode: c.setCode || c.setCode || '', id: c.setCode || '' },
+            images: { small: c.imageDataUrl || './assets/placeholder-card.png', large: c.imageDataUrl || './assets/placeholder-card.png' }
+          }));
+        }
+      }catch(e){ /* ignore local fallback errors */ }
+    }
     if (!candidates.length) { saveHint.textContent = "No results found."; return []; }
 
     // Score and sort candidates by closeness
@@ -486,27 +499,58 @@ function renderSearchResults(candidates){
     img.style.height = 'auto';
     img.style.borderRadius = '6px';
 
+
     const meta = document.createElement('div');
     meta.style.flex = '1';
+    const setName = c.set?.name || c.setName || '';
+    const rarity = c.rarity || '';
+    const release = c.set?.releaseDate || '';
     meta.innerHTML = `<strong style="font-size:0.95rem">${escapeHtml(c.name)}</strong>
-      <div style="font-size:0.85rem; color:var(--muted);">${escapeHtml(c.set?.name || '')} — ${escapeHtml(c.number || '')}</div>`;
+      <div style="font-size:0.85rem; color:var(--muted);">${escapeHtml(setName)} — ${escapeHtml(c.number || '')}</div>
+      <div style="font-size:0.8rem; color:var(--muted); margin-top:4px;">${escapeHtml(rarity)} ${release ? '· ' + escapeHtml(release) : ''}</div>`;
 
-    const btn = document.createElement('button');
-    btn.className = 'btn btn-small btn-ghost';
-    btn.type = 'button';
-    btn.textContent = 'Select';
-    btn.style.marginLeft = '8px';
+    const actions = document.createElement('div');
+    actions.style.display = 'flex';
+    actions.style.gap = '8px';
+
+    const selectBtn = document.createElement('button');
+    selectBtn.className = 'btn btn-small';
+    selectBtn.type = 'button';
+    selectBtn.textContent = 'Select';
+
+    const infoBtn = document.createElement('button');
+    infoBtn.className = 'btn btn-small btn-ghost';
+    infoBtn.type = 'button';
+    infoBtn.textContent = 'Info';
+
+    const details = document.createElement('div');
+    details.style.display = 'none';
+    details.style.marginTop = '8px';
+    details.style.fontSize = '0.85rem';
+    details.style.color = 'var(--muted)';
+    details.textContent = JSON.stringify(c, null, 2).slice(0, 400) + (JSON.stringify(c, null, 2).length > 400 ? '…' : '');
+
+    actions.appendChild(selectBtn);
+    actions.appendChild(infoBtn);
 
     div.appendChild(img);
     div.appendChild(meta);
-    div.appendChild(btn);
+    div.appendChild(actions);
+    div.appendChild(details);
 
-    // click on row or button selects the card
-    div.addEventListener('click', async () => {
+    // select button fills the form
+    selectBtn.addEventListener('click', async (ev) => {
+      ev.stopPropagation();
       pSearchInput.value = c.name || '';
       await fillPokemonFromApi(c);
       renderSearchResults([]);
       saveHint.textContent = 'Filled from selected match.';
+    });
+
+    // toggle details
+    infoBtn.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      details.style.display = details.style.display === 'none' ? 'block' : 'none';
     });
 
     pResultsEl.appendChild(div);
