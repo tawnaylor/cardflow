@@ -1,0 +1,30 @@
+{
+  "pokemon": [
+    {
+      "name": "Pikachu",
+      "hp": "60",
+      "types": ["Electric"],
+      "cardNumber": "25/111",
+      "rarity": "holo",
+      "set": { "id": "SM-25", "name": "Sun & Moon — Pikachu Collection", "ptcgoCode": "SM25" }
+    },
+    {
+      "name": "Demomon",
+      "hp": "120",
+      "types": ["Demo"],
+      "cardNumber": "1/1",
+      "rarity": "rare",
+      "set": { "id": "SM1", "name": "Sun & Moon", "ptcgoCode": "SM1" }
+    }
+  ],
+  "mtg": [
+    {
+      "name": "Black Lotus",
+      "manaCost": "{0}",
+      "type_line": "Artifact",
+      "collector_number": "233",
+      "set": { "id": "LEA", "name": "Limited Edition Alpha" },
+      "rarity": "rare"
+    }
+  ]
+}
