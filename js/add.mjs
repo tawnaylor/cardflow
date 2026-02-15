@@ -248,14 +248,14 @@ autoFillBtn?.addEventListener("click", async () => {
     autoFillBtn.disabled = true;
     saveHint.textContent = "Reading card…";
 
-    const imgDataUrl = (lastScanDataUrl || (imagePreview?.src || "")).startsWith("data:")
-      ? (lastScanDataUrl || imagePreview.src)
-      : null;
-
-    if (!imgDataUrl) {
-      alert("Scan or upload an image first.");
+    // Only allow Auto-Fill from an uploaded file (not from camera scans)
+    const file = imageInput.files?.[0] || null;
+    if (!file) {
+      alert("Please upload an image file from your computer for Auto-Fill (scanned captures are not supported).");
       return;
     }
+
+    const imgDataUrl = await fileToDataUrl(file);
 
     const text = await ocrImageDataUrl(imgDataUrl);
     const result = await recognizeCardFromText(text, { allowOnlineLookup: true });
