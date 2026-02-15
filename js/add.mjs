@@ -195,6 +195,15 @@ imageInput.addEventListener("change", async () => {
   }
   const dataUrl = await fileToDataUrl(file);
   imagePreview.src = dataUrl;
+  // Offer to auto-fill the form from the uploaded image
+  try{
+    const want = confirm('Auto-fill form from this uploaded image?');
+    if (want){
+      await autoFillFromDataUrl(dataUrl);
+    }
+  }catch(e){
+    console.error(e);
+  }
 });
 
 startScanBtn?.addEventListener("click", async () => {
@@ -254,6 +263,7 @@ autoFillBtn?.addEventListener("click", async () => {
     saveHint.textContent = "Reading card…";
 
     // Allow Auto-Fill from either an uploaded file or the last scanned capture
+    // Determine an image to use and delegate to the shared auto-fill function
     let imgDataUrl = null;
     const file = imageInput.files?.[0] || null;
     if (lastScanDataUrl) imgDataUrl = lastScanDataUrl;
@@ -263,6 +273,19 @@ autoFillBtn?.addEventListener("click", async () => {
       return;
     }
 
+    await autoFillFromDataUrl(imgDataUrl);
+  } catch (e) {
+    console.error(e);
+    alert("Auto-fill failed. Try a cleaner scan with better lighting.");
+  } finally {
+    autoFillBtn.disabled = false;
+  }
+});
+
+// Shared auto-fill routine used by button, scan and upload
+async function autoFillFromDataUrl(imgDataUrl){
+  try{
+    saveHint.textContent = "Reading card…";
     const text = await ocrImageDataUrl(imgDataUrl);
     const result = await recognizeCardFromText(text, { allowOnlineLookup: true });
 
@@ -310,14 +333,20 @@ autoFillBtn?.addEventListener("click", async () => {
       }
     }
 
+    // update preview image if possible
+    try{
+      // If OCR/lookup returned an image URL, prefer it
+      const poke = result.resolved || null;
+      const img = poke?.images?.large || poke?.images?.small || imgDataUrl;
+      if (img) imagePreview.src = img;
+    }catch(e){ /* ignore */ }
+
     saveHint.textContent = "Auto-fill complete. Please review fields for accuracy.";
-  } catch (e) {
+  }catch(e){
     console.error(e);
     alert("Auto-fill failed. Try a cleaner scan with better lighting.");
-  } finally {
-    autoFillBtn.disabled = false;
   }
-});
+}
 
   async function fillPokemonFromApi(card) {
     if (!card) return;
