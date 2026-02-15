@@ -126,8 +126,11 @@
             <div class="field">
               <label for="p_name">Name <span aria-hidden="true">*</span></label>
               <div style="display:flex; gap:8px; align-items:center; margin-bottom:8px;">
-                <input id="p_search" placeholder="Search Pokémon name or number" style="flex:1;" />
+                <input id="p_search" placeholder="Search Pokémon name, number or set+number (e.g. SV1 12)" style="flex:1;" />
                 <button class="btn btn-small" id="p_searchBtn" type="button">Search</button>
+              </div>
+              <div id="p_searchResults" style="margin-top:8px; display:none; background:#111; border-radius:8px; padding:8px;">
+                <!-- Search results inserted here -->
               </div>
               <input id="p_name" name="p_name" required />
               <p class="error" data-for="p_name" aria-live="polite"></p>

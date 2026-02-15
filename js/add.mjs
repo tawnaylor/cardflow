@@ -34,6 +34,7 @@ const autoFillBtn = document.querySelector("#autoFillBtn");
 // Search UI (search by name / number)
 const pSearchInput = document.querySelector("#p_search");
 const pSearchBtn = document.querySelector("#p_searchBtn");
+const pResultsEl = document.querySelector("#p_searchResults");
 
 // New selects
 const pTypeSelect = document.querySelector("#p_type");
@@ -342,87 +343,168 @@ autoFillBtn?.addEventListener("click", async () => {
     if (img) imagePreview.src = img;
   }
 
-  async function searchPokemonAndFill(query){
-    if (!query || !query.trim()) return null;
-    saveHint.textContent = "Searching online…";
-    const clean = String(query || "").replaceAll('"','').trim();
-    function normalize(s){ return String(s||"").toLowerCase().replace(/[^a-z0-9]/g,""); }
-    function levenshtein(a,b){
-      a = String(a||""); b = String(b||"");
-      const m = a.length, n = b.length;
-      const d = Array.from({length: m+1}, () => new Array(n+1).fill(0));
-      for(let i=0;i<=m;i++) d[i][0]=i;
-      for(let j=0;j<=n;j++) d[0][j]=j;
-      for(let i=1;i<=m;i++){
-        for(let j=1;j<=n;j++){
-          const cost = a[i-1] === b[j-1] ? 0 : 1;
-          d[i][j] = Math.min(d[i-1][j]+1, d[i][j-1]+1, d[i-1][j-1]+cost);
-        }
+async function searchPokemonAndFill(query){
+  if (!query || !query.trim()) return null;
+  const clean = String(query || "").replaceAll('"','').trim();
+  // perform search and auto-fill the best match (kept for backward compatibility)
+  const candidates = await searchPokemonCandidates(clean);
+  if (!candidates || candidates.length === 0){ saveHint.textContent = "No results found."; return null; }
+  const best = candidates[0];
+  gameSelect.value = "pokemon";
+  showGameFields();
+  populateSetDropdown();
+  await fillPokemonFromApi(best);
+  saveHint.textContent = "Found and filled from API. Review fields.";
+  // clear results UI
+  renderSearchResults([]);
+  return best;
+}
+
+// Return an array of candidate cards (best first). Supports name and set+number queries.
+async function searchPokemonCandidates(query){
+  if (!query || !query.trim()) return [];
+  saveHint.textContent = "Searching online…";
+  const clean = String(query||"").replaceAll('"','').trim();
+  function normalize(s){ return String(s||"").toLowerCase().replace(/[^a-z0-9]/g,""); }
+  function levenshtein(a,b){
+    a = String(a||""); b = String(b||"");
+    const m = a.length, n = b.length;
+    const d = Array.from({length: m+1}, () => new Array(n+1).fill(0));
+    for(let i=0;i<=m;i++) d[i][0]=i;
+    for(let j=0;j<=n;j++) d[0][j]=j;
+    for(let i=1;i<=m;i++){
+      for(let j=1;j<=n;j++){
+        const cost = a[i-1] === b[j-1] ? 0 : 1;
+        d[i][j] = Math.min(d[i-1][j]+1, d[i][j-1]+1, d[i-1][j-1]+cost);
       }
-      return d[m][n];
     }
-
-    try{
-      // Try exact quoted name first
-      let path = `cards?q=${encodeURIComponent(`name:"${clean}"`)}&orderBy=releasedAt&order=desc&pageSize=20`;
-      let res = null;
-      try{ res = await pokemontcgFetch(path); } catch(e) { res = null; }
-
-      // If no results, try wildcard contains (name:*term*)
-      if (!res?.data?.length){
-        path = `cards?q=${encodeURIComponent(`name:*${clean}*`)}&orderBy=releasedAt&order=desc&pageSize=40`;
-        try{ res = await pokemontcgFetch(path); } catch(e) { res = null; }
-      }
-
-      const candidates = res?.data || [];
-      if (candidates.length === 0){
-        saveHint.textContent = "No results found.";
-        return null;
-      }
-
-      // Score candidates: exact match > contains > levenshtein
-      const qNorm = normalize(clean);
-      let best = null, bestScore = Infinity;
-      for (const c of candidates){
-        const name = c.name || "";
-        const nNorm = normalize(name);
-        if (nNorm === qNorm){ best = c; bestScore = -1; break; }
-        if (nNorm.includes(qNorm)){
-          // prefer shorter distance to exact
-          const score = 10 + (nNorm.length - qNorm.length);
-          if (score < bestScore){ best = c; bestScore = score; }
-          continue;
-        }
-        // fallback: small levenshtein distance on normalized strings
-        const dist = levenshtein(nNorm, qNorm);
-        const score = 100 + dist;
-        if (score < bestScore){ best = c; bestScore = score; }
-      }
-
-      if (best){
-        gameSelect.value = "pokemon";
-        showGameFields();
-        populateSetDropdown();
-        await fillPokemonFromApi(best);
-        saveHint.textContent = "Found and filled from API. Review fields.";
-        return best;
-      }
-
-      saveHint.textContent = "No suitable match found.";
-      return null;
-    }catch(err){
-      console.error(err);
-      saveHint.textContent = "Search failed.";
-      return null;
-    }
+    return d[m][n];
   }
+
+  try{
+    // Detect set+number patterns like "SV1 12", "SV1:12", "SV1-12/198" etc.
+    const setNumMatch = clean.match(/^([A-Za-z0-9]{1,8})[\s:\-]?\s*(\d{1,4}(?:\/\d{1,4})?)$/);
+    let res = null;
+    let candidates = [];
+
+    if (setNumMatch){
+      const code = setNumMatch[1];
+      const number = setNumMatch[2];
+      // try ptcgoCode + number
+      try{ res = await pokemontcgFetch(`cards?q=${encodeURIComponent(`set.ptcgoCode:"${code}" number:"${number.split('/')[0]}"`)}&pageSize=10`); }catch(e){ res = null; }
+      if (!res?.data?.length){
+        try{ res = await pokemontcgFetch(`cards?q=${encodeURIComponent(`set.id:"${code}" number:"${number.split('/')[0]}"`)}&pageSize=10`); }catch(e){ res = null; }
+      }
+      candidates = res?.data || [];
+      // still try name fallback if none
+      if (!candidates.length){
+        // fallthrough to name-based search
+      } else {
+        return candidates.slice(0,10);
+      }
+    }
+
+    // Name-based search: exact quoted name, wildcard contains
+    let path = `cards?q=${encodeURIComponent(`name:"${clean}"`)}&orderBy=releasedAt&order=desc&pageSize=40`;
+    try{ res = await pokemontcgFetch(path); }catch(e){ res = null; }
+    if (!res?.data?.length){
+      path = `cards?q=${encodeURIComponent(`name:*${clean}*`)}&orderBy=releasedAt&order=desc&pageSize=80`;
+      try{ res = await pokemontcgFetch(path); }catch(e){ res = null; }
+    }
+
+    candidates = res?.data || [];
+    if (!candidates.length) { saveHint.textContent = "No results found."; return []; }
+
+    // Score and sort candidates by closeness
+    const qNorm = normalize(clean);
+    const scored = candidates.map(c => {
+      const nNorm = normalize(c.name || "");
+      let score = 1000;
+      if (nNorm === qNorm) score = 0;
+      else if (nNorm.includes(qNorm)) score = 10 + (nNorm.length - qNorm.length);
+      else score = 200 + levenshtein(nNorm, qNorm);
+      return { card: c, score };
+    }).sort((a,b) => a.score - b.score);
+
+    return scored.map(s => s.card).slice(0,10);
+  }catch(err){
+    console.error(err);
+    saveHint.textContent = "Search failed.";
+    return [];
+  }
+}
+
+function renderSearchResults(candidates){
+  if (!pResultsEl) return;
+  pResultsEl.innerHTML = "";
+  if (!candidates || candidates.length === 0){ pResultsEl.style.display = 'none'; return; }
+  pResultsEl.style.display = 'block';
+  for (const c of candidates){
+    const div = document.createElement('div');
+    div.style.display = 'flex';
+    div.style.gap = '8px';
+    div.style.alignItems = 'center';
+    div.style.padding = '6px';
+    div.style.borderRadius = '6px';
+    div.style.cursor = 'pointer';
+    div.style.border = '1px solid rgba(255,255,255,0.04)';
+    div.dataset.cardJson = JSON.stringify(c);
+
+    const img = document.createElement('img');
+    img.src = c.images?.small || c.images?.large || './assets/placeholder-card.png';
+    img.alt = c.name || '';
+    img.style.width = '48px';
+    img.style.height = 'auto';
+    img.style.borderRadius = '6px';
+
+    const meta = document.createElement('div');
+    meta.style.flex = '1';
+    meta.innerHTML = `<strong style="font-size:0.95rem">${escapeHtml(c.name)}</strong>
+      <div style="font-size:0.85rem; color:var(--muted);">${escapeHtml(c.set?.name || '')} — ${escapeHtml(c.number || '')}</div>`;
+
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-small btn-ghost';
+    btn.type = 'button';
+    btn.textContent = 'Select';
+    btn.style.marginLeft = '8px';
+
+    div.appendChild(img);
+    div.appendChild(meta);
+    div.appendChild(btn);
+
+    // click on row or button selects the card
+    div.addEventListener('click', async () => {
+      pSearchInput.value = c.name || '';
+      await fillPokemonFromApi(c);
+      renderSearchResults([]);
+      saveHint.textContent = 'Filled from selected match.';
+    });
+
+    pResultsEl.appendChild(div);
+  }
+}
+
+function escapeHtml(s){ return String(s||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
 
   pSearchBtn?.addEventListener('click', async () => {
     const q = pSearchInput?.value || "";
     if (!q.trim()) { alert('Enter a Pokémon name or card number to search.'); return; }
     pSearchBtn.disabled = true;
-    await searchPokemonAndFill(q.trim());
+    const candidates = await searchPokemonCandidates(q.trim());
+    if (!candidates || candidates.length === 0){ pSearchBtn.disabled = false; return; }
+    if (candidates.length === 1){
+      await searchPokemonAndFill(q.trim());
+      pSearchBtn.disabled = false;
+      return;
+    }
+    // show top matches for user to pick
+    renderSearchResults(candidates);
     pSearchBtn.disabled = false;
+  });
+
+  // support Enter key in search input
+  pSearchInput?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); pSearchBtn?.click(); }
   });
 
 createBinderBtn.addEventListener("click", () => {
