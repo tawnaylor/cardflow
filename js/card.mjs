@@ -1,4 +1,4 @@
-import { getCards } from "./storage.mjs";
+import { getCards, deleteCard } from "./storage.mjs";
 import { initThemeSwitch, escapeText } from "./ui.mjs";
 
 const themeSwitch = document.querySelector("#themeSwitch");
@@ -120,6 +120,10 @@ function renderCard(card){
       <div class="panel soft">
         <h2 class="h2">Card info</h2>
         <div class="grid-2">${common}</div>
+        <div style="margin-top:12px; display:flex; gap:8px;">
+          <button class="btn btn-danger" id="deleteCardBtn" type="button">Delete Card</button>
+          <a class="btn btn-ghost" href="./index.html">Back to Home</a>
+        </div>
       </div>
     </div>
 
@@ -135,3 +139,19 @@ else {
   if (!card) renderNotFound();
   else renderCard(card);
 }
+
+// Attach delete handler after initial render (delegated via event listener)
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest && e.target.closest('#deleteCardBtn');
+  if (!btn) return;
+  const id = qs('id');
+  if (!id) return;
+  if (!confirm('Delete this card? This cannot be undone.')) return;
+  const ok = deleteCard(id);
+  if (ok) {
+    alert('Card deleted. Returning to Home.');
+    window.location.href = './index.html';
+  } else {
+    alert('Could not delete card. It may have already been removed.');
+  }
+});
