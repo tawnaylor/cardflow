@@ -345,20 +345,70 @@ autoFillBtn?.addEventListener("click", async () => {
   async function searchPokemonAndFill(query){
     if (!query || !query.trim()) return null;
     saveHint.textContent = "Searching online…";
+    const clean = String(query || "").replaceAll('"','').trim();
+    function normalize(s){ return String(s||"").toLowerCase().replace(/[^a-z0-9]/g,""); }
+    function levenshtein(a,b){
+      a = String(a||""); b = String(b||"");
+      const m = a.length, n = b.length;
+      const d = Array.from({length: m+1}, () => new Array(n+1).fill(0));
+      for(let i=0;i<=m;i++) d[i][0]=i;
+      for(let j=0;j<=n;j++) d[0][j]=j;
+      for(let i=1;i<=m;i++){
+        for(let j=1;j<=n;j++){
+          const cost = a[i-1] === b[j-1] ? 0 : 1;
+          d[i][j] = Math.min(d[i-1][j]+1, d[i][j-1]+1, d[i-1][j-1]+cost);
+        }
+      }
+      return d[m][n];
+    }
+
     try{
-      // simple name search; the API uses q=NAME query
-      const q = `name:"${query.replaceAll('"','')}"`;
-      const res = await pokemontcgFetch(`cards?q=${encodeURIComponent(q)}&orderBy=releasedAt&order=desc&pageSize=10`);
-      const card = res?.data?.[0] || null;
-      if (card){
+      // Try exact quoted name first
+      let path = `cards?q=${encodeURIComponent(`name:"${clean}"`)}&orderBy=releasedAt&order=desc&pageSize=20`;
+      let res = null;
+      try{ res = await pokemontcgFetch(path); } catch(e) { res = null; }
+
+      // If no results, try wildcard contains (name:*term*)
+      if (!res?.data?.length){
+        path = `cards?q=${encodeURIComponent(`name:*${clean}*`)}&orderBy=releasedAt&order=desc&pageSize=40`;
+        try{ res = await pokemontcgFetch(path); } catch(e) { res = null; }
+      }
+
+      const candidates = res?.data || [];
+      if (candidates.length === 0){
+        saveHint.textContent = "No results found.";
+        return null;
+      }
+
+      // Score candidates: exact match > contains > levenshtein
+      const qNorm = normalize(clean);
+      let best = null, bestScore = Infinity;
+      for (const c of candidates){
+        const name = c.name || "";
+        const nNorm = normalize(name);
+        if (nNorm === qNorm){ best = c; bestScore = -1; break; }
+        if (nNorm.includes(qNorm)){
+          // prefer shorter distance to exact
+          const score = 10 + (nNorm.length - qNorm.length);
+          if (score < bestScore){ best = c; bestScore = score; }
+          continue;
+        }
+        // fallback: small levenshtein distance on normalized strings
+        const dist = levenshtein(nNorm, qNorm);
+        const score = 100 + dist;
+        if (score < bestScore){ best = c; bestScore = score; }
+      }
+
+      if (best){
         gameSelect.value = "pokemon";
         showGameFields();
         populateSetDropdown();
-        await fillPokemonFromApi(card);
+        await fillPokemonFromApi(best);
         saveHint.textContent = "Found and filled from API. Review fields.";
-        return card;
+        return best;
       }
-      saveHint.textContent = "No results found.";
+
+      saveHint.textContent = "No suitable match found.";
       return null;
     }catch(err){
       console.error(err);
