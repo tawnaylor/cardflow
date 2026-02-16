@@ -43,7 +43,7 @@ body{
   display:grid; place-items:center;
   border:2px solid var(--ink);
   border-radius:6px;
-  background:#ffffff;
+  background:var(--soft);
 }
 /* Logo image sizing */
 .logo img{
@@ -105,7 +105,7 @@ body{
 .arrow{
   width:56px; height:56px;
   border:2px solid var(--line);
-  background:#ffffff;
+  background:var(--btn);
   border-radius:6px;
   font-size:34px;
   cursor:pointer;
@@ -124,14 +124,14 @@ body{
 
 .card{
   border:2px solid var(--line);
-  background:#fff;
+  background:var(--card-bg);
   border-radius:6px;
   padding:10px;
   cursor:pointer;
   position:relative;
 }
 .card:hover{
-  outline:3px solid #cfcfcf;
+  outline:3px solid rgba(0,229,255,0.08);
 }
 
 /* Rarity animations */
@@ -204,7 +204,7 @@ body{
   width:100%;
   aspect-ratio: 4 / 5;
   border:2px solid var(--line);
-  background:#f0f0f0;
+  background:var(--card-bg);
   display:grid;
   place-items:center;
   overflow:hidden;
@@ -243,7 +243,7 @@ body{
   border-radius:6px;
   font-weight:700;
   color:var(--ink);
-  background:#050714;
+  background:var(--bg);
 }
 
 .dots{
@@ -256,7 +256,7 @@ body{
   width:11px; height:11px;
   border:2px solid #a9a9a9;
   border-radius:999px;
-  background:#fff;
+  background:var(--card-bg);
 }
 .dot.active{
   background:#a9a9a9;
@@ -399,7 +399,7 @@ body{
   border:2px solid var(--line);
   border-radius:10px;
   padding:16px;
-  background:#fff;
+  background:var(--panel-bg);
 }
 .details-row{
   display:flex;
@@ -420,7 +420,7 @@ body{
   padding:10px;
   border:2px solid var(--line);
   border-radius:10px;
-  background:#fafafa;
+  background:var(--panel-bg);
 }
 dt{ font-weight:800; }
 dd{ margin:0; }
