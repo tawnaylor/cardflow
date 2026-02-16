@@ -20,3 +20,6 @@ export function injectHeaderFooter() {
     footer.innerHTML = `<div class="small">CardFlow • Local-only demo (localStorage)</div>`;
   }
 }
+
+// Backwards-compatible alias
+export { injectHeaderFooter as setupHeaderFooter };

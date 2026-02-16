@@ -6,7 +6,7 @@ function getIdFromUrl() {
 }
 
 export function initCardDetailsPage() {
-  const host = document.getElementById("cardDetails");
+  const host = document.getElementById("cardDetails") || document.getElementById("main-content") || document.getElementById("mainContent");
   const id = getIdFromUrl();
 
   if (!id) {
@@ -67,6 +67,17 @@ export function initCardDetailsPage() {
     const qty = Math.max(1, parseInt(editQty.value || "1", 10));
     const updated = updateCard(id, { rarity: editRarity.value.trim(), qty });
     status.textContent = updated ? "Saved." : "Failed to save.";
+    if (updated) {
+      const qtyBadge = host.querySelector('.badge');
+      if (qtyBadge) qtyBadge.textContent = `x${updated.qty || 1}`;
+      const rarityDivs = host.querySelectorAll('div');
+      for (const d of rarityDivs) {
+        if (d.textContent && d.textContent.trim().startsWith('Rarity:')) {
+          d.innerHTML = `<strong>Rarity:</strong> ${updated.rarity || ''}`;
+          break;
+        }
+      }
+    }
   });
 
   btnDelete.addEventListener("click", () => {
@@ -74,3 +85,7 @@ export function initCardDetailsPage() {
     if (ok) location.href = "binders.html";
   });
 }
+
+// Auto-init when the module is loaded directly in a page
+if (document.readyState !== 'loading') initCardDetailsPage();
+else document.addEventListener('DOMContentLoaded', initCardDetailsPage);
