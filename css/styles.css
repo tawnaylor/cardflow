@@ -152,6 +152,18 @@ body{
 }
 .card.rarity-holo-rare { animation: pulse-magenta 3s infinite; border-color: rgba(255,50,208,0.12); }
 
+@keyframes illustration-glow {
+  0% { box-shadow: 0 8px 24px rgba(180,140,255,0.06); background-position: 0% 50%; }
+  50% { box-shadow: 0 16px 48px rgba(180,140,255,0.14); background-position: 100% 50%; }
+  100% { box-shadow: 0 8px 24px rgba(180,140,255,0.06); background-position: 0% 50%; }
+}
+.card.rarity-illustration-rare {
+  border-color: rgba(180,140,255,0.12);
+  background-image: linear-gradient(120deg, rgba(255,220,120,0.02), rgba(180,140,255,0.02));
+  background-size: 200% 200%;
+  animation: illustration-glow 4s ease-in-out infinite;
+}
+
 @keyframes gradient-shift {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -178,6 +190,7 @@ body{
 .details.rarity-uncommon { box-shadow: 0 10px 40px rgba(0,200,150,0.04); }
 .details.rarity-rare { animation: pulse-cyan 3s infinite; box-shadow: 0 14px 60px rgba(0,229,255,0.08); }
 .details.rarity-holo-rare { animation: pulse-magenta 3s infinite; box-shadow: 0 14px 60px rgba(255,50,208,0.08); }
+.details.rarity-illustration-rare { animation: illustration-glow 4s ease-in-out infinite; box-shadow: 0 18px 80px rgba(180,140,255,0.08); }
 .details.rarity-ultra-rare { animation: gradient-shift 6s linear infinite; box-shadow: 0 18px 80px rgba(255,200,0,0.06); }
 .details.rarity-secret-rare { animation: rainbow-spin 4s linear infinite; box-shadow: 0 18px 90px rgba(255,77,109,0.08); }
 
@@ -464,4 +477,15 @@ body{
 
 /* reduce bright outlines on inputs */
 input, select, textarea{ background: rgba(255,255,255,0.02); color:var(--ink); border-color: rgba(255,255,255,0.04); }
+
+/* Specific background for Series / Expansion selects and rarity selects */
+#seriesSelect, #expansionSelect, #editRarity, select[name="rarity"] {
+  background: #050714; /* requested color */
+  color: var(--ink);
+  border-color: rgba(255,255,255,0.04);
+}
+#seriesSelect option, #expansionSelect option, #editRarity option, select[name="rarity"] option {
+  background: #050714;
+  color: var(--ink);
+}
 
