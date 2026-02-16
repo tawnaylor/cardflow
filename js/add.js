@@ -5,8 +5,6 @@ const status = document.getElementById("status");
 const imageInput = document.getElementById("imageInput");
 const imageUrlInput = document.getElementById("imageUrl");
 const seedBtn = document.getElementById("seedDemo");
-const seedDatasetBtn = document.getElementById("seedDataset");
-const importLocalImagesBtn = document.getElementById("importLocalImages");
 const seriesSelect = document.getElementById('seriesSelect');
 const expansionSelect = document.getElementById('expansionSelect');
 
@@ -112,102 +110,7 @@ seedBtn.addEventListener("click", () => {
   setStatus("Demo seeded! Check your Binders page to see the cards.");
 });
 
-// Seed from dataset JSON (database/cardflow-pokemon-dataset.json)
-if (seedDatasetBtn) {
-  seedDatasetBtn.addEventListener('click', async () => {
-    const existing = getCards();
-    if (existing.length > 0) {
-      setStatus('You already have cards. Clear them on the Binders page if you want a fresh import.');
-      return;
-    }
-
-    setStatus('Fetching dataset...');
-    try {
-      const resp = await fetch('./database/cardflow-pokemon-dataset.json');
-      if (!resp.ok) throw new Error('Network response not ok');
-      const data = await resp.json();
-      const exps = Array.isArray(data.expansions) ? data.expansions : [];
-
-      if (!exps.length) {
-        setStatus('No expansions found in dataset.');
-        return;
-      }
-
-      // Create a compact sample card per expansion
-      let count = 0;
-      for (const e of exps) {
-        const card = {
-          name: e.name || (`${e.series} ${e.name || ''}`).trim(),
-          series: e.series || 'Unknown Series',
-          expansion: e.name || e.set_abb || '',
-          rarity: 'Common',
-          number: e.set_abb || String(e.set_no || ''),
-          qty: 1,
-          imageDataUrl: ''
-        };
-        upsertCard(card);
-        count++;
-      }
-
-      setStatus(`Imported ${count} expansions as sample cards.`);
-    } catch (err) {
-      console.error('Failed to import dataset:', err);
-      setStatus('Failed to fetch dataset. If you opened the page via file://, run a local server (e.g., `python -m http.server`).');
-    }
-  });
-}
-
-// Import local images previously downloaded with the Python tool.
-if (importLocalImagesBtn) {
-  importLocalImagesBtn.addEventListener('click', async () => {
-    setStatus('Looking for local images index...');
-    try {
-      const resp = await fetch('./database/pkmn-images/index.json');
-      if (!resp.ok) throw new Error('index.json not found');
-      const index = await resp.json();
-
-      const cards = getCards();
-      if (!cards.length) {
-        setStatus('No cards in your binder — seed or add cards first.');
-        return;
-      }
-
-      // helper to slugify expansion to match folder keys
-      const slugify = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-
-      let imported = 0;
-      for (const c of cards) {
-        const candidates = [slugify(c.expansion), slugify(c.series + '-' + c.expansion), slugify(c.series)];
-        let found = null;
-        for (const key of candidates) {
-          if (index[key] && index[key][String(c.number || '')]) {
-            found = index[key][String(c.number || '')];
-            break;
-          }
-        }
-        if (!found) continue;
-
-        try {
-          const imgResp = await fetch(found);
-          if (!imgResp.ok) continue;
-          const blob = await imgResp.blob();
-          if (!blob.type.startsWith('image/')) continue;
-          const dataUrl = await fileToDataUrl(blob);
-          // update card with image
-          upsertCard({ ...c, imageDataUrl: dataUrl });
-          imported++;
-        } catch (err) {
-          console.warn('failed to import image for', c, err);
-        }
-      }
-
-      setStatus(`Imported ${imported} images from local dataset.`);
-    } catch (err) {
-      console.error(err);
-      setStatus('Could not load local images index. Run the downloader script to populate `database/pkmn-images` and serve the site via HTTP.');
-    }
-  });
-}
+// (dataset seeding and local image import buttons removed)
 
 // Populate series & expansions selects from dataset JSON
 let _seriesMap = {}; // series -> Set of expansions
