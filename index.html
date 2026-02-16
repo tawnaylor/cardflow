@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CardFlow | Home</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <!-- simple inline logo -->
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+          <path d="M6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M8 16V8l4 3 4-3v8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="brand-name">CardFlow</span>
+    </div>
+
+    <nav class="nav">
+      <a class="nav-link active" href="./index.html">Home</a>
+      <a class="nav-link" href="./add-card.html">Add Cards</a>
+      <a class="nav-link" href="./binders.html">Binders</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <h1 class="hero">Your Cards all in one place</h1>
+
+    <section class="carousel" aria-label="Recent cards carousel">
+      <button class="arrow" id="carouselPrev" aria-label="Previous cards">
+        <span aria-hidden="true">‹</span>
+      </button>
+
+      <div class="cards-row" id="cardsRow" role="list" aria-live="polite"></div>
+
+      <button class="arrow" id="carouselNext" aria-label="Next cards">
+        <span aria-hidden="true">›</span>
+      </button>
+    </section>
+
+    <div class="dots" id="dots" aria-label="Carousel pages"></div>
+
+    <div class="pager" aria-label="Page controls">
+      <button class="btn" id="pagePrev">‹ Prev</button>
+      <div class="page-indicator" id="pageIndicator">Page 1 of 1</div>
+      <button class="btn" id="pageNext">Next ›</button>
+    </div>
+  </main>
+
+  <script type="module" src="./js/home.js"></script>
+</body>
+</html>
