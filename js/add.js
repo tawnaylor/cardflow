@@ -5,6 +5,7 @@ const status = document.getElementById("status");
 const imageInput = document.getElementById("imageInput");
 const imageUrlInput = document.getElementById("imageUrl");
 const seedBtn = document.getElementById("seedDemo");
+const seedDatasetBtn = document.getElementById("seedDataset");
 
 function setStatus(msg) {
   status.textContent = msg;
@@ -107,3 +108,48 @@ seedBtn.addEventListener("click", () => {
   for (const c of demo) upsertCard(c);
   setStatus("Demo seeded! Check your Binders page to see the cards.");
 });
+
+// Seed from dataset JSON (database/cardflow-pokemon-dataset.json)
+if (seedDatasetBtn) {
+  seedDatasetBtn.addEventListener('click', async () => {
+    const existing = getCards();
+    if (existing.length > 0) {
+      setStatus('You already have cards. Clear them on the Binders page if you want a fresh import.');
+      return;
+    }
+
+    setStatus('Fetching dataset...');
+    try {
+      const resp = await fetch('./database/cardflow-pokemon-dataset.json');
+      if (!resp.ok) throw new Error('Network response not ok');
+      const data = await resp.json();
+      const exps = Array.isArray(data.expansions) ? data.expansions : [];
+
+      if (!exps.length) {
+        setStatus('No expansions found in dataset.');
+        return;
+      }
+
+      // Create a compact sample card per expansion
+      let count = 0;
+      for (const e of exps) {
+        const card = {
+          name: e.name || (`${e.series} ${e.name || ''}`).trim(),
+          series: e.series || 'Unknown Series',
+          expansion: e.name || e.set_abb || '',
+          rarity: 'Common',
+          number: e.set_abb || String(e.set_no || ''),
+          qty: 1,
+          imageDataUrl: ''
+        };
+        upsertCard(card);
+        count++;
+      }
+
+      setStatus(`Imported ${count} expansions as sample cards.`);
+    } catch (err) {
+      console.error('Failed to import dataset:', err);
+      setStatus('Failed to fetch dataset. If you opened the page via file://, run a local server (e.g., `python -m http.server`).');
+    }
+  });
+}
