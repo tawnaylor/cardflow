@@ -12,6 +12,7 @@ const dExpansion = document.getElementById("dExpansion");
 const dRarity = document.getElementById("dRarity");
 const dNumber = document.getElementById("dNumber");
 const status = document.getElementById("status");
+const detailsSection = document.querySelector('.details');
 
 const backBtn = document.getElementById("back");
 const deleteBtn = document.getElementById("delete");
@@ -162,6 +163,16 @@ function render() {
   }
 
   if (dName) dName.innerHTML = escapeHtml(card.name || "Untitled");
+
+  // apply rarity class to details section for animated background
+  if (detailsSection) {
+    // remove previous rarity-* classes
+    Array.from(detailsSection.classList).forEach(cl => {
+      if (cl && cl.startsWith('rarity-')) detailsSection.classList.remove(cl);
+    });
+    const rcls = 'rarity-' + String(card.rarity || 'common').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
+    detailsSection.classList.add(rcls);
+  }
 
   const metaParts = [];
   if (card.series) metaParts.push(escapeHtml(card.series));

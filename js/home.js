@@ -87,7 +87,9 @@ function render() {
   cardsRow.innerHTML = "";
   for (const c of slice) {
     const tile = document.createElement("article");
-    tile.className = "card";
+    // add rarity class for animated effect
+    const rarityCls = 'rarity-' + String(c.rarity || 'common').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
+    tile.className = `card ${rarityCls}`;
     tile.setAttribute("role", "listitem");
     tile.tabIndex = 0;
 
