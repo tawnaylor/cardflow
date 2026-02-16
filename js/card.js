@@ -54,9 +54,31 @@ function render() {
   status.textContent = "";
 
   if (bigImg) {
-    bigImg.innerHTML = card.imageDataUrl
-      ? `<img src="${card.imageDataUrl}" alt="${escapeHtml(card.name || "Card image")}" />`
-      : `<div class="ph">Image</div>`;
+    // ensure container (parent) is available for placeholder fallbacks
+    const container = bigImg.parentElement || bigImg;
+    // remove any existing placeholders added previously
+    const existingPh = container.querySelector('.ph');
+    if (existingPh) existingPh.remove();
+
+    if (card.imageDataUrl) {
+      bigImg.style.display = '';
+      bigImg.src = card.imageDataUrl;
+      bigImg.alt = escapeHtml(card.name || 'Card image');
+      bigImg.loading = 'lazy';
+      bigImg.onerror = function () {
+        this.style.display = 'none';
+        const d = document.createElement('div');
+        d.className = 'ph';
+        d.textContent = 'Image';
+        container.appendChild(d);
+      };
+    } else {
+      bigImg.style.display = 'none';
+      const d = document.createElement('div');
+      d.className = 'ph';
+      d.textContent = 'Image';
+      container.appendChild(d);
+    }
   }
 
   if (dName) dName.innerHTML = escapeHtml(card.name || "Untitled");

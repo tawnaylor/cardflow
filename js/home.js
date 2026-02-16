@@ -74,7 +74,7 @@ function render() {
     tile.tabIndex = 0;
 
     const imgHtml = c.imageDataUrl
-      ? `<img src="${c.imageDataUrl}" alt="${escapeHtml(c.name || "Card image")}" />`
+      ? `<img src="${c.imageDataUrl}" alt="${escapeHtml(c.name || "Card image")}" loading="lazy" onerror="this.style.display='none';var d=document.createElement('div');d.className='ph';d.textContent='Image';this.parentNode.appendChild(d);" />`
       : `<div class="ph">Image</div>`;
 
     tile.innerHTML = `

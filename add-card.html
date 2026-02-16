@@ -70,10 +70,16 @@
           <input name="qty" type="number" min="1" value="1" />
         </label>
 
+        <label class="field">
+          <span>Image URL (optional)</span>
+          <input id="imageUrl" name="imageUrl" type="url" placeholder="https://example.com/image.jpg" />
+          <small class="hint">If provided, the image will be fetched and stored locally (base64). CORS may block some remote images.</small>
+        </label>
+
         <label class="field field-wide">
-          <span>Card Image</span>
+          <span>Or upload an image file</span>
           <input id="imageInput" name="image" type="file" accept="image/*" />
-          <small class="hint">Optional. Stored locally (base64) in your browser.</small>
+          <small class="hint">Optional. Uploading a file stores it locally (base64) in your browser.</small>
         </label>
       </div>
 

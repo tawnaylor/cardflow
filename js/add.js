@@ -3,6 +3,7 @@ import { upsertCard, fileToDataUrl, getCards } from "./storage.js";
 const form = document.getElementById("cardForm");
 const status = document.getElementById("status");
 const imageInput = document.getElementById("imageInput");
+const imageUrlInput = document.getElementById("imageUrl");
 const seedBtn = document.getElementById("seedDemo");
 
 function setStatus(msg) {
@@ -37,8 +38,29 @@ form.addEventListener("submit", async (e) => {
     return;
   }
 
+  // Priority: file input (local upload) -> image URL (fetch & convert) -> empty
   const file = imageInput.files?.[0] || null;
-  const imageDataUrl = file ? await fileToDataUrl(file) : "";
+  let imageDataUrl = "";
+
+  if (file) {
+    imageDataUrl = await fileToDataUrl(file);
+  } else if (imageUrlInput && imageUrlInput.value.trim()) {
+    const url = imageUrlInput.value.trim();
+    try {
+      const resp = await fetch(url, { mode: 'cors' });
+      if (!resp.ok) throw new Error('Network response not ok');
+      const blob = await resp.blob();
+      // ensure it's an image
+      if (blob.type && blob.type.startsWith('image/')) {
+        imageDataUrl = await fileToDataUrl(blob);
+      } else {
+        setStatus('Fetched resource is not an image; ignoring.');
+      }
+    } catch (err) {
+      console.warn('Failed to fetch image URL:', err);
+      setStatus('Unable to fetch image URL — it may be blocked by CORS. Upload a file instead.');
+    }
+  }
 
   const payload = {
     name: form.elements.name.value,
