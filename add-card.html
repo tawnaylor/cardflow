@@ -35,12 +35,16 @@
 
         <label class="field">
           <span>Series *</span>
-          <input name="series" type="text" required placeholder="e.g., Scarlet & Violet" />
+          <select id="seriesSelect" name="series" required>
+            <option value="" selected disabled>Select a series…</option>
+          </select>
         </label>
 
         <label class="field">
           <span>Series Expansion *</span>
-          <input name="expansion" type="text" required placeholder="e.g., Paldea Evolved" />
+          <select id="expansionSelect" name="expansion" required>
+            <option value="" selected disabled>Select an expansion…</option>
+          </select>
         </label>
 
         <label class="field">

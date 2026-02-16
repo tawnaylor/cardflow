@@ -7,6 +7,8 @@ const imageUrlInput = document.getElementById("imageUrl");
 const seedBtn = document.getElementById("seedDemo");
 const seedDatasetBtn = document.getElementById("seedDataset");
 const importLocalImagesBtn = document.getElementById("importLocalImages");
+const seriesSelect = document.getElementById('seriesSelect');
+const expansionSelect = document.getElementById('expansionSelect');
 
 function setStatus(msg) {
   status.textContent = msg;
@@ -206,3 +208,53 @@ if (importLocalImagesBtn) {
     }
   });
 }
+
+// Populate series & expansions selects from dataset JSON
+let _seriesMap = {}; // series -> Set of expansions
+async function populateSeriesFromDataset() {
+  if (!seriesSelect || !expansionSelect) return;
+  try {
+    const resp = await fetch('./database/cardflow-pokemon-dataset.json');
+    if (!resp.ok) return;
+    const data = await resp.json();
+    const exps = Array.isArray(data.expansions) ? data.expansions : [];
+
+    _seriesMap = {};
+    for (const e of exps) {
+      const s = (e.series || 'Unknown').trim();
+      const name = (e.name || e.set_abb || '').trim();
+      if (!s) continue;
+      if (!_seriesMap[s]) _seriesMap[s] = new Set();
+      if (name) _seriesMap[s].add(name);
+    }
+
+    // sort series
+    const seriesList = Object.keys(_seriesMap).sort((a,b)=>a.localeCompare(b));
+    // clear existing options except the placeholder
+    seriesSelect.querySelectorAll('option:not([disabled])')?.forEach(o=>o.remove());
+    for (const s of seriesList) {
+      const opt = document.createElement('option');
+      opt.value = s;
+      opt.textContent = s;
+      seriesSelect.appendChild(opt);
+    }
+
+    // when series changes, populate expansions
+    seriesSelect.addEventListener('change', () => {
+      const sel = seriesSelect.value;
+      expansionSelect.querySelectorAll('option:not([disabled])')?.forEach(o=>o.remove());
+      const set = _seriesMap[sel] ? Array.from(_seriesMap[sel]).sort((a,b)=>a.localeCompare(b)) : [];
+      for (const ex of set) {
+        const opt = document.createElement('option');
+        opt.value = ex;
+        opt.textContent = ex;
+        expansionSelect.appendChild(opt);
+      }
+    });
+  } catch (err) {
+    console.warn('Failed to load dataset for series/expansions:', err);
+  }
+}
+
+// initialize selects on load
+populateSeriesFromDataset();
