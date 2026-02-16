@@ -11,6 +11,8 @@ const pageNext = document.getElementById("pageNext");
 
 const PAGE_SIZE = 5;
 let pageIndex = 0;
+const params = new URLSearchParams(location.search);
+const filterSeriesParam = params.get('series') ? params.get('series').trim().toLowerCase() : null;
 
 function formatNum(numStr) {
   const n = String(numStr || "").padStart(3, "0");
@@ -53,9 +55,25 @@ function renderDots(totalPages) {
 }
 
 function render() {
-  const cards = getCards();
+  let cards = getCards();
+
+  // Apply series filter if present
+  if (filterSeriesParam) {
+    cards = cards.filter(c => String(c.series || '').trim().toLowerCase() === filterSeriesParam);
+  }
 
   if (!cards.length) {
+    if (filterSeriesParam) {
+      cardsRow.innerHTML = `<div class="card" style="grid-column:1 / -1; cursor:default;"><div class="thumb"><div class="ph">No cards in this series</div></div><div class="card-title">No cards</div></div>`;
+      dotsWrap.innerHTML = "";
+      pageIndicator.textContent = "Page 1 of 1";
+      carouselPrev.disabled = true;
+      carouselNext.disabled = true;
+      pagePrev.disabled = true;
+      pageNext.disabled = true;
+      return;
+    }
+
     renderEmpty();
     return;
   }
