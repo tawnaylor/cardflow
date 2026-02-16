@@ -78,6 +78,16 @@ export function deleteCard(id) {
   setCards(cards);
 }
 
+export function updateCard(id, updates = {}) {
+  const cards = getCards();
+  const idx = cards.findIndex(c => c.id === id);
+  if (idx === -1) return null;
+  const updated = Object.assign({}, cards[idx], updates, { updatedAt: Date.now() });
+  cards[idx] = updated;
+  setCards(cards);
+  return updated;
+}
+
 export function clearAll() {
   localStorage.removeItem(KEY);
 }
