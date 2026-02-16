@@ -40,6 +40,14 @@ body{
   border-radius:6px;
   background:#fff;
 }
+/* Logo image sizing */
+.logo img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+  border-radius:4px;
+}
 .brand-name{
   font-size:28px;
   font-weight:700;
