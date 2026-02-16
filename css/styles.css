@@ -489,3 +489,150 @@ input, select, textarea{ background: rgba(255,255,255,0.02); color:var(--ink); b
   color: var(--ink);
 }
 
+
+/* ====== Neon Street + Fogged Glass Background ====== */
+
+/* Page base */
+.neon-street {
+  min-height: 100vh;
+  margin: 0;
+  color: #e9e9ff;
+  background: radial-gradient(1200px 800px at 50% 20%, rgba(95, 46, 255, 0.25), rgba(0,0,0,0) 60%),
+              radial-gradient(900px 700px at 20% 70%, rgba(0, 255, 255, 0.12), rgba(0,0,0,0) 55%),
+              radial-gradient(900px 700px at 80% 75%, rgba(255, 0, 160, 0.10), rgba(0,0,0,0) 55%),
+              linear-gradient(180deg, #05060a 0%, #050512 40%, #03030a 100%);
+  overflow-x: hidden;
+  position: relative;
+  isolation: isolate;
+}
+
+/* Background effects layer */
+.bg-effects {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* 1) Moving neon “street lights” streaks */
+.bg-effects::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background:
+    /* street perspective streaks */
+    repeating-linear-gradient(
+      110deg,
+      rgba(0, 255, 255, 0.00) 0%,
+      rgba(0, 255, 255, 0.00) 6%,
+      rgba(0, 255, 255, 0.18) 7%,
+      rgba(0, 255, 255, 0.00) 10%
+    ),
+    repeating-linear-gradient(
+      70deg,
+      rgba(255, 0, 170, 0.00) 0%,
+      rgba(255, 0, 170, 0.00) 7%,
+      rgba(255, 0, 170, 0.16) 8%,
+      rgba(255, 0, 170, 0.00) 12%
+    );
+  filter: blur(2px);
+  opacity: 0.65;
+  transform: translate3d(0,0,0);
+  animation: street-drift 14s linear infinite;
+}
+
+@keyframes street-drift {
+  0%   { transform: translate3d(-6%, -2%, 0) scale(1.05); }
+  100% { transform: translate3d( 6%,  2%, 0) scale(1.05); }
+}
+
+/* 2) Neon “sign” blobs + fog haze + grain */
+.bg-effects::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    /* neon sign glows */
+    radial-gradient(500px 240px at 15% 25%, rgba(0, 255, 255, 0.20), rgba(0,0,0,0) 60%),
+    radial-gradient(420px 220px at 85% 30%, rgba(255, 0, 170, 0.18), rgba(0,0,0,0) 62%),
+    radial-gradient(520px 300px at 55% 80%, rgba(140, 80, 255, 0.15), rgba(0,0,0,0) 65%),
+
+    /* fog layer */
+    radial-gradient(900px 700px at 50% 55%, rgba(255,255,255,0.06), rgba(255,255,255,0) 70%),
+
+    /* grain/noise (CSS-only approximation) */
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.02) 0px,
+      rgba(255,255,255,0.02) 1px,
+      rgba(0,0,0,0.00) 2px,
+      rgba(0,0,0,0.00) 4px
+    );
+  mix-blend-mode: screen;
+  opacity: 0.95;
+  filter: blur(0px);
+  animation: neon-pulse 6.5s ease-in-out infinite;
+}
+
+@keyframes neon-pulse {
+  0%, 100% { opacity: 0.85; filter: blur(0px); }
+  50%      { opacity: 1;    filter: blur(1px); }
+}
+
+/* ====== Fogged Glass Panel (use on your main containers) ====== */
+.glass-panel {
+  width: min(1100px, 92vw);
+  margin: 5rem auto;
+  padding: 2rem;
+  border-radius: 22px;
+
+  /* frosted look */
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.55),
+    0 0 0 1px rgba(255,255,255,0.06) inset;
+
+  /* the “fogged glass” */
+  backdrop-filter: blur(18px) saturate(130%);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+
+  position: relative;
+  overflow: hidden;
+}
+
+/* Optional: subtle inner neon rim */
+.glass-panel::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 180deg,
+    rgba(0,255,255,0.0),
+    rgba(0,255,255,0.18),
+    rgba(255,0,170,0.16),
+    rgba(140,80,255,0.14),
+    rgba(0,255,255,0.0)
+  );
+  filter: blur(18px);
+  opacity: 0.75;
+  animation: rim-shift 10s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes rim-shift {
+  0%   { transform: rotate(0deg) scale(1.2); }
+  100% { transform: rotate(360deg) scale(1.2); }
+}
+
+/* Optional: reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .bg-effects::before,
+  .bg-effects::after,
+  .glass-panel::before {
+    animation: none !important;
+  }
+}
+
+
