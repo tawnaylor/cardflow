@@ -6,6 +6,7 @@ const imageInput = document.getElementById("imageInput");
 const imageUrlInput = document.getElementById("imageUrl");
 const seedBtn = document.getElementById("seedDemo");
 const seedDatasetBtn = document.getElementById("seedDataset");
+const importLocalImagesBtn = document.getElementById("importLocalImages");
 
 function setStatus(msg) {
   status.textContent = msg;
@@ -150,6 +151,58 @@ if (seedDatasetBtn) {
     } catch (err) {
       console.error('Failed to import dataset:', err);
       setStatus('Failed to fetch dataset. If you opened the page via file://, run a local server (e.g., `python -m http.server`).');
+    }
+  });
+}
+
+// Import local images previously downloaded with the Python tool.
+if (importLocalImagesBtn) {
+  importLocalImagesBtn.addEventListener('click', async () => {
+    setStatus('Looking for local images index...');
+    try {
+      const resp = await fetch('./database/pkmn-images/index.json');
+      if (!resp.ok) throw new Error('index.json not found');
+      const index = await resp.json();
+
+      const cards = getCards();
+      if (!cards.length) {
+        setStatus('No cards in your binder — seed or add cards first.');
+        return;
+      }
+
+      // helper to slugify expansion to match folder keys
+      const slugify = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+      let imported = 0;
+      for (const c of cards) {
+        const candidates = [slugify(c.expansion), slugify(c.series + '-' + c.expansion), slugify(c.series)];
+        let found = null;
+        for (const key of candidates) {
+          if (index[key] && index[key][String(c.number || '')]) {
+            found = index[key][String(c.number || '')];
+            break;
+          }
+        }
+        if (!found) continue;
+
+        try {
+          const imgResp = await fetch(found);
+          if (!imgResp.ok) continue;
+          const blob = await imgResp.blob();
+          if (!blob.type.startsWith('image/')) continue;
+          const dataUrl = await fileToDataUrl(blob);
+          // update card with image
+          upsertCard({ ...c, imageDataUrl: dataUrl });
+          imported++;
+        } catch (err) {
+          console.warn('failed to import image for', c, err);
+        }
+      }
+
+      setStatus(`Imported ${imported} images from local dataset.`);
+    } catch (err) {
+      console.error(err);
+      setStatus('Could not load local images index. Run the downloader script to populate `database/pkmn-images` and serve the site via HTTP.');
     }
   });
 }
