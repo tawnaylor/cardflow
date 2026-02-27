@@ -55,6 +55,8 @@ function renderDots(totalPages) {
 }
 
 function render() {
+  if (!cardsRow || !dotsWrap || !pageIndicator) return;
+
   let cards = getCards();
 
   // Apply series filter if present
@@ -94,7 +96,7 @@ function render() {
     tile.tabIndex = 0;
 
     const imgHtml = c.imageDataUrl
-      ? `<img src="${c.imageDataUrl}" alt="${escapeHtml(c.name || "Card image")}" loading="lazy" onerror="this.style.display='none';var d=document.createElement('div');d.className='ph';d.textContent='Image';this.parentNode.appendChild(d);" />`
+      ? `<img src="${c.imageDataUrl}" alt="${escapeHtml(c.name || "Card image")}" loading="lazy" />`
       : `<div class="ph">Image</div>`;
 
     tile.innerHTML = `
@@ -107,10 +109,26 @@ function render() {
       </div>
     `;
 
+    // Attach image error handler instead of using inline onerror attribute
+    const imgEl = tile.querySelector('img');
+    if (imgEl) {
+      imgEl.addEventListener('error', () => {
+        imgEl.style.display = 'none';
+        const d = document.createElement('div');
+        d.className = 'ph';
+        d.textContent = 'Image';
+        imgEl.parentNode && imgEl.parentNode.appendChild(d);
+      });
+    }
+
     const go = () => (location.href = `./card.html?id=${encodeURIComponent(c.id)}`);
     tile.addEventListener("click", go);
     tile.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") go();
+      // support Enter and Space keys; prevent default on Space to avoid scrolling
+      if (e.key === "Enter" || e.key === " " || e.code === 'Space') {
+        e.preventDefault();
+        go();
+      }
     });
 
     cardsRow.appendChild(tile);
