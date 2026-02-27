@@ -6,7 +6,8 @@ const binderNameInput = document.getElementById("binderName");
 const binderDescInput = document.getElementById("binderDesc");
 const binderImageInput = document.getElementById("binderImage");
 
-let binders = [];
+// Load saved binders from localStorage
+let binders = JSON.parse(localStorage.getItem("binders")) || [];
 
 // Render binders
 function renderBinders() {
@@ -32,14 +33,24 @@ saveBinderBtn.addEventListener("click", () => {
   const image = binderImageInput.value.trim();
   if (!name) return alert("Binder name is required!");
   binders.push({ name, desc, image });
+
+  // Save to localStorage
+  localStorage.setItem("binders", JSON.stringify(binders));
+
   binderNameInput.value = "";
   binderDescInput.value = "";
   binderImageInput.value = "";
+
   renderBinders();
 });
 
 // Clear all binders
 clearAllBtn.addEventListener("click", () => {
+  if (!confirm("Are you sure you want to clear all binders?")) return;
   binders = [];
+  localStorage.removeItem("binders"); // remove saved data
   renderBinders();
 });
+
+// Initial render on page load
+renderBinders();
