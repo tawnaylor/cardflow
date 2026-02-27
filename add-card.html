@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CardFlow | Add Cards</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body class="neon-street">
+  <div class="bg-effects" aria-hidden="true"></div>
+  <header class="topbar">
+      <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <img src="./images/cardflow%20logo.jpeg" alt="CardFlow logo" />
+      </div>
+      <span class="brand-name">CardFlow</span>
+    </div>
+
+    <nav class="nav">
+      <a class="nav-link" href="./index.html">Home</a>
+      <a class="nav-link active" href="./add-card.html">Add Cards</a>
+      <a class="nav-link" href="./binders.html">Binders</a>
+    </nav>
+  </header>
+
+  <main class="page glass-panel">
+    <h1 class="page-title">Add Cards</h1>
+
+    <form id="cardForm" class="form" novalidate>
+      <div class="form-grid">
+        <label class="field">
+          <span>Card Name *</span>
+          <input name="name" type="text" required minlength="2" placeholder="e.g., Charizard" />
+          <small class="hint">At least 2 characters.</small>
+        </label>
+
+        <label class="field">
+          <span>Series *</span>
+          <select id="seriesSelect" name="series" required>
+            <option value="" selected disabled>Select a series…</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Series Expansion *</span>
+          <select id="expansionSelect" name="expansion" required>
+            <option value="" selected disabled>Select an expansion…</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Rarity *</span>
+          <select name="rarity" required>
+            <option value="" selected disabled>Select…</option>
+            <option>Common</option>
+            <option>Uncommon</option>
+            <option>Rare</option>
+            <option>Holo Rare</option>
+            <option>Illustration Rare</option>
+            <option>Ultra Rare</option>
+            <option>Secret Rare</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Card Number *</span>
+          <input name="number" type="text" required pattern="^[0-9]{1,4}$" placeholder="e.g., 151" />
+          <small class="hint">Digits only (1–4 digits).</small>
+        </label>
+
+        <label class="field">
+          <span>Quantity</span>
+          <input name="qty" type="number" min="1" value="1" />
+        </label>
+
+        <label class="field">
+          <span>Image URL (optional)</span>
+          <input id="imageUrl" name="imageUrl" type="url" placeholder="https://example.com/image.jpg" />
+          <small class="hint">If provided, the image will be fetched and stored locally (base64). CORS may block some remote images.</small>
+        </label>
+
+        <label class="field field-wide">
+          <span>Or upload an image file</span>
+          <input id="imageInput" name="image" type="file" accept="image/*" />
+          <small class="hint">Optional. Uploading a file stores it locally (base64) in your browser.</small>
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn primary" type="submit">Add To Binder</button>
+        <button class="btn" type="button" id="seedDemo">Add Demo Cards</button>
+      </div>
+
+      <p class="form-status" id="status" role="status" aria-live="polite"></p>
+    </form>
+  </main>
+
+  <script type="module" src="./js/add.js"></script>
+</body>
+</html>

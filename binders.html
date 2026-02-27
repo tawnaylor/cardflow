@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CardFlow | Binders</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body class="neon-street">
+  <div class="bg-effects" aria-hidden="true"></div>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <img src="./images/cardflow%20logo.jpeg" alt="CardFlow logo" />
+      </div>
+      <span class="brand-name">CardFlow</span>
+    </div>
+
+    <nav class="nav">
+      <a class="nav-link" href="./index.html">Home</a>
+      <a class="nav-link" href="./add-card.html">Add Cards</a>
+      <a class="nav-link active" href="./binders.html">Binders</a>
+    </nav>
+  </header>
+
+  <main class="page glass-panel">
+    <h1 class="page-title">Binders</h1>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Series & Expansions</h2>
+        <button class="btn danger" id="clearAll">Clear All Cards</button>
+      </div>
+      <div id="binderList" class="binder-list"></div>
+    </section>
+  </main>
+
+  <script type="module" src="./js/binders.js"></script>
+</body>
+</html>
