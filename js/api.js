@@ -14,3 +14,10 @@ export async function getPromoSets(){
   const data = await fetchCards();
   return data.promo_sets || [];
 }
+
+// Fetch user/sample cards stored under cardflow/data/cards.json
+export async function getCards(){
+  const res = await fetch('./data/cards.json');
+  if (!res.ok) throw new Error('Failed to load data/cards.json');
+  return res.json();
+}

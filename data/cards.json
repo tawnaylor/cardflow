@@ -1,0 +1,46 @@
+[
+  {
+    "id": "pika-001",
+    "name": "Pikachu",
+    "game": "Pokemon",
+    "set": "Base Set",
+    "rarity": "Common",
+    "type": "Electric",
+    "number": "58/102",
+    "image": "https://images.pokemontcg.io/base1/58_hires.png",
+    "description": "A classic Electric-type Pokémon card loved by collectors."
+  },
+  {
+    "id": "char-004",
+    "name": "Charizard",
+    "game": "Pokemon",
+    "set": "Base Set",
+    "rarity": "Rare",
+    "type": "Fire",
+    "number": "4/102",
+    "image": "https://images.pokemontcg.io/base1/4_hires.png",
+    "description": "One of the most iconic and collectible Pokémon cards ever printed."
+  },
+  {
+    "id": "bolt-150",
+    "name": "Lightning Bolt",
+    "game": "Magic",
+    "set": "Alpha",
+    "rarity": "Common",
+    "type": "Instant",
+    "number": "150",
+    "image": "https://cards.scryfall.io/large/front/6/e/6edc735e-cbf1-4f1a-b165-3d41726b2df1.jpg",
+    "description": "A fast, efficient spell that has remained legendary in Magic."
+  },
+  {
+    "id": "black-233",
+    "name": "Black Lotus",
+    "game": "Magic",
+    "set": "Alpha",
+    "rarity": "Rare",
+    "type": "Artifact",
+    "number": "233",
+    "image": "https://cards.scryfall.io/large/front/7/1/71cc3d3d-f56f-4ecd-9f42-3d9fb130f5f9.jpg",
+    "description": "A historic and famously rare Magic card."
+  }
+]

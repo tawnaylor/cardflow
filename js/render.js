@@ -15,3 +15,19 @@ export function renderMessage(container, msg, type='info'){
   el.textContent = msg;
   container.appendChild(el);
 }
+
+export function renderCardGrid(container, cards){
+  const grid = document.createElement('div');
+  grid.className = 'cards-row';
+  cards.forEach(c => {
+    const card = document.createElement('article');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="thumb"><img src="${c.image}" alt="${c.name}"></div>
+      <div class="card-title">${c.name}</div>
+      <div class="card-details"><span class="muted">${c.set} • ${c.number || ''}</span><span class="qty-pill">${c.rarity}</span></div>
+    `;
+    grid.appendChild(card);
+  });
+  container.appendChild(grid);
+}
