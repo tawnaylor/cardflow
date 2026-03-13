@@ -1,0 +1,1326 @@
+{
+  "meta": {
+    "title": "Pokémon TCG English expansions + promo sets (machine-ready)",
+    "scope": "English-only; expansions + major promo/other sets as listed on Bulbapedia's 'List of Pokémon Trading Card Game expansions'.",
+    "generated_at_utc": "2026-02-16T20:51:23.016472+00:00",
+    "note": "Pokémon TCG English main releases began in 1999 (Base Set). There were no English expansions in 1998."
+  },
+  "expansions": [
+    {
+      "set_no": "1",
+      "series": "Wizards / Original",
+      "name": "Base Set",
+      "type": "Main Series Expansion",
+      "release_date": "1999-01-09",
+      "set_abb": "BS"
+    },
+    {
+      "set_no": "2",
+      "series": "Wizards / Original",
+      "name": "Jungle",
+      "type": "Main Series Expansion",
+      "release_date": "1999-06-16",
+      "set_abb": "JU"
+    },
+    {
+      "set_no": "3",
+      "series": "Wizards / Original",
+      "name": "Fossil",
+      "type": "Main Series Expansion",
+      "release_date": "1999-10-10",
+      "set_abb": "FO"
+    },
+    {
+      "set_no": "4",
+      "series": "Wizards / Original",
+      "name": "Base Set 2",
+      "type": "Main Series Expansion",
+      "release_date": "2000-02-24",
+      "set_abb": "B2"
+    },
+    {
+      "set_no": "5",
+      "series": "Wizards / Original",
+      "name": "Team Rocket",
+      "type": "Main Series Expansion",
+      "release_date": "2000-04-24",
+      "set_abb": "TR"
+    },
+    {
+      "set_no": "6",
+      "series": "Wizards / Original",
+      "name": "Gym Heroes",
+      "type": "Main Series Expansion",
+      "release_date": "2000-08-14",
+      "set_abb": "G1"
+    },
+    {
+      "set_no": "7",
+      "series": "Wizards / Original",
+      "name": "Gym Challenge",
+      "type": "Main Series Expansion",
+      "release_date": "2000-10-16",
+      "set_abb": "G2"
+    },
+    {
+      "set_no": "N1",
+      "series": "Wizards / Neo",
+      "name": "Neo Genesis",
+      "type": "Main Series Expansion",
+      "release_date": "2000-12-16",
+      "set_abb": "N1"
+    },
+    {
+      "set_no": "N2",
+      "series": "Wizards / Neo",
+      "name": "Neo Discovery",
+      "type": "Main Series Expansion",
+      "release_date": "2001-06-01",
+      "set_abb": "N2"
+    },
+    {
+      "set_no": "N3",
+      "series": "Wizards / Neo",
+      "name": "Neo Revelation",
+      "type": "Main Series Expansion",
+      "release_date": "2001-09-21",
+      "set_abb": "N3"
+    },
+    {
+      "set_no": "N4",
+      "series": "Wizards / Neo",
+      "name": "Neo Destiny",
+      "type": "Main Series Expansion",
+      "release_date": "2002-02-28",
+      "set_abb": "N4"
+    },
+    {
+      "set_no": "LC",
+      "series": "Wizards / Legendary Collection",
+      "name": "Legendary Collection",
+      "type": "Main Series Expansion",
+      "release_date": "2002-05-24",
+      "set_abb": "LC"
+    },
+    {
+      "set_no": "EX",
+      "series": "Wizards / e-Card",
+      "name": "Expedition Base Set",
+      "type": "Main Series Expansion",
+      "release_date": "2002-09-15",
+      "set_abb": "EX"
+    },
+    {
+      "set_no": "AQ",
+      "series": "Wizards / e-Card",
+      "name": "Aquapolis",
+      "type": "Main Series Expansion",
+      "release_date": "2003-01-15",
+      "set_abb": "AQ"
+    },
+    {
+      "set_no": "SK",
+      "series": "Wizards / e-Card",
+      "name": "Skyridge",
+      "type": "Main Series Expansion",
+      "release_date": "2003-05-12",
+      "set_abb": "SK"
+    },
+    {
+      "set_no": "EX1",
+      "series": "EX",
+      "name": "EX Ruby & Sapphire",
+      "type": "Main Series Expansion",
+      "release_date": "2003-07-18",
+      "set_abb": "RS"
+    },
+    {
+      "set_no": "EX2",
+      "series": "EX",
+      "name": "EX Sandstorm",
+      "type": "Main Series Expansion",
+      "release_date": "2003-09-18",
+      "set_abb": "SS"
+    },
+    {
+      "set_no": "EX3",
+      "series": "EX",
+      "name": "EX Dragon",
+      "type": "Main Series Expansion",
+      "release_date": "2003-11-24",
+      "set_abb": "DR"
+    },
+    {
+      "set_no": "EX4",
+      "series": "EX",
+      "name": "EX Team Magma vs Team Aqua",
+      "type": "Main Series Expansion",
+      "release_date": "2004-03-15",
+      "set_abb": "MA"
+    },
+    {
+      "set_no": "EX5",
+      "series": "EX",
+      "name": "EX Hidden Legends",
+      "type": "Main Series Expansion",
+      "release_date": "2004-06-14",
+      "set_abb": "HL"
+    },
+    {
+      "set_no": "EX6",
+      "series": "EX",
+      "name": "EX FireRed & LeafGreen",
+      "type": "Main Series Expansion",
+      "release_date": "2004-08-30",
+      "set_abb": "RG"
+    },
+    {
+      "set_no": "EX7",
+      "series": "EX",
+      "name": "EX Team Rocket Returns",
+      "type": "Main Series Expansion",
+      "release_date": "2004-11-08",
+      "set_abb": "TRR"
+    },
+    {
+      "set_no": "EX8",
+      "series": "EX",
+      "name": "EX Deoxys",
+      "type": "Main Series Expansion",
+      "release_date": "2005-02-14",
+      "set_abb": "DX"
+    },
+    {
+      "set_no": "EX9",
+      "series": "EX",
+      "name": "EX Emerald",
+      "type": "Main Series Expansion",
+      "release_date": "2005-05-09",
+      "set_abb": "EM"
+    },
+    {
+      "set_no": "EX10",
+      "series": "EX",
+      "name": "EX Unseen Forces",
+      "type": "Main Series Expansion",
+      "release_date": "2005-08-22",
+      "set_abb": "UF"
+    },
+    {
+      "set_no": "EX11",
+      "series": "EX",
+      "name": "EX Delta Species",
+      "type": "Main Series Expansion",
+      "release_date": "2005-10-31",
+      "set_abb": "DS"
+    },
+    {
+      "set_no": "EX12",
+      "series": "EX",
+      "name": "EX Legend Maker",
+      "type": "Main Series Expansion",
+      "release_date": "2006-02-13",
+      "set_abb": "LM"
+    },
+    {
+      "set_no": "EX13",
+      "series": "EX",
+      "name": "EX Holon Phantoms",
+      "type": "Main Series Expansion",
+      "release_date": "2006-05-03",
+      "set_abb": "HP"
+    },
+    {
+      "set_no": "EX14",
+      "series": "EX",
+      "name": "EX Crystal Guardians",
+      "type": "Main Series Expansion",
+      "release_date": "2006-08-30",
+      "set_abb": "CG"
+    },
+    {
+      "set_no": "EX15",
+      "series": "EX",
+      "name": "EX Dragon Frontiers",
+      "type": "Main Series Expansion",
+      "release_date": "2006-11-08",
+      "set_abb": "DF"
+    },
+    {
+      "set_no": "EX16",
+      "series": "EX",
+      "name": "EX Power Keepers",
+      "type": "Main Series Expansion",
+      "release_date": "2007-02-14",
+      "set_abb": "PK"
+    },
+    {
+      "set_no": "DP1",
+      "series": "Diamond & Pearl",
+      "name": "Diamond & Pearl",
+      "type": "Main Series Expansion",
+      "release_date": "2007-05-23",
+      "set_abb": "DP"
+    },
+    {
+      "set_no": "DP2",
+      "series": "Diamond & Pearl",
+      "name": "Diamond & Pearl—Mysterious Treasures",
+      "type": "Main Series Expansion",
+      "release_date": "2007-08-22",
+      "set_abb": "MT"
+    },
+    {
+      "set_no": "DP3",
+      "series": "Diamond & Pearl",
+      "name": "Diamond & Pearl—Secret Wonders",
+      "type": "Main Series Expansion",
+      "release_date": "2007-11-07",
+      "set_abb": "SW"
+    },
+    {
+      "set_no": "DP4",
+      "series": "Diamond & Pearl",
+      "name": "Diamond & Pearl—Great Encounters",
+      "type": "Main Series Expansion",
+      "release_date": "2008-02-13",
+      "set_abb": "GE"
+    },
+    {
+      "set_no": "DP5",
+      "series": "Diamond & Pearl",
+      "name": "Diamond & Pearl—Majestic Dawn",
+      "type": "Main Series Expansion",
+      "release_date": "2008-05-21",
+      "set_abb": "MD"
+    },
+    {
+      "set_no": "DP6",
+      "series": "Diamond & Pearl",
+      "name": "Diamond & Pearl—Legends Awakened",
+      "type": "Main Series Expansion",
+      "release_date": "2008-08-20",
+      "set_abb": "LA"
+    },
+    {
+      "set_no": "DP7",
+      "series": "Diamond & Pearl",
+      "name": "Diamond & Pearl—Stormfront",
+      "type": "Main Series Expansion",
+      "release_date": "2008-11-05",
+      "set_abb": "SF"
+    },
+    {
+      "set_no": "PL1",
+      "series": "Platinum",
+      "name": "Platinum",
+      "type": "Main Series Expansion",
+      "release_date": "2009-02-11",
+      "set_abb": "PL"
+    },
+    {
+      "set_no": "PL2",
+      "series": "Platinum",
+      "name": "Platinum—Rising Rivals",
+      "type": "Main Series Expansion",
+      "release_date": "2009-05-16",
+      "set_abb": "RR"
+    },
+    {
+      "set_no": "PL3",
+      "series": "Platinum",
+      "name": "Platinum—Supreme Victors",
+      "type": "Main Series Expansion",
+      "release_date": "2009-08-19",
+      "set_abb": "SV"
+    },
+    {
+      "set_no": "PL4",
+      "series": "Platinum",
+      "name": "Platinum—Arceus",
+      "type": "Main Series Expansion",
+      "release_date": "2009-11-04",
+      "set_abb": "AR"
+    },
+    {
+      "set_no": "HGSS1",
+      "series": "HeartGold & SoulSilver",
+      "name": "HeartGold & SoulSilver",
+      "type": "Main Series Expansion",
+      "release_date": "2010-02-10",
+      "set_abb": "HS"
+    },
+    {
+      "set_no": "HGSS2",
+      "series": "HeartGold & SoulSilver",
+      "name": "HS—Unleashed",
+      "type": "Main Series Expansion",
+      "release_date": "2010-05-12",
+      "set_abb": "UL"
+    },
+    {
+      "set_no": "HGSS3",
+      "series": "HeartGold & SoulSilver",
+      "name": "HS—Undaunted",
+      "type": "Main Series Expansion",
+      "release_date": "2010-08-18",
+      "set_abb": "UD"
+    },
+    {
+      "set_no": "HGSS4",
+      "series": "HeartGold & SoulSilver",
+      "name": "HS—Triumphant",
+      "type": "Main Series Expansion",
+      "release_date": "2010-11-03",
+      "set_abb": "TM"
+    },
+    {
+      "set_no": "COL1",
+      "series": "Call of Legends",
+      "name": "Call of Legends",
+      "type": "Main Series Expansion",
+      "release_date": "2011-02-09",
+      "set_abb": "CL"
+    },
+    {
+      "set_no": "BW1",
+      "series": "Black & White",
+      "name": "Black & White",
+      "type": "Main Series Expansion",
+      "release_date": "2011-04-25",
+      "set_abb": "BLW"
+    },
+    {
+      "set_no": "BW2",
+      "series": "Black & White",
+      "name": "Black & White—Emerging Powers",
+      "type": "Main Series Expansion",
+      "release_date": "2011-08-31",
+      "set_abb": "EPO"
+    },
+    {
+      "set_no": "BW3",
+      "series": "Black & White",
+      "name": "Black & White—Noble Victories",
+      "type": "Main Series Expansion",
+      "release_date": "2011-11-16",
+      "set_abb": "NVI"
+    },
+    {
+      "set_no": "BW4",
+      "series": "Black & White",
+      "name": "Black & White—Next Destinies",
+      "type": "Main Series Expansion",
+      "release_date": "2012-02-08",
+      "set_abb": "NXD"
+    },
+    {
+      "set_no": "BW5",
+      "series": "Black & White",
+      "name": "Black & White—Dark Explorers",
+      "type": "Main Series Expansion",
+      "release_date": "2012-05-09",
+      "set_abb": "DEX"
+    },
+    {
+      "set_no": "BW6",
+      "series": "Black & White",
+      "name": "Black & White—Dragons Exalted",
+      "type": "Main Series Expansion",
+      "release_date": "2012-08-15",
+      "set_abb": "DRX"
+    },
+    {
+      "set_no": "BW6.5",
+      "series": "Black & White",
+      "name": "Dragon Vault",
+      "type": "Special Expansion",
+      "release_date": "2012-10-05",
+      "set_abb": "DRV"
+    },
+    {
+      "set_no": "BW7",
+      "series": "Black & White",
+      "name": "Black & White—Boundaries Crossed",
+      "type": "Main Series Expansion",
+      "release_date": "2012-11-07",
+      "set_abb": "BCR"
+    },
+    {
+      "set_no": "BW8",
+      "series": "Black & White",
+      "name": "Black & White—Plasma Storm",
+      "type": "Main Series Expansion",
+      "release_date": "2013-02-06",
+      "set_abb": "PLS"
+    },
+    {
+      "set_no": "BW9",
+      "series": "Black & White",
+      "name": "Black & White—Plasma Freeze",
+      "type": "Main Series Expansion",
+      "release_date": "2013-05-08",
+      "set_abb": "PLF"
+    },
+    {
+      "set_no": "BW10",
+      "series": "Black & White",
+      "name": "Black & White—Plasma Blast",
+      "type": "Main Series Expansion",
+      "release_date": "2013-08-14",
+      "set_abb": "PLB"
+    },
+    {
+      "set_no": "BW11",
+      "series": "Black & White",
+      "name": "Black & White—Legendary Treasures",
+      "type": "Main Series Expansion",
+      "release_date": "2013-11-06",
+      "set_abb": "LTR"
+    },
+    {
+      "set_no": "XY0",
+      "series": "XY",
+      "name": "XY—Kalos Starter Set",
+      "type": "Special Expansion",
+      "release_date": "2013-11-08",
+      "set_abb": "KSS"
+    },
+    {
+      "set_no": "XY1",
+      "series": "XY",
+      "name": "XY",
+      "type": "Main Series Expansion",
+      "release_date": "2014-02-05",
+      "set_abb": "XY"
+    },
+    {
+      "set_no": "XY2",
+      "series": "XY",
+      "name": "XY—Flashfire",
+      "type": "Main Series Expansion",
+      "release_date": "2014-05-07",
+      "set_abb": "FLF"
+    },
+    {
+      "set_no": "XY3",
+      "series": "XY",
+      "name": "XY—Furious Fists",
+      "type": "Main Series Expansion",
+      "release_date": "2014-08-13",
+      "set_abb": "FFI"
+    },
+    {
+      "set_no": "XY4",
+      "series": "XY",
+      "name": "XY—Phantom Forces",
+      "type": "Main Series Expansion",
+      "release_date": "2014-11-05",
+      "set_abb": "PHF"
+    },
+    {
+      "set_no": "XY5",
+      "series": "XY",
+      "name": "XY—Primal Clash",
+      "type": "Main Series Expansion",
+      "release_date": "2015-02-04",
+      "set_abb": "PRC"
+    },
+    {
+      "set_no": "DC1",
+      "series": "XY",
+      "name": "Double Crisis",
+      "type": "Special Expansion",
+      "release_date": "2015-03-25",
+      "set_abb": "DCR"
+    },
+    {
+      "set_no": "XY6",
+      "series": "XY",
+      "name": "XY—Roaring Skies",
+      "type": "Main Series Expansion",
+      "release_date": "2015-05-06",
+      "set_abb": "ROS"
+    },
+    {
+      "set_no": "XY7",
+      "series": "XY",
+      "name": "XY—Ancient Origins",
+      "type": "Main Series Expansion",
+      "release_date": "2015-08-12",
+      "set_abb": "AOR"
+    },
+    {
+      "set_no": "XY8",
+      "series": "XY",
+      "name": "XY—BREAKthrough",
+      "type": "Main Series Expansion",
+      "release_date": "2015-11-04",
+      "set_abb": "BKT"
+    },
+    {
+      "set_no": "XY9",
+      "series": "XY",
+      "name": "XY—BREAKpoint",
+      "type": "Main Series Expansion",
+      "release_date": "2016-02-03",
+      "set_abb": "BKP"
+    },
+    {
+      "set_no": "G1",
+      "series": "XY",
+      "name": "Generations",
+      "type": "Special Expansion",
+      "release_date": "2016-02-22",
+      "set_abb": "GEN"
+    },
+    {
+      "set_no": "XY10",
+      "series": "XY",
+      "name": "XY—Fates Collide",
+      "type": "Main Series Expansion",
+      "release_date": "2016-05-02",
+      "set_abb": "FCO"
+    },
+    {
+      "set_no": "XY11",
+      "series": "XY",
+      "name": "XY—Steam Siege",
+      "type": "Main Series Expansion",
+      "release_date": "2016-08-03",
+      "set_abb": "STS"
+    },
+    {
+      "set_no": "XY12",
+      "series": "XY",
+      "name": "XY—Evolutions",
+      "type": "Main Series Expansion",
+      "release_date": "2016-11-02",
+      "set_abb": "EVO"
+    },
+    {
+      "set_no": "SM1",
+      "series": "Sun & Moon",
+      "name": "Sun & Moon",
+      "type": "Main Series Expansion",
+      "release_date": "2017-02-03",
+      "set_abb": "SUM"
+    },
+    {
+      "set_no": "SM2",
+      "series": "Sun & Moon",
+      "name": "Sun & Moon—Guardians Rising",
+      "type": "Main Series Expansion",
+      "release_date": "2017-05-05",
+      "set_abb": "GRI"
+    },
+    {
+      "set_no": "SM3",
+      "series": "Sun & Moon",
+      "name": "Sun & Moon—Burning Shadows",
+      "type": "Main Series Expansion",
+      "release_date": "2017-08-04",
+      "set_abb": "BUS"
+    },
+    {
+      "set_no": "SM3.5",
+      "series": "Sun & Moon",
+      "name": "Shining Legends",
+      "type": "Special Expansion",
+      "release_date": "2017-10-06",
+      "set_abb": "SLG"
+    },
+    {
+      "set_no": "SM4",
+      "series": "Sun & Moon",
+      "name": "Sun & Moon—Crimson Invasion",
+      "type": "Main Series Expansion",
+      "release_date": "2017-11-03",
+      "set_abb": "CIN"
+    },
+    {
+      "set_no": "SM5",
+      "series": "Sun & Moon",
+      "name": "Sun & Moon—Ultra Prism",
+      "type": "Main Series Expansion",
+      "release_date": "2018-02-02",
+      "set_abb": "UPR"
+    },
+    {
+      "set_no": "SM6",
+      "series": "Sun & Moon",
+      "name": "Sun & Moon—Forbidden Light",
+      "type": "Main Series Expansion",
+      "release_date": "2018-05-04",
+      "set_abb": "FLI"
+    },
+    {
+      "set_no": "SM7",
+      "series": "Sun & Moon",
+      "name": "Sun & Moon—Celestial Storm",
+      "type": "Main Series Expansion",
+      "release_date": "2018-08-03",
+      "set_abb": "CES"
+    },
+    {
+      "set_no": "SM7.5",
+      "series": "Sun & Moon",
+      "name": "Dragon Majesty",
+      "type": "Special Expansion",
+      "release_date": "2018-09-07",
+      "set_abb": "DRM"
+    },
+    {
+      "set_no": "SM8",
+      "series": "Sun & Moon",
+      "name": "Sun & Moon—Lost Thunder",
+      "type": "Main Series Expansion",
+      "release_date": "2018-11-02",
+      "set_abb": "LOT"
+    },
+    {
+      "set_no": "SM9",
+      "series": "Sun & Moon",
+      "name": "Sun & Moon—Team Up",
+      "type": "Main Series Expansion",
+      "release_date": "2019-02-01",
+      "set_abb": "TEU"
+    },
+    {
+      "set_no": "DET",
+      "series": "Sun & Moon",
+      "name": "Detective Pikachu",
+      "type": "Special Expansion",
+      "release_date": "2019-03-29",
+      "set_abb": "DET"
+    },
+    {
+      "set_no": "SM10",
+      "series": "Sun & Moon",
+      "name": "Sun & Moon—Unbroken Bonds",
+      "type": "Main Series Expansion",
+      "release_date": "2019-05-03",
+      "set_abb": "UNB"
+    },
+    {
+      "set_no": "SM11",
+      "series": "Sun & Moon",
+      "name": "Sun & Moon—Unified Minds",
+      "type": "Main Series Expansion",
+      "release_date": "2019-08-02",
+      "set_abb": "UNM"
+    },
+    {
+      "set_no": "SM11.5",
+      "series": "Sun & Moon",
+      "name": "Hidden Fates",
+      "type": "Special Expansion",
+      "release_date": "2019-08-23",
+      "set_abb": "HIF"
+    },
+    {
+      "set_no": "SM12",
+      "series": "Sun & Moon",
+      "name": "Sun & Moon—Cosmic Eclipse",
+      "type": "Main Series Expansion",
+      "release_date": "2019-11-01",
+      "set_abb": "CEC"
+    },
+    {
+      "set_no": "SWSH1",
+      "series": "Sword & Shield",
+      "name": "Sword & Shield",
+      "type": "Main Series Expansion",
+      "release_date": "2020-02-07",
+      "set_abb": "SSH"
+    },
+    {
+      "set_no": "SWSH2",
+      "series": "Sword & Shield",
+      "name": "Sword & Shield—Rebel Clash",
+      "type": "Main Series Expansion",
+      "release_date": "2020-05-01",
+      "set_abb": "RCL"
+    },
+    {
+      "set_no": "SWSH3",
+      "series": "Sword & Shield",
+      "name": "Sword & Shield—Darkness Ablaze",
+      "type": "Main Series Expansion",
+      "release_date": "2020-08-14",
+      "set_abb": "DAA"
+    },
+    {
+      "set_no": "CPA",
+      "series": "Sword & Shield",
+      "name": "Champion's Path",
+      "type": "Special Expansion",
+      "release_date": "2020-09-25",
+      "set_abb": "CPA"
+    },
+    {
+      "set_no": "SWSH4",
+      "series": "Sword & Shield",
+      "name": "Sword & Shield—Vivid Voltage",
+      "type": "Main Series Expansion",
+      "release_date": "2020-11-13",
+      "set_abb": "VIV"
+    },
+    {
+      "set_no": "SHF",
+      "series": "Sword & Shield",
+      "name": "Shining Fates",
+      "type": "Special Expansion",
+      "release_date": "2021-02-19",
+      "set_abb": "SHF"
+    },
+    {
+      "set_no": "SWSH5",
+      "series": "Sword & Shield",
+      "name": "Sword & Shield—Battle Styles",
+      "type": "Main Series Expansion",
+      "release_date": "2021-03-19",
+      "set_abb": "BST"
+    },
+    {
+      "set_no": "SWSH6",
+      "series": "Sword & Shield",
+      "name": "Sword & Shield—Chilling Reign",
+      "type": "Main Series Expansion",
+      "release_date": "2021-06-18",
+      "set_abb": "CRE"
+    },
+    {
+      "set_no": "SWSH7",
+      "series": "Sword & Shield",
+      "name": "Sword & Shield—Evolving Skies",
+      "type": "Main Series Expansion",
+      "release_date": "2021-08-27",
+      "set_abb": "EVS"
+    },
+    {
+      "set_no": "CEL25",
+      "series": "Sword & Shield",
+      "name": "Celebrations",
+      "type": "Special Expansion",
+      "release_date": "2021-10-08",
+      "set_abb": "CEL"
+    },
+    {
+      "set_no": "SWSH8",
+      "series": "Sword & Shield",
+      "name": "Sword & Shield—Fusion Strike",
+      "type": "Main Series Expansion",
+      "release_date": "2021-11-12",
+      "set_abb": "FST"
+    },
+    {
+      "set_no": "SWSH9",
+      "series": "Sword & Shield",
+      "name": "Sword & Shield—Brilliant Stars",
+      "type": "Main Series Expansion",
+      "release_date": "2022-02-25",
+      "set_abb": "BRS"
+    },
+    {
+      "set_no": "SWSH10",
+      "series": "Sword & Shield",
+      "name": "Sword & Shield—Astral Radiance",
+      "type": "Main Series Expansion",
+      "release_date": "2022-05-27",
+      "set_abb": "ASR"
+    },
+    {
+      "set_no": "PGO",
+      "series": "Sword & Shield",
+      "name": "Pokémon TCG: Pokémon GO",
+      "type": "Special Expansion",
+      "release_date": "2022-07-01",
+      "set_abb": "PGO"
+    },
+    {
+      "set_no": "SWSH11",
+      "series": "Sword & Shield",
+      "name": "Sword & Shield—Lost Origin",
+      "type": "Main Series Expansion",
+      "release_date": "2022-09-09",
+      "set_abb": "LOR"
+    },
+    {
+      "set_no": "SWSH12",
+      "series": "Sword & Shield",
+      "name": "Sword & Shield—Silver Tempest",
+      "type": "Main Series Expansion",
+      "release_date": "2022-11-11",
+      "set_abb": "SIT"
+    },
+    {
+      "set_no": "CZ",
+      "series": "Sword & Shield",
+      "name": "Crown Zenith",
+      "type": "Special Expansion",
+      "release_date": "2023-01-20",
+      "set_abb": "CRZ"
+    },
+    {
+      "set_no": "SV1",
+      "series": "Scarlet & Violet",
+      "name": "Scarlet & Violet",
+      "type": "Main Series Expansion",
+      "release_date": "2023-03-31",
+      "set_abb": "SVI"
+    },
+    {
+      "set_no": "SV2",
+      "series": "Scarlet & Violet",
+      "name": "Scarlet & Violet—Paldea Evolved",
+      "type": "Main Series Expansion",
+      "release_date": "2023-06-09",
+      "set_abb": "PAL"
+    },
+    {
+      "set_no": "SV3",
+      "series": "Scarlet & Violet",
+      "name": "Scarlet & Violet—Obsidian Flames",
+      "type": "Main Series Expansion",
+      "release_date": "2023-08-11",
+      "set_abb": "OBF"
+    },
+    {
+      "set_no": "SV3.5",
+      "series": "Scarlet & Violet",
+      "name": "Scarlet & Violet—151",
+      "type": "Special Expansion",
+      "release_date": "2023-09-22",
+      "set_abb": "MEW"
+    },
+    {
+      "set_no": "SV4",
+      "series": "Scarlet & Violet",
+      "name": "Scarlet & Violet—Paradox Rift",
+      "type": "Main Series Expansion",
+      "release_date": "2023-11-03",
+      "set_abb": "PAR"
+    },
+    {
+      "set_no": "SV4.5",
+      "series": "Scarlet & Violet",
+      "name": "Paldean Fates",
+      "type": "Special Expansion",
+      "release_date": "2024-01-26",
+      "set_abb": "PAF"
+    },
+    {
+      "set_no": "SV5",
+      "series": "Scarlet & Violet",
+      "name": "Scarlet & Violet—Temporal Forces",
+      "type": "Main Series Expansion",
+      "release_date": "2024-03-22",
+      "set_abb": "TEF"
+    },
+    {
+      "set_no": "SV6",
+      "series": "Scarlet & Violet",
+      "name": "Scarlet & Violet—Twilight Masquerade",
+      "type": "Main Series Expansion",
+      "release_date": "2024-05-24",
+      "set_abb": "TWM"
+    },
+    {
+      "set_no": "SV6.5",
+      "series": "Scarlet & Violet",
+      "name": "Shrouded Fable",
+      "type": "Special Expansion",
+      "release_date": "2024-08-02",
+      "set_abb": "SFA"
+    },
+    {
+      "set_no": "SV7",
+      "series": "Scarlet & Violet",
+      "name": "Scarlet & Violet—Stellar Crown",
+      "type": "Main Series Expansion",
+      "release_date": "2024-09-13",
+      "set_abb": "SCR"
+    },
+    {
+      "set_no": "SV8",
+      "series": "Scarlet & Violet",
+      "name": "Scarlet & Violet—Surging Sparks",
+      "type": "Main Series Expansion",
+      "release_date": "2024-11-08",
+      "set_abb": "SSP"
+    },
+    {
+      "set_no": "SV9",
+      "series": "Scarlet & Violet",
+      "name": "Scarlet & Violet—Prismatic Evolutions",
+      "type": "Special Expansion",
+      "release_date": "2025-01-17",
+      "set_abb": "PRE"
+    },
+    {
+      "set_no": "SV10",
+      "series": "Scarlet & Violet",
+      "name": "Scarlet & Violet—Journey Together",
+      "type": "Main Series Expansion",
+      "release_date": "2025-03-28",
+      "set_abb": "JTG"
+    },
+    {
+      "set_no": "SV11",
+      "series": "Scarlet & Violet",
+      "name": "Scarlet & Violet—Destined Rivals",
+      "type": "Main Series Expansion",
+      "release_date": "2025-05-30",
+      "set_abb": "DRI"
+    },
+    {
+      "set_no": "SV12",
+      "series": "Scarlet & Violet",
+      "name": "Scarlet & Violet—Black Bolt",
+      "type": "Main Series Expansion",
+      "release_date": "2025-08-01",
+      "set_abb": "BLK"
+    },
+    {
+      "set_no": "SV13",
+      "series": "Scarlet & Violet",
+      "name": "Scarlet & Violet—White Flare",
+      "type": "Main Series Expansion",
+      "release_date": "2025-08-01",
+      "set_abb": "WHT"
+    },
+    {
+      "set_no": "ME1",
+      "series": "Mega Evolution",
+      "name": "Mega Evolution",
+      "type": "Main Series Expansion",
+      "release_date": "2025-09-26",
+      "set_abb": "MEG"
+    },
+    {
+      "set_no": "ME2",
+      "series": "Mega Evolution",
+      "name": "Mega Evolution—Phantasmal Flames",
+      "type": "Main Series Expansion",
+      "release_date": "2025-11-14",
+      "set_abb": "PFL"
+    },
+    {
+      "set_no": "ME2.5",
+      "series": "Mega Evolution",
+      "name": "Mega Evolution—Ascended Heroes",
+      "type": "Special Expansion",
+      "release_date": "2026-01-30",
+      "set_abb": "ASC"
+    },
+    {
+      "set_no": "ME3",
+      "series": "Mega Evolution",
+      "name": "Mega Evolution—Perfect Order",
+      "type": "Main Series Expansion",
+      "release_date": "2026-03-27",
+      "set_abb": "POR"
+    }
+  ],
+  "promo_sets": [
+    {
+      "name": "Wizards Black Star Promos",
+      "release_period": "1999-07 to 2003-03",
+      "set_abb": "WP"
+    },
+    {
+      "name": "Nintendo Black Star Promos",
+      "release_period": "2003-10 to 2006-09",
+      "set_abb": "NP"
+    },
+    {
+      "name": "DP Black Star Promos",
+      "release_period": "2007-05 to 2009-12",
+      "set_abb": "DPP"
+    },
+    {
+      "name": "HGSS Black Star Promos",
+      "release_period": "2010-02 to 2011-02",
+      "set_abb": "HSP"
+    },
+    {
+      "name": "BW Black Star Promos",
+      "release_period": "2011-03 to 2013-12",
+      "set_abb": "BWP"
+    },
+    {
+      "name": "XY Black Star Promos",
+      "release_period": "2013-10 to 2017-05",
+      "set_abb": "XYP"
+    },
+    {
+      "name": "SM Black Star Promos",
+      "release_period": "2016-11 to 2021-11",
+      "set_abb": "SMP"
+    },
+    {
+      "name": "SWSH Black Star Promos",
+      "release_period": "2019-11 to 2023-08",
+      "set_abb": "SSP"
+    },
+    {
+      "name": "SVP Black Star Promos",
+      "release_period": "2023-01 to present",
+      "set_abb": "SVP"
+    },
+    {
+      "name": "MEP Black Star Promos",
+      "release_period": "2025-09 to present",
+      "set_abb": "MEP"
+    }
+  ],
+  "other_sets": [
+    {
+      "category": "Basic Energies",
+      "name": "SVE Basic Energies",
+      "release_date": "2023-03-31",
+      "set_abb": "SVE"
+    },
+    {
+      "category": "Basic Energies",
+      "name": "MEE Basic Energies",
+      "release_date": "2025-09-26",
+      "set_abb": "MEE"
+    },
+    {
+      "category": "McDonald's Collection",
+      "name": "McDonald's Collection 2011",
+      "release_date": "2011-06-17",
+      "set_abb": "M11"
+    },
+    {
+      "category": "McDonald's Collection",
+      "name": "McDonald's Collection 2012",
+      "release_date": "2012-06-15",
+      "set_abb": "M12"
+    },
+    {
+      "category": "McDonald's Collection",
+      "name": "McDonald's Collection 2013",
+      "release_date": "2013-10-13",
+      "set_abb": "M13"
+    },
+    {
+      "category": "McDonald's Collection",
+      "name": "McDonald's Collection 2014",
+      "release_date": "2014-05-23",
+      "set_abb": "M14"
+    },
+    {
+      "category": "McDonald's Collection",
+      "name": "McDonald's Collection 2015",
+      "release_date": "2015-10-14",
+      "set_abb": "M15"
+    },
+    {
+      "category": "McDonald's Collection",
+      "name": "McDonald's Collection 2016",
+      "release_date": "2016-08-19",
+      "set_abb": "M16"
+    },
+    {
+      "category": "McDonald's Collection",
+      "name": "McDonald's Collection 2017",
+      "release_date": "2017-07-01",
+      "set_abb": "M17"
+    },
+    {
+      "category": "McDonald's Collection",
+      "name": "McDonald's Collection 2018",
+      "release_date": "2018-10-16",
+      "set_abb": "M18"
+    },
+    {
+      "category": "McDonald's Collection",
+      "name": "McDonald's Collection 2019",
+      "release_date": "2019-10-15",
+      "set_abb": "M19"
+    },
+    {
+      "category": "McDonald's Collection",
+      "name": "McDonald's Collection 2021",
+      "release_date": "2021-02-09",
+      "set_abb": "M21"
+    },
+    {
+      "category": "McDonald's Collection",
+      "name": "McDonald's Collection 2022",
+      "release_date": "2022-08-03",
+      "set_abb": "M22"
+    },
+    {
+      "category": "McDonald's Collection",
+      "name": "McDonald's Collection 2023",
+      "release_date": "2023-07-27",
+      "set_abb": "M23"
+    },
+    {
+      "category": "McDonald's Collection",
+      "name": "McDonald's Collection 2024",
+      "release_date": "2024-12-04",
+      "set_abb": "M24"
+    },
+    {
+      "category": "Trick or Trade",
+      "name": "Trick or Trade 2022",
+      "release_date": "2022-09-01",
+      "set_abb": "TT22"
+    },
+    {
+      "category": "Trick or Trade",
+      "name": "Trick or Trade 2023",
+      "release_date": "2023-09-01",
+      "set_abb": "TT23"
+    },
+    {
+      "category": "Trick or Trade",
+      "name": "Trick or Trade 2024",
+      "release_date": "2024-08-30",
+      "set_abb": "TT24"
+    },
+    {
+      "category": "POP / Prize Packs",
+      "name": "POP Series 1",
+      "release_date": "2004-09-01",
+      "set_abb": "POP1"
+    },
+    {
+      "category": "POP / Prize Packs",
+      "name": "POP Series 2",
+      "release_date": "2005-08-01",
+      "set_abb": "POP2"
+    },
+    {
+      "category": "POP / Prize Packs",
+      "name": "POP Series 3",
+      "release_date": "2006-04-01",
+      "set_abb": "POP3"
+    },
+    {
+      "category": "POP / Prize Packs",
+      "name": "POP Series 4",
+      "release_date": "2006-08-01",
+      "set_abb": "POP4"
+    },
+    {
+      "category": "POP / Prize Packs",
+      "name": "POP Series 5",
+      "release_date": "2007-03-01",
+      "set_abb": "POP5"
+    },
+    {
+      "category": "POP / Prize Packs",
+      "name": "POP Series 6",
+      "release_date": "2007-09-01",
+      "set_abb": "POP6"
+    },
+    {
+      "category": "POP / Prize Packs",
+      "name": "POP Series 7",
+      "release_date": "2008-03-01",
+      "set_abb": "POP7"
+    },
+    {
+      "category": "POP / Prize Packs",
+      "name": "POP Series 8",
+      "release_date": "2008-09-01",
+      "set_abb": "POP8"
+    },
+    {
+      "category": "POP / Prize Packs",
+      "name": "POP Series 9",
+      "release_date": "2009-03-01",
+      "set_abb": "POP9"
+    },
+    {
+      "category": "POP / Prize Packs",
+      "name": "Play! Pokémon Prize Pack Series One",
+      "release_date": "2022-11-09",
+      "set_abb": "PPS1"
+    },
+    {
+      "category": "POP / Prize Packs",
+      "name": "Play! Pokémon Prize Pack Series Two",
+      "release_date": "2023-01-19",
+      "set_abb": "PPS2"
+    },
+    {
+      "category": "POP / Prize Packs",
+      "name": "Play! Pokémon Prize Pack Series Three",
+      "release_date": "2023-08-14",
+      "set_abb": "PPS3"
+    },
+    {
+      "category": "POP / Prize Packs",
+      "name": "Play! Pokémon Prize Pack Series Four",
+      "release_date": "2024-02-14",
+      "set_abb": "PPS4"
+    },
+    {
+      "category": "POP / Prize Packs",
+      "name": "Play! Pokémon Prize Pack Series Five",
+      "release_date": "2024-08-14",
+      "set_abb": "PPS5"
+    },
+    {
+      "category": "POP / Prize Packs",
+      "name": "Play! Pokémon Prize Pack Series Six",
+      "release_date": "2025-02-14",
+      "set_abb": "PPS6"
+    },
+    {
+      "category": "POP / Prize Packs",
+      "name": "Play! Pokémon Prize Pack Series Seven",
+      "release_date": "2025-08-14",
+      "set_abb": "PPS7"
+    },
+    {
+      "category": "POP / Prize Packs",
+      "name": "Play! Pokémon Prize Pack Series Eight",
+      "release_date": "2026-01-01",
+      "set_abb": "PPS8"
+    },
+    {
+      "category": "Misc",
+      "name": "Southern Islands",
+      "release_date": "2001-07-31",
+      "set_abb": "SI"
+    },
+    {
+      "category": "Misc",
+      "name": "Best of Game",
+      "release_date": "2002-12-01",
+      "set_abb": null
+    },
+    {
+      "category": "Misc",
+      "name": "Poké Card Creator Pack",
+      "release_date": "2004-07-01",
+      "set_abb": "CC"
+    },
+    {
+      "category": "Misc",
+      "name": "Pokémon Rumble",
+      "release_date": "2009-12-02",
+      "set_abb": "RM"
+    },
+    {
+      "category": "Misc",
+      "name": "Pokémon Futsal",
+      "release_date": "2020-09-11",
+      "set_abb": "FUT20"
+    },
+    {
+      "category": "Misc",
+      "name": "Pokémon Trading Card Game Classic",
+      "release_date": "2023-11-17",
+      "set_abb": "CL"
+    }
+  ]
+}
