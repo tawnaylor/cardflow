@@ -342,6 +342,13 @@ body{
   color:var(--muted);
 }
 
+/* Make inline error messages clearly visible on dark backgrounds */
+.error,
+small.error,
+.field small.error {
+  color: #ffffff !important;
+}
+
 .panel{
   border:2px solid var(--line);
   border-radius:10px;
