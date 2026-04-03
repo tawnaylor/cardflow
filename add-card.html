@@ -28,6 +28,15 @@
 
     <form id="cardForm" class="form" novalidate>
       <div class="form-grid">
+        <label class="field field-wide">
+          <span>TCGdex Card ID</span>
+          <div class="field-inline">
+            <input id="tcgdexCardId" type="text" placeholder="e.g., swsh3-136" autocapitalize="off" spellcheck="false" />
+            <button class="btn" type="button" id="lookupTcgdexBtn">Autofill</button>
+          </div>
+          <small class="hint">Fetch card details from TCGdex and prefill the form.</small>
+        </label>
+
         <label class="field">
           <span>Card Name *</span>
           <input name="name" type="text" required minlength="2" placeholder="e.g., Charizard" />

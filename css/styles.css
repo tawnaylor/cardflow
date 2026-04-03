@@ -316,6 +316,12 @@ body{
   flex-direction:column;
   gap:6px;
 }
+.field-inline{
+  display:grid;
+  grid-template-columns:minmax(0, 1fr) auto;
+  gap:12px;
+  align-items:center;
+}
 .field-wide{
   grid-column: 1 / -1;
 }
@@ -327,6 +333,9 @@ body{
   border-radius:6px;
   border:2px solid var(--line);
   font-size:16px;
+}
+.field-inline .btn{
+  white-space:nowrap;
 }
 .hint{
   color:var(--muted);
@@ -460,6 +469,7 @@ dd{ margin:0; }
   .cards-row{ grid-template-columns: repeat(2, 1fr); }
   .carousel{ grid-template-columns:56px 1fr 56px; }
   .details{ grid-template-columns: 1fr; }
+  .field-inline{ grid-template-columns: 1fr; }
 }
 
 /* Dark neon overrides */

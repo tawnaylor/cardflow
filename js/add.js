@@ -1,4 +1,5 @@
 import { upsertCard, fileToDataUrl, getCards } from "./storage.js";
+import { fetchTcgdexCard } from "./tcgdex.js";
 
 const form = document.getElementById("cardForm");
 const status = document.getElementById("status");
@@ -7,9 +8,85 @@ const imageUrlInput = document.getElementById("imageUrl");
 const seedBtn = document.getElementById("seedDemo");
 const seriesSelect = document.getElementById('seriesSelect');
 const expansionSelect = document.getElementById('expansionSelect');
+const tcgdexCardIdInput = document.getElementById('tcgdexCardId');
+const lookupTcgdexBtn = document.getElementById('lookupTcgdexBtn');
 
 function setStatus(msg) {
   status.textContent = msg;
+}
+
+function ensureSelectOption(selectEl, value) {
+  if (!selectEl || !value) return;
+  const existing = Array.from(selectEl.options).find(option => option.value === value);
+  if (existing) return;
+
+  const option = document.createElement('option');
+  option.value = value;
+  option.textContent = value;
+  selectEl.appendChild(option);
+}
+
+function updateExpansionOptions(selectedSeries, selectedExpansion = '') {
+  if (!seriesSelect || !expansionSelect) return;
+
+  expansionSelect.querySelectorAll('option:not([disabled])')?.forEach(option => option.remove());
+
+  const expansions = _seriesMap[selectedSeries]
+    ? Array.from(_seriesMap[selectedSeries]).sort((a, b) => a.localeCompare(b))
+    : [];
+
+  for (const expansion of expansions) {
+    const option = document.createElement('option');
+    option.value = expansion;
+    option.textContent = expansion;
+    expansionSelect.appendChild(option);
+  }
+
+  if (selectedExpansion) {
+    ensureSelectOption(expansionSelect, selectedExpansion);
+    expansionSelect.value = selectedExpansion;
+  }
+}
+
+async function autofillFromTcgdex() {
+  if (!tcgdexCardIdInput || !lookupTcgdexBtn) return;
+
+  const cardId = tcgdexCardIdInput.value.trim();
+  if (!cardId) {
+    setStatus('Enter a TCGdex card ID to autofill the form.');
+    return;
+  }
+
+  lookupTcgdexBtn.disabled = true;
+  setStatus('Looking up card details from TCGdex...');
+
+  try {
+    const card = await fetchTcgdexCard(cardId);
+
+    form.elements.name.value = card.name || form.elements.name.value;
+    form.elements.number.value = card.number || form.elements.number.value;
+
+    if (card.series) {
+      ensureSelectOption(seriesSelect, card.series);
+      seriesSelect.value = card.series;
+      updateExpansionOptions(card.series, card.expansion);
+    }
+
+    if (card.rarity) {
+      ensureSelectOption(form.elements.rarity, card.rarity);
+      form.elements.rarity.value = card.rarity;
+    }
+
+    if (card.imageUrl && !imageUrlInput.value.trim()) {
+      imageUrlInput.value = card.imageUrl;
+    }
+
+    setStatus(`Loaded ${card.name || card.id} from TCGdex.`);
+  } catch (error) {
+    setStatus(error instanceof Error ? error.message : 'Unable to fetch card details from TCGdex.');
+  } finally {
+    lookupTcgdexBtn.disabled = false;
+  }
 }
 
 function validate(formEl) {
@@ -110,6 +187,16 @@ seedBtn.addEventListener("click", () => {
   setStatus("Demo seeded! Check your Binders page to see the cards.");
 });
 
+lookupTcgdexBtn?.addEventListener('click', () => {
+  autofillFromTcgdex();
+});
+
+tcgdexCardIdInput?.addEventListener('keydown', (event) => {
+  if (event.key !== 'Enter') return;
+  event.preventDefault();
+  autofillFromTcgdex();
+});
+
 // (dataset seeding and local image import buttons removed)
 
 // Populate series & expansions selects from dataset JSON
@@ -117,6 +204,8 @@ let _seriesMap = {}; // series -> Set of expansions
 async function populateSeriesFromDataset() {
   if (!seriesSelect || !expansionSelect) return;
   try {
+    const selectedSeries = seriesSelect.value;
+    const selectedExpansion = expansionSelect.value;
     const resp = await fetch('./database/cardflow-pokemon-dataset.json');
     if (!resp.ok) return;
     const data = await resp.json();
@@ -142,17 +231,15 @@ async function populateSeriesFromDataset() {
       seriesSelect.appendChild(opt);
     }
 
+    if (selectedSeries) {
+      ensureSelectOption(seriesSelect, selectedSeries);
+      seriesSelect.value = selectedSeries;
+      updateExpansionOptions(selectedSeries, selectedExpansion);
+    }
+
     // when series changes, populate expansions
     seriesSelect.addEventListener('change', () => {
-      const sel = seriesSelect.value;
-      expansionSelect.querySelectorAll('option:not([disabled])')?.forEach(o=>o.remove());
-      const set = _seriesMap[sel] ? Array.from(_seriesMap[sel]).sort((a,b)=>a.localeCompare(b)) : [];
-      for (const ex of set) {
-        const opt = document.createElement('option');
-        opt.value = ex;
-        opt.textContent = ex;
-        expansionSelect.appendChild(opt);
-      }
+      updateExpansionOptions(seriesSelect.value);
     });
   } catch (err) {
     console.warn('Failed to load dataset for series/expansions:', err);
