@@ -10,6 +10,7 @@ const seriesSelect = document.getElementById('seriesSelect');
 const expansionSelect = document.getElementById('expansionSelect');
 const tcgdexCardIdInput = document.getElementById('tcgdexCardId');
 const lookupTcgdexBtn = document.getElementById('lookupTcgdexBtn');
+const CARD_NUMBER_PATTERN = /^[A-Za-z0-9/-]{1,20}$/;
 
 function setStatus(msg) {
   status.textContent = msg;
@@ -102,7 +103,7 @@ function validate(formEl) {
   if (!series.value.trim()) problems.push("Series is required.");
   if (!expansion.value.trim()) problems.push("Series expansion is required.");
   if (!rarity.value) problems.push("Rarity is required.");
-  if (!/^[0-9]{1,4}$/.test(number.value.trim())) problems.push("Card number must be 1–4 digits.");
+  if (!CARD_NUMBER_PATTERN.test(number.value.trim())) problems.push("Card number must be 1-20 characters using letters, numbers, /, or -.");
 
   return problems;
 }
@@ -204,8 +205,6 @@ let _seriesMap = {}; // series -> Set of expansions
 async function populateSeriesFromDataset() {
   if (!seriesSelect || !expansionSelect) return;
   try {
-    const selectedSeries = seriesSelect.value;
-    const selectedExpansion = expansionSelect.value;
     const resp = await fetch('./database/cardflow-pokemon-dataset.json');
     if (!resp.ok) return;
     const data = await resp.json();
@@ -222,6 +221,8 @@ async function populateSeriesFromDataset() {
 
     // sort series
     const seriesList = Object.keys(_seriesMap).sort((a,b)=>a.localeCompare(b));
+    const selectedSeries = seriesSelect.value;
+    const selectedExpansion = expansionSelect.value;
     // clear existing options except the placeholder
     seriesSelect.querySelectorAll('option:not([disabled])')?.forEach(o=>o.remove());
     for (const s of seriesList) {
