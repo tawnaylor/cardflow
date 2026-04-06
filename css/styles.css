@@ -1,19 +1,18 @@
 :root{
   /* Dark Neon theme colors */
-  /* Light blue theme colors */
-  --bg: #eaf8ff; /* page background fallback (light blue) */
-  --card-bg: #ffffff;
-  --panel-bg: #ffffff;
-  --ink: #012a3a; /* dark text for contrast on light bg */
-  --muted: #5b8496; /* softer text */
-  --line: rgba(2,74,110,0.08);
-  --soft: #f6fdff;
-  --btn: #e6f9ff;
-  --btn-ink: #012a3a;
-  --primary: #1fb6ff; /* primary blue */
-  --accent: #7aa2ff; /* accent */
-  --danger: #ff6b6b;
-  --glow-primary: 0 0 18px rgba(31,182,255,0.08);
+  --bg: #021826; /* page background (fallback dark blue) */
+  --card-bg: #071028;
+  --panel-bg: #071022;
+  --ink: #e6f7ff; /* light text */
+  --muted: #6ea7b8; /* softer text */
+  --line: rgba(0,229,255,0.12);
+  --soft: #071022;
+  --btn: #0b1220;
+  --btn-ink: #e6f7ff;
+  --primary: #00e5ff; /* cyan neon */
+  --accent: #ff32d0; /* magenta accent */
+  --danger: #ff4d6d;
+  --glow-primary: 0 0 18px rgba(0,229,255,0.12);
 }
 
 *{ box-sizing:border-box; }
@@ -21,15 +20,9 @@ body{
   margin:0;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color:var(--ink);
-  background: linear-gradient(135deg, #eaf8ff 0%, #d2eefc 50%, #c4e6fb 100%);
+  background: linear-gradient(135deg, #021826 0%, #033049 50%, #064e6a 100%);
   background-attachment: fixed;
   background-size: cover;
-}
-
-/* Disable all animations and transitions for a fully static UI */
-*, *::before, *::after {
-  animation: none !important;
-  transition: none !important;
 }
 
 .topbar{
