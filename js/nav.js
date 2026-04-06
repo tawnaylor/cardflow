@@ -3,8 +3,10 @@
   const headerHtml = `
     <div class="topbar">
       <div class="brand">
-        <div class="logo" aria-hidden="true"><img src="./images/cardflow%20logo.jpeg" alt="CardFlow logo"></div>
-        <span class="brand-name">CardFlow</span>
+        <a href="./index.html" class="brand-link">
+          <div class="logo" aria-hidden="true"><img src="./images/cardflow%20logo.jpeg" alt="CardFlow logo"></div>
+          <span class="brand-name">CardFlow</span>
+        </a>
       </div>
       <nav class="nav">
         <a class="nav-link" href="./index.html">Home</a>
