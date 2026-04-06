@@ -1,6 +1,6 @@
 :root{
   /* Dark Neon theme colors */
-  --bg: #050714; /* page background */
+  --bg: #021826; /* page background (fallback dark blue) */
   --card-bg: #071028;
   --panel-bg: #071022;
   --ink: #e6f7ff; /* light text */
@@ -20,7 +20,9 @@ body{
   margin:0;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color:var(--ink);
-  background:var(--bg);
+  background: linear-gradient(135deg, #021826 0%, #033049 50%, #064e6a 100%);
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 .topbar{
