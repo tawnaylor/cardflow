@@ -543,8 +543,10 @@ input, select, textarea{ background: rgba(255,255,255,0.02); color:var(--ink); b
   isolation: isolate;
 }
 
-/* Background effects layer */
+/* Background effects layer (disabled) */
 .bg-effects {
+  /* Disabled per user request: remove animated background */
+  display: none;
   position: fixed;
   inset: 0;
   z-index: -1;
