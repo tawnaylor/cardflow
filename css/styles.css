@@ -1,16 +1,16 @@
 :root{
   /* Dark Neon theme colors */
   --bg: #1d6897; /* page background (fallback dark blue) */
-  --card-bg: #193379;
+  --card-bg: #000000;
   --panel-bg: #526b9c;
   --ink: #e6f7ff; /* light text */
-  --muted: #6ea7b8; /* softer text */
+  --muted: hsl(194, 13%, 81%); /* softer text */
   --line: rgba(0,229,255,0.12);
-  --soft: #071022;
-  --btn: #0b1220;
+  --soft: #4f6694;
+  --btn: #526b9c;
   --btn-ink: #e6f7ff;
   --primary: #00e5ff; /* cyan neon */
-  --accent: #ff32d0; /* magenta accent */
+  --accent: #65a8bb; /* magenta accent */
   --danger: #ff4d6d;
   --glow-primary: 0 0 18px rgba(0,229,255,0.12);
 }
@@ -513,7 +513,7 @@ body{
 .ph{ color:var(--muted); }
 
 /* reduce bright outlines on inputs */
-input, select, textarea{ background: rgba(255,255,255,0.02); color:var(--ink); border-color: rgba(255,255,255,0.04); }
+input, select, textarea{ background: rgb(22, 21, 21); color:var(--ink); border-color: rgba(255,255,255,0.04); }
 
 /* Specific background for Series / Expansion selects and rarity selects */
 #seriesSelect, #expansionSelect, #editRarity, select[name="rarity"] {
@@ -534,7 +534,7 @@ input, select, textarea{ background: rgba(255,255,255,0.02); color:var(--ink); b
   min-height: 100vh;
   margin: 0;
   color: #e9e9ff;
-  background: radial-gradient(1200px 800px at 50% 20%, rgba(95, 46, 255, 0.25), rgba(0,0,0,0) 60%),
+  background: radial-gradient(1200px 800px at 50% 20%, rgba(143, 174, 203, 0.535), rgba(158, 168, 192, 0.423) 60%),
               radial-gradient(900px 700px at 20% 70%, rgba(0, 255, 255, 0.12), rgba(0,0,0,0) 55%),
               radial-gradient(900px 700px at 80% 75%, rgba(255, 0, 160, 0.10), rgba(0,0,0,0) 55%),
               linear-gradient(180deg, #05060a 0%, #050512 40%, #03030a 100%);
