@@ -5,20 +5,20 @@ const binderNameInput = document.getElementById("binderName");
 const binderDescInput = document.getElementById("binderDesc");
 const binderImageInput = document.getElementById("binderImage");
 
-// Load binders from localStorage
 let binders = JSON.parse(localStorage.getItem("binders") || "[]");
 
-function saveBinders() {
+function saveBinders(){
   localStorage.setItem("binders", JSON.stringify(binders));
 }
 
-function renderBinders() {
+function renderBinders(){
   binderList.innerHTML = "";
+
   binders.forEach((binder, index) => {
+
     const div = document.createElement("div");
     div.className = "binder-item";
 
-    // Handle image display
     let imgSrc = binder.image || "https://via.placeholder.com/200";
 
     div.innerHTML = `
@@ -27,56 +27,96 @@ function renderBinders() {
       <p>${binder.description}</p>
     `;
 
-    // Optional: click to delete binder
     div.addEventListener("dblclick", () => {
-      if (confirm(`Delete binder "${binder.name}"?`)) {
-        binders.splice(index, 1);
+      if(confirm(`Delete binder "${binder.name}"?`)){
+        binders.splice(index,1);
         saveBinders();
         renderBinders();
       }
     });
 
     binderList.appendChild(div);
+
   });
+
 }
 
-// Add new binder
+// Save binder
 saveBinderBtn.addEventListener("click", () => {
+
   const name = binderNameInput.value.trim();
   const desc = binderDescInput.value.trim();
   const file = binderImageInput.files[0];
 
-  if (!name) return alert("Please enter a binder name.");
+  if(!name){
+    alert("Please enter a binder name.");
+    return;
+  }
 
-  if (file) {
+  if(file){
+
     const reader = new FileReader();
-    reader.onload = (e) => {
-      binders.push({ name, description: desc, image: e.target.result });
+
+    reader.onload = (e)=>{
+
+      binders.push({
+        name:name,
+        description:desc,
+        image:e.target.result
+      });
+
       saveBinders();
       renderBinders();
-      binderNameInput.value = "";
-      binderDescInput.value = "";
-      binderImageInput.value = "";
-    };
-    reader.readAsDataURL(file); // Converts file to base64 string
-  } else {
-    binders.push({ name, description: desc, image: "" });
+
+      binderNameInput.value="";
+      binderDescInput.value="";
+      binderImageInput.value="";
+    }
+
+    reader.readAsDataURL(file);
+
+  }else{
+
+    binders.push({
+      name:name,
+      description:desc,
+      image:""
+    });
+
     saveBinders();
     renderBinders();
-    binderNameInput.value = "";
-    binderDescInput.value = "";
-    binderImageInput.value = "";
+
+    binderNameInput.value="";
+    binderDescInput.value="";
+    binderImageInput.value="";
+
   }
+
 });
 
-// Clear all binders
+// Clear binders
 clearAllBtn.addEventListener("click", () => {
-  if (confirm("Clear all binders?")) {
-    binders = [];
+
+  if(confirm("Clear all binders?")){
+    binders=[];
     saveBinders();
     renderBinders();
   }
+
 });
+
+
+// --------------------
+// NAVBAR DROPDOWN
+// --------------------
+
+const navToggle = document.querySelector(".nav-toggle");
+const nav = document.querySelector(".nav");
+
+navToggle.addEventListener("click", () => {
+  nav.classList.toggle("show");
+});
+
 
 // Initial render
 renderBinders();

@@ -1190,4 +1190,85 @@ input, select, textarea{ background: rgba(255,255,255,0.02); color:var(--ink); b
   }
 }
 
+/* Hide hamburger on large screens */
+.nav-toggle{
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+/* Mobile styles */
+@media (max-width: 768px){
+
+  .nav-toggle{
+    display: block;
+  }
+
+  .nav{
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    background: var(--panel-bg);
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,.5);
+  }
+
+  .nav.show{
+    display: flex;
+  }
+
+  .nav-link{
+    padding: .5rem 1rem;
+  }
+
+  .topbar{
+    position: relative;
+  }
+}
+.nav-toggle{
+  display:none;
+  font-size:28px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  color:white;
+}
+
+@media (max-width:768px){
+
+  .nav-toggle{
+    display:block;
+  }
+
+  .nav{
+    display:none;
+    flex-direction:column;
+    position:absolute;
+    top:70px;
+    right:20px;
+    background:#071022;
+    padding:15px;
+    border-radius:10px;
+  }
+
+  .nav.show{
+    display:flex;
+  }
+
+  .nav-link{
+    padding:10px 0;
+  }
+
+  .topbar{
+    position:relative;
+  }
+
+}
+
 }
