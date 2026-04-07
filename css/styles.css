@@ -1,8 +1,8 @@
 :root{
   /* Dark Neon theme colors */
-  --bg: #021826; /* page background (fallback dark blue) */
-  --card-bg: #071028;
-  --panel-bg: #071022;
+  --bg: #1d6897; /* page background (fallback dark blue) */
+  --card-bg: #193379;
+  --panel-bg: #526b9c;
   --ink: #e6f7ff; /* light text */
   --muted: #6ea7b8; /* softer text */
   --line: rgba(0,229,255,0.12);
@@ -20,7 +20,7 @@ body{
   margin:0;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color:var(--ink);
-  background: linear-gradient(135deg, #021826 0%, #033049 50%, #064e6a 100%);
+  background: linear-gradient(135deg, #66acd8 0%, #0b2d3f 50%, #064e6a 100%);
   background-attachment: fixed;
   background-size: cover;
 }
