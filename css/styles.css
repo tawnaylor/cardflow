@@ -1,8 +1,8 @@
 :root{
   /* Dark Neon theme colors */
-  --bg: #021826; /* page background (fallback dark blue) */
-  --card-bg: #071028;
-  --panel-bg: #071022;
+  --bg: #1d6897; /* page background (fallback dark blue) */
+  --card-bg: #193379;
+  --panel-bg: #526b9c;
   --ink: #e6f7ff; /* light text */
   --muted: #6ea7b8; /* softer text */
   --line: rgba(0,229,255,0.12);
