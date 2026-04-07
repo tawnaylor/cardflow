@@ -1276,9 +1276,10 @@ input, select, textarea{ background: rgb(22, 21, 21); color:var(--ink); border-c
 /* ====== Site footer ====== */
 .site-footer {
   border-top: 1px solid rgba(255,255,255,0.04);
-  padding: 22px 18px;
+  padding: 20px 18px;
   color: var(--muted);
   background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.02));
+  font-size: 14px;
 }
 .site-footer .footer-inner{
   max-width: 1100px;
@@ -1286,19 +1287,25 @@ input, select, textarea{ background: rgb(22, 21, 21); color:var(--ink); border-c
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 18px;
 }
-.site-footer .footer-text{
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--muted);
-}
-.site-footer .footer-note{
-  font-size: 13px;
-  color: rgba(255,255,255,0.6);
-}
+.site-footer .footer-left,
+.site-footer .footer-center,
+.site-footer .footer-right{ display: flex; align-items:center; gap:12px; }
+.site-footer .footer-left{ min-width:0; }
+.site-footer .footer-logo{ display:flex; align-items:center; gap:10px; }
+.site-footer .footer-logo img{ width:36px; height:36px; border-radius:6px; object-fit:cover; border:1px solid rgba(255,255,255,0.04); }
+.site-footer .footer-brand{ font-weight:700; color:var(--primary); letter-spacing:0.2px; }
+.site-footer .footer-copy{ color:var(--muted); font-weight:600; }
+.site-footer .footer-center{ gap:18px; }
+.site-footer .footer-center a{ color:var(--muted); text-decoration:none; font-weight:600; padding:6px 8px; border-radius:8px; }
+.site-footer .footer-center a:hover{ background: rgba(0,229,255,0.04); color:var(--ink); }
+.site-footer .footer-right{ flex-direction:column; align-items:flex-end; }
+.site-footer .footer-course{ font-weight:700; color:var(--muted); }
+.site-footer .footer-note{ font-size:13px; color:rgba(255,255,255,0.6); }
 
 @media (max-width: 760px){
-  .site-footer .footer-inner{ flex-direction: column; text-align:center; }
+  .site-footer .footer-inner{ flex-direction: column; text-align:center; gap:8px; }
+  .site-footer .footer-right{ align-items:center; }
 }
 
