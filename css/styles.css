@@ -55,6 +55,12 @@ body{
   display:block;
   border-radius:4px;
 }
+/* Ensure the header logo reserves space and loads with priority */
+.site-logo {
+  width: 160px;
+  height: auto;
+  display: block;
+}
 .brand-name{
   font-size:28px;
   font-weight:700;
@@ -84,6 +90,8 @@ body{
   margin:0 auto;
   padding:42px 18px 60px;
 }
+/* Reserve vertical space to reduce CLS when cards load */
+.page{ min-height: 70vh; }
 
 .hero{
   text-align:center;
@@ -122,7 +130,20 @@ body{
   grid-template-columns: repeat(5, 1fr);
   gap:18px;
   min-height:240px;
+  list-style:none;
+  padding:0;
+  margin:0;
 }
+
+/* Provide a more responsive grid and reserved space for cards */
+.cards-section{ min-height:320px; }
+.cards-row{ min-height:220px; display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; align-items:start; }
+
+.card-skeleton{ min-height:220px; border-radius:12px; background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
+
+.empty-state{ min-height:220px; display:grid; place-items:center; text-align:center; }
+
+.site-footer{ min-height:80px; }
 
 .card{
   border:2px solid var(--line);

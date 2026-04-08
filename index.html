@@ -3,16 +3,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="CardFlow helps you organize, browse, and manage your digital trading card collection with cards, binders, and quick search tools." />
   <title>CardFlow | Home</title>
+  <link rel="preload" href="./css/styles.css" as="style">
   <link rel="stylesheet" href="./css/styles.css" />
 </head>
 <body class="neon-street">
   <div class="bg-effects" aria-hidden="true"></div>
 <header class="topbar">
   <div class="brand">
-    <div class="logo">
-      <img src="./images/cardflow%20logo.jpeg" alt="CardFlow logo">
-    </div>
+      <div class="logo">
+        <img
+          src="./images/cardflow%20logo.jpeg"
+          alt="CardFlow"
+          width="320"
+          height="320"
+          fetchpriority="high"
+          decoding="async"
+          class="site-logo"
+        >
+      </div>
     <span class="brand-name">CardFlow</span>
   </div>
 
@@ -35,14 +45,16 @@
         <span aria-hidden="true">‹</span>
       </button>
 
-      <div class="cards-row" id="cardsRow" role="list" aria-live="polite"></div>
+      <ul class="cards-row" id="cardsRow" aria-live="polite"></ul>
 
       <button class="arrow" id="carouselNext" aria-label="Next cards">
         <span aria-hidden="true">›</span>
       </button>
     </section>
 
-    <div class="dots" id="dots" aria-label="Carousel pages"></div>
+    <nav class="carousel-nav" aria-label="Carousel pages">
+      <div class="dots" id="dots"></div>
+    </nav>
 
     <div class="pager" aria-label="Page controls">
       <button class="btn" id="pagePrev">‹ Prev</button>
@@ -62,17 +74,17 @@
         </div>
       </div>
 
-      <div class="footer-center" aria-hidden="true">
+      <nav class="footer-center" aria-label="Footer navigation">
         <a href="./index.html">Home</a>
         <a href="./add-card.html">Add Cards</a>
         <a href="./binders.html">Binders</a>
-      </div>
+      </nav>
 
       
     </div>
   </footer>
 
   <script type="module" src="./js/home.js"></script>
-  <script src="./js/navbar.js"></script>
+  <script src="./js/navbar.js" defer></script>
 </body>
 </html>

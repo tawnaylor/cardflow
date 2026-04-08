@@ -21,15 +21,17 @@ function formatNum(numStr) {
 
 function renderEmpty() {
   cardsRow.innerHTML = `
-    <div class="card" style="grid-column: 1 / -1; cursor: default;">
-      <div class="card-num">#---</div>
-      <div class="thumb"><div class="ph">No cards yet</div></div>
-      <div class="card-title">Add your first card</div>
-      <div class="card-details">
-        <span>Go to “Add Cards”</span>
-        <span class="qty-pill">x0</span>
-      </div>
-    </div>
+    <li class="card-item" style="grid-column: 1 / -1; cursor: default;">
+      <article class="card">
+        <div class="card-num">#---</div>
+        <div class="thumb"><div class="ph">No cards yet</div></div>
+        <div class="card-title">Add your first card</div>
+        <div class="card-details">
+          <span>Go to “Add Cards”</span>
+          <span class="qty-pill">x0</span>
+        </div>
+      </article>
+    </li>
   `;
   dotsWrap.innerHTML = "";
   pageIndicator.textContent = "Page 1 of 1";
@@ -46,6 +48,7 @@ function renderDots(totalPages) {
     d.className = `dot ${i === pageIndex ? "active" : ""}`;
     d.type = "button";
     d.setAttribute("aria-label", `Go to page ${i + 1}`);
+    d.setAttribute('aria-current', i === pageIndex ? 'true' : 'false');
     d.addEventListener("click", () => {
       pageIndex = i;
       render();
@@ -88,18 +91,21 @@ function render() {
 
   cardsRow.innerHTML = "";
   for (const c of slice) {
-    const tile = document.createElement("article");
+    // wrapper list item
+    const li = document.createElement('li');
+    li.className = 'card-item';
+
+    const article = document.createElement("article");
     // add rarity class for animated effect
     const rarityCls = 'rarity-' + String(c.rarity || 'common').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
-    tile.className = `card ${rarityCls}`;
-    tile.setAttribute("role", "listitem");
-    tile.tabIndex = 0;
+    article.className = `card ${rarityCls}`;
+    article.tabIndex = 0;
 
     const imgHtml = c.imageDataUrl
-      ? `<img src="${c.imageDataUrl}" alt="${escapeHtml(c.name || "Card image")}" loading="lazy" />`
+      ? `<img src="${c.imageDataUrl}" alt="${escapeHtml(c.name || "Card image")}" width="240" height="336" loading="lazy" decoding="async" />`
       : `<div class="ph">Image</div>`;
 
-    tile.innerHTML = `
+    article.innerHTML = `
       <div class="card-num">${formatNum(c.number)}</div>
       <div class="thumb">${imgHtml}</div>
       <div class="card-title">${escapeHtml(c.name || "Title")}</div>
@@ -110,7 +116,7 @@ function render() {
     `;
 
     // Attach image error handler instead of using inline onerror attribute
-    const imgEl = tile.querySelector('img');
+    const imgEl = article.querySelector('img');
     if (imgEl) {
       imgEl.addEventListener('error', () => {
         imgEl.style.display = 'none';
@@ -122,16 +128,16 @@ function render() {
     }
 
     const go = () => (location.href = `./card.html?id=${encodeURIComponent(c.id)}`);
-    tile.addEventListener("click", go);
-    tile.addEventListener("keydown", (e) => {
-      // support Enter and Space keys; prevent default on Space to avoid scrolling
+    article.addEventListener("click", go);
+    article.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " " || e.code === 'Space') {
         e.preventDefault();
         go();
       }
     });
 
-    cardsRow.appendChild(tile);
+    li.appendChild(article);
+    cardsRow.appendChild(li);
   }
 
   renderDots(totalPages);

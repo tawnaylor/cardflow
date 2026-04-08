@@ -4,7 +4,7 @@
     <div class="topbar">
       <div class="brand">
         <a href="./index.html" class="brand-link">
-          <div class="logo" aria-hidden="true"><img src="./images/cardflow%20logo.jpeg" alt="CardFlow logo"></div>
+          <div class="logo"><img src="./images/cardflow%20logo.jpeg" alt="CardFlow" width="320" height="320" fetchpriority="high" decoding="async" class="site-logo"></div>
           <span class="brand-name">CardFlow</span>
         </a>
       </div>
