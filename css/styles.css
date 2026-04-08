@@ -1157,71 +1157,43 @@ input, select, textarea{ background: rgb(22, 21, 21); color:var(--ink); border-c
     width: 100%;
   }
 }
-/* Hide hamburger on large screens */
-.nav-toggle {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 28px;
-  color: var(--ink);
-  cursor: pointer;
-}
 
-/* Small screens: show hamburger, hide nav by default */
-@media (max-width: 780px) {
-  .nav {
-    display: none;
-    flex-direction: column;
-    gap: 12px;
-    background: var(--soft);
-    position: absolute;
-    top: 100%;
-    right: 0;
-    width: 200px;
-    padding: 12px;
-    border-radius: 8px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+/* Mobile Navigation Logic */
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: block; /* Show hamburger */
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: var(--ink);
+    cursor: pointer;
   }
+
+  .nav {
+    display: none; /* Hide nav links by default */
+    flex-direction: column;
+    position: absolute;
+    top: 70px; /* Adjust based on topbar height */
+    right: 18px;
+    background: var(--panel-bg);
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid var(--line);
+    z-index: 100;
+    min-width: 180px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+
+  /* When JS adds this class, the menu appears */
   .nav.active {
     display: flex;
   }
-  .nav-toggle {
-    display: block;
+
+  .nav-link {
+    font-size: 20px;
+    padding: 10px 0;
   }
 }
-
-/* Hide hamburger on large screens */
-.nav-toggle{
-  display: none;
-  background: none;
-  border: none;
-  font-size: 1.8rem;
-  color: var(--ink);
-  cursor: pointer;
-}
-
-/* Mobile styles */
-@media (max-width: 768px){
-
-  .nav-toggle{
-    display: block;
-  }
-
-  .nav{
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 70px;
-    right: 20px;
-    background: var(--panel-bg);
-    padding: 1rem;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,.5);
-  }
-
-  .nav.show{
-    display: flex;
-  }
 
   .nav-link{
     padding: .5rem 1rem;
@@ -1269,6 +1241,42 @@ input, select, textarea{ background: rgb(22, 21, 21); color:var(--ink); border-c
     position:relative;
   }
 
+/* Update this specific block in your styles.css */
+@media (max-width: 768px) {
+  .topbar {
+    position: relative; 
+    z-index: 1000;
+  }
+
+  .nav-toggle {
+    display: block !important; 
+    font-size: 28px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+
+  .nav {
+    display: none; 
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    background: #071022; /* Solid dark color so it's not see-through */
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid var(--primary);
+    z-index: 9999; /* Higher than the glass-panel class */
+    min-width: 150px;
+  }
+
+  /* This is what the JavaScript toggles */
+  .nav.show {
+    display: flex !important;
+  }
+}
 }
 
-}
+
+
