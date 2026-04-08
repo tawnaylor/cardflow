@@ -1241,41 +1241,46 @@ input, select, textarea{ background: rgb(22, 21, 21); color:var(--ink); border-c
     position:relative;
   }
 
-/* Update this specific block in your styles.css */
+/* Mobile Navigation Logic */
 @media (max-width: 768px) {
-  .topbar {
-    position: relative; 
-    z-index: 1000;
-  }
-
   .nav-toggle {
-    display: block !important; 
-    font-size: 28px;
+    display: block !important; /* Ensures the hamburger appears */
     background: none;
     border: none;
-    color: white;
+    font-size: 28px;
+    color: var(--ink);
     cursor: pointer;
   }
 
   .nav {
-    display: none; 
+    display: none; /* Hide by default on mobile */
     flex-direction: column;
     position: absolute;
-    top: 70px;
-    right: 20px;
-    background: #071022; /* Solid dark color so it's not see-through */
-    padding: 15px;
+    top: 70px; 
+    right: 18px;
+    background: #071022; /* Dark solid background for visibility */
+    padding: 20px;
     border-radius: 10px;
-    border: 1px solid var(--primary);
-    z-index: 9999; /* Higher than the glass-panel class */
-    min-width: 150px;
+    border: 2px solid var(--line);
+    z-index: 10000; /* High z-index to stay above glass panels */
+    min-width: 180px;
   }
 
+  /* The class toggled by navbar.js */
+  .nav.show {
+    display: flex !important;
+  }
+
+  .nav-link {
+    font-size: 20px;
+    padding: 10px 0;
+  }
+}
   /* This is what the JavaScript toggles */
   .nav.show {
     display: flex !important;
   }
 }
-}
+
 
 
