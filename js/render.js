@@ -17,17 +17,21 @@ export function renderMessage(container, msg, type='info'){
 }
 
 export function renderCardGrid(container, cards){
-  const grid = document.createElement('div');
+  const grid = document.createElement('ul');
   grid.className = 'cards-row';
+  grid.setAttribute('aria-live', 'polite');
   cards.forEach(c => {
+    const li = document.createElement('li');
+    li.className = 'card-item';
     const card = document.createElement('article');
     card.className = 'card';
     card.innerHTML = `
-      <div class="thumb"><img src="${c.image}" alt="${c.name}"></div>
+      <div class="thumb"><img src="${c.image}" alt="${c.name}" width="240" height="336" loading="lazy" decoding="async"></div>
       <div class="card-title">${c.name}</div>
       <div class="card-details"><span class="muted">${c.set} • ${c.number || ''}</span><span class="qty-pill">${c.rarity}</span></div>
     `;
-    grid.appendChild(card);
+    li.appendChild(card);
+    grid.appendChild(li);
   });
   container.appendChild(grid);
 }
