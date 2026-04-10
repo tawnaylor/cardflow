@@ -10,13 +10,13 @@
   <body>
     <header class="site-header">
       <div class="container header-row">
-        <div>
+        <div class="brand-block">
           <h1 class="brand">CardFlow</h1>
           <p class="subtitle">Your digital trading card binder</p>
         </div>
         <div class="header-actions">
           <button class="nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">☰</button>
-          <nav id="main-nav">
+          <nav id="main-nav" aria-label="Main navigation">
             <ul class="nav-links" role="list">
               <li><a href="index.html">Home</a></li>
               <li><a href="add-card.html">Add Cards</a></li>
@@ -27,9 +27,9 @@
       </div>
     </header>
 
-    <main class="container" style="padding-top: 32px;">
-      <a href="index.html" class="btn" style="margin-bottom: 20px; display:inline-block;">← Back to Collection</a>
-      <div id="card-detail-container" aria-live="polite">
+    <main class="container" style="padding-top:32px; padding-bottom:60px;">
+      <a href="index.html" class="btn" style="display:inline-block;margin-bottom:20px;">← Back to Collection</a>
+      <div id="cardDetailContainer" aria-live="polite">
         <p>Loading card…</p>
       </div>
     </main>
@@ -38,7 +38,7 @@
 
     <footer class="site-footer" role="contentinfo">
       <div class="footer-inner">
-        <div class="footer-left"><div class="footer-brand">CardFlow</div></div>
+        <div class="footer-brand">CardFlow</div>
         <nav class="footer-center" aria-label="Footer navigation">
           <a href="index.html">Home</a>
           <a href="add-card.html">Add Cards</a>

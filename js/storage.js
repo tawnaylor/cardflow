@@ -1,170 +1,64 @@
-// storage.js — tiny wrapper around localStorage
-export function save(key, value){
-  localStorage.setItem(key, JSON.stringify(value));
-}
+// storage.js — single source of truth for all localStorage operations
 
-export function load(key, fallback=null){
-  try{ return JSON.parse(localStorage.getItem(key)) ?? fallback; }
-  catch{ return fallback; }
-}
+const CARDS_KEY = 'cardflow_cards_v1';
+const BINDERS_KEY = 'cardflow_binders_v1';
 
-export function remove(key){ localStorage.removeItem(key); }
-const KEY = "cardflow_cards_v1";
-
-function uid() {
-  return crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2);
-}
+// ── Cards ──────────────────────────────────────────────────────────────
 
 export function getCards() {
   try {
-    const raw = localStorage.getItem(KEY);
+    const raw = localStorage.getItem(CARDS_KEY);
     const parsed = raw ? JSON.parse(raw) : [];
     return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
+  } catch { return []; }
 }
 
 export function setCards(cards) {
-  localStorage.setItem(KEY, JSON.stringify(cards));
+  localStorage.setItem(CARDS_KEY, JSON.stringify(cards));
 }
 
 export function findCardById(id) {
   return getCards().find(c => c.id === id) || null;
 }
 
-/**
- * Merge rule (per your earlier preference):
- * Merge quantities ONLY if same series + expansion + number + rarity.
- * (So different series/expansions never merge.)
- */
-export function upsertCard(newCard) {
-  const cards = getCards();
-
-  const seriesKey = (newCard.series || "").trim().toLowerCase();
-  const expKey = (newCard.expansion || "").trim().toLowerCase();
-  const rarityKey = (newCard.rarity || "").trim().toLowerCase();
-  const numberKey = String(newCard.number || "").trim();
-
-  const matchIndex = cards.findIndex(c =>
-    (c.series || "").trim().toLowerCase() === seriesKey &&
-    (c.expansion || "").trim().toLowerCase() === expKey &&
-    (c.rarity || "").trim().toLowerCase() === rarityKey &&
-    String(c.number || "").trim() === numberKey
-  );
-
-  if (matchIndex >= 0) {
-    const existing = cards[matchIndex];
-    existing.qty = Math.max(1, Number(existing.qty || 1) + Number(newCard.qty || 1));
-    existing.updatedAt = Date.now();
-    // keep existing image if new one missing; otherwise update
-    if (newCard.imageDataUrl) existing.imageDataUrl = newCard.imageDataUrl;
-    // keep name if new one provided
-    if (newCard.name && newCard.name.trim()) existing.name = newCard.name.trim();
-    cards[matchIndex] = existing;
-    setCards(cards);
-    return { merged: true, card: existing };
-  }
-
-  const card = {
-    id: uid(),
-    name: (newCard.name || "").trim(),
-    series: (newCard.series || "").trim(),
-    expansion: (newCard.expansion || "").trim(),
-    rarity: (newCard.rarity || "").trim(),
-    number: String(newCard.number || "").trim(),
-    qty: Math.max(1, Number(newCard.qty || 1)),
-    imageDataUrl: newCard.imageDataUrl || "",
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-  };
-
-  cards.unshift(card); // newest first
-  setCards(cards);
-  return { merged: false, card };
-}
-
-export function deleteCard(id) {
-  const cards = getCards().filter(c => c.id !== id);
-  setCards(cards);
-}
-
-export function updateCard(id, updates = {}) {
-  const cards = getCards();
-  const idx = cards.findIndex(c => c.id === id);
-  if (idx === -1) return null;
-  const updated = Object.assign({}, cards[idx], updates, { updatedAt: Date.now() });
-  cards[idx] = updated;
-  setCards(cards);
-  return updated;
-}
-
-export function clearAll() {
-  localStorage.removeItem(KEY);
-}
-
-export function toGroupedBinders(cards = getCards()) {
-  // group by series -> expansion
-  const map = new Map();
-  for (const c of cards) {
-    const s = c.series || "Unknown Series";
-    const e = c.expansion || "Unknown Expansion";
-    const key = `${s}|||${e}`;
-    if (!map.has(key)) map.set(key, { series: s, expansion: e, count: 0, qtyTotal: 0 });
-    const item = map.get(key);
-    item.count += 1;
-    item.qtyTotal += Number(c.qty || 1);
-  }
-  return Array.from(map.values())
-    .sort((a, b) => (a.series + a.expansion).localeCompare(b.series + b.expansion));
-}
-
-export async function fileToDataUrl(file) {
-  if (!file) return "";
-  return await new Promise((resolve, reject) => {
-    const r = new FileReader();
-    r.onload = () => resolve(String(r.result || ""));
-    r.onerror = reject;
-    r.readAsDataURL(file);
-  });
-}
-// js/storage.js — Module for all localStorage operations
-
-const CARDS_KEY = 'cardflow_cards';
-const BINDERS_KEY = 'cardflow_binders';
-
-export function getCards() {
-  return JSON.parse(localStorage.getItem(CARDS_KEY) || '[]');
-}
-
 export function saveCard(card) {
   const cards = getCards();
-  card.id = card.id || Date.now().toString();
-  card.dateAdded = new Date().toISOString();
-  cards.push(card);
-  localStorage.setItem(CARDS_KEY, JSON.stringify(cards));
-  return card.id;
-}
-
-export function getCardById(id) {
-  return getCards().find(c => c.id === id) || null;
+  const existing = cards.findIndex(c => c.id === card.id);
+  if (existing >= 0) {
+    cards[existing] = { ...cards[existing], ...card, updatedAt: Date.now() };
+  } else {
+    cards.unshift({ ...card, createdAt: Date.now(), updatedAt: Date.now() });
+  }
+  setCards(cards);
 }
 
 export function deleteCard(id) {
-  const cards = getCards().filter(c => c.id !== id);
-  localStorage.setItem(CARDS_KEY, JSON.stringify(cards));
+  setCards(getCards().filter(c => c.id !== id));
 }
 
+export function clearAllCards() {
+  localStorage.removeItem(CARDS_KEY);
+}
+
+// ── Binders ────────────────────────────────────────────────────────────
+
 export function getBinders() {
-  return JSON.parse(localStorage.getItem(BINDERS_KEY) || '[]');
+  try {
+    const raw = localStorage.getItem(BINDERS_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch { return []; }
 }
 
 export function saveBinder(binder) {
   const binders = getBinders();
-  binder.id = binder.id || Date.now().toString();
-  binders.push(binder);
+  const existing = binders.findIndex(b => b.id === binder.id);
+  if (existing >= 0) {
+    binders[existing] = { ...binders[existing], ...binder, updatedAt: Date.now() };
+  } else {
+    binders.push({ ...binder, createdAt: Date.now(), updatedAt: Date.now() });
+  }
   localStorage.setItem(BINDERS_KEY, JSON.stringify(binders));
-  return binder.id;
 }
 
 export function deleteBinder(id) {
@@ -172,30 +66,24 @@ export function deleteBinder(id) {
   localStorage.setItem(BINDERS_KEY, JSON.stringify(binders));
 }
 
-export function clearAll() {
-  localStorage.removeItem(CARDS_KEY);
+export function clearAllBinders() {
   localStorage.removeItem(BINDERS_KEY);
-}export const STORAGE_KEY = 'cardflow_binder_cards_v1';
-
-export function loadCards() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    const parsed = raw ? JSON.parse(raw) : [];
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
 }
 
-export function saveCards(cards) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(cards));
+// ── Helpers ────────────────────────────────────────────────────────────
+
+export function createId() {
+  return crypto.randomUUID
+    ? crypto.randomUUID()
+    : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 }
 
-export function getCardById(id) {
-  return loadCards().find(c => c.id === id) || null;
-}
-
-export function deleteCardById(id) {
-  const cards = loadCards().filter(c => c.id !== id);
-  saveCards(cards);
+export async function fileToDataUrl(file) {
+  if (!file) return '';
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(String(r.result || ''));
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
 }
