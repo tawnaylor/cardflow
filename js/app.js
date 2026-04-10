@@ -1,5 +1,10 @@
-import { loadCards, saveCards, STORAGE_KEY } from './storage.js';
-import { createId, escapeHtml, escapeAttribute, formatCurrency, pushUnique, readFileAsDataUrl } from './utils.js';
+// app.js — home page: card grid, filters, add/edit modal
+import { getCards, setCards, findCardById, saveCard, deleteCard, createId, fileToDataUrl } from './storage.js';
+import { escapeHtml, escapeAttr, formatCurrency, getParam, showToast, initNav } from './utils.js';
+
+initNav();
+
+const STORAGE_KEY = 'cardflow_cards_v1';
 
 const DEFAULT_SETS = {
   pokemon: ['Base Set', 'Jungle', 'Fossil', '151', 'Paldean Fates', 'Surging Sparks'],
@@ -8,13 +13,12 @@ const DEFAULT_SETS = {
 };
 
 const GAME_LABELS = {
-  pokemon: 'Pokemon',
+  pokemon: 'Pokémon',
   mtg: 'Magic: The Gathering',
   onepiece: 'One Piece',
 };
 
 const state = {
-  cards: loadCards(),
   filtersOpen: true,
   editingId: '',
   uploadedImageDataUrl: '',
@@ -25,62 +29,59 @@ const state = {
   },
 };
 
+const el = id => document.getElementById(id);
 const elements = {
-  addCardBtn: document.getElementById('addCardBtn'),
-  emptyAddBtn: document.getElementById('emptyAddBtn'),
-  toggleFiltersBtn: document.getElementById('toggleFiltersBtn'),
-  clearFiltersBtn: document.getElementById('clearFiltersBtn'),
-  searchInput: document.getElementById('searchInput'),
-  gameFilter: document.getElementById('gameFilter'),
-  setFilter: document.getElementById('setFilter'),
-  conditionFilter: document.getElementById('conditionFilter'),
-  sortSelect: document.getElementById('sortSelect'),
-  totalCards: document.getElementById('totalCards'),
-  totalValue: document.getElementById('totalValue'),
-  filters: document.getElementById('filters'),
-  emptyState: document.getElementById('emptyState'),
-  binderGrid: document.getElementById('binderGrid'),
-  modalOverlay: document.getElementById('modalOverlay'),
-  modalTitle: document.getElementById('modalTitle'),
-  closeModalBtn: document.getElementById('closeModalBtn'),
-  cardForm: document.getElementById('cardForm'),
-  cardId: document.getElementById('cardId'),
-  deleteBtn: document.getElementById('deleteBtn'),
-  cancelBtn: document.getElementById('cancelBtn'),
-  game: document.getElementById('game'),
-  name: document.getElementById('name'),
-  setId: document.getElementById('setId'),
-  cardNumber: document.getElementById('cardNumber'),
-  condition: document.getElementById('condition'),
-  quantity: document.getElementById('quantity'),
-  foil: document.getElementById('foil'),
-  purchasePrice: document.getElementById('purchasePrice'),
-  currentValue: document.getElementById('currentValue'),
-  imageUrl: document.getElementById('imageUrl'),
-  imageFile: document.getElementById('imageFile'),
-  imagePreviewImg: document.getElementById('imagePreviewImg'),
-  imagePreviewPlaceholder: document.getElementById('imagePreviewPlaceholder'),
-  notes: document.getElementById('notes'),
-  toast: document.getElementById('toast'),
+  addCardBtn: el('addCardBtn'),
+  emptyAddBtn: el('emptyAddBtn'),
+  toggleFiltersBtn: el('toggleFiltersBtn'),
+  clearFiltersBtn: el('clearFiltersBtn'),
+  searchInput: el('searchInput'),
+  gameFilter: el('gameFilter'),
+  setFilter: el('setFilter'),
+  conditionFilter: el('conditionFilter'),
+  sortSelect: el('sortSelect'),
+  totalCards: el('totalCards'),
+  totalValue: el('totalValue'),
+  filters: el('filters'),
+  emptyState: el('emptyState'),
+  binderGrid: el('binderGrid'),
+  modalOverlay: el('modalOverlay'),
+  modalTitle: el('modalTitle'),
+  closeModalBtn: el('closeModalBtn'),
+  cardForm: el('cardForm'),
+  cardId: el('cardId'),
+  deleteBtn: el('deleteBtn'),
+  cancelBtn: el('cancelBtn'),
+  game: el('game'),
+  name: el('name'),
+  setId: el('setId'),
+  cardNumber: el('cardNumber'),
+  condition: el('condition'),
+  quantity: el('quantity'),
+  foil: el('foil'),
+  purchasePrice: el('purchasePrice'),
+  currentValue: el('currentValue'),
+  imageUrl: el('imageUrl'),
+  imageFile: el('imageFile'),
+  imagePreviewImg: el('imagePreviewImg'),
+  imagePreviewPlaceholder: el('imagePreviewPlaceholder'),
+  notes: el('notes'),
 };
 
 const errorNodes = new Map(
-  Array.from(document.querySelectorAll('.error[data-for]')).map((node) => [node.dataset.for, node])
+  Array.from(document.querySelectorAll('.error[data-for]')).map(n => [n.dataset.for, n])
 );
+
+// ── URL param: open edit modal for ?edit=id ────────────────────────────
+const editParam = getParam('edit');
 
 bindEvents();
 hydrateSetOptions().finally(() => {
-  populateSetSelect(elements.game.value);
+  populateSetSelect(elements.game?.value || '');
   populateFilterSets();
   render();
+  if (editParam) openModal(editParam);
 });
-
-// Check for ?edit=id URL param on load — open modal for that card
-const editParam = new URLSearchParams(window.location.search).get('edit');
-if (editParam) {
-  window.addEventListener('DOMContentLoaded', () => openModal(editParam));
-  openModal(editParam);
-}
 
 function bindEvents() {
   elements.addCardBtn?.addEventListener('click', () => openModal());
@@ -99,42 +100,38 @@ function bindEvents() {
   elements.sortSelect?.addEventListener('change', render);
   elements.clearFiltersBtn?.addEventListener('click', clearFilters);
   elements.toggleFiltersBtn?.addEventListener('click', toggleFilters);
-  elements.modalOverlay?.addEventListener('click', (e) => { if (e.target === elements.modalOverlay) closeModal(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !elements.modalOverlay?.hidden) closeModal(); });
-  window.addEventListener('storage', (e) => {
+  elements.modalOverlay?.addEventListener('click', e => { if (e.target === elements.modalOverlay) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !elements.modalOverlay?.hidden) closeModal(); });
+  window.addEventListener('storage', e => {
     if (e.key !== STORAGE_KEY) return;
-    state.cards = loadCards();
     populateFilterSets();
     render();
   });
 }
 
 async function hydrateSetOptions() {
-  const requests = [
-    fetch('../data/cards.json').then(r => r.ok ? r.json() : []).catch(() => []),
-    fetch('../database/cardflow-pokemon-dataset.json').then(r => r.ok ? r.json() : null).catch(() => null),
-  ];
-  const [seedCards, pokemonDataset] = await Promise.all(requests);
+  try {
+    const [seedCards, pokemonData] = await Promise.all([
+      fetch('data/cards.json').then(r => r.ok ? r.json() : []).catch(() => []),
+      fetch('database/cardflow-pokemon-dataset.json').then(r => r.ok ? r.json() : null).catch(() => null),
+    ]);
 
-  if (Array.isArray(seedCards)) {
-    for (const entry of seedCards) {
-      const rawGame = String(entry.game || '').trim().toLowerCase();
-      const game = rawGame === 'magic' ? 'mtg' : rawGame;
-      const setName = String(entry.set || '').trim();
-      if (!state.setOptions[game] || !setName) continue;
-      pushUnique(state.setOptions[game], setName);
+    if (Array.isArray(seedCards)) {
+      for (const entry of seedCards) {
+        const game = String(entry.game || '').trim().toLowerCase() === 'magic' ? 'mtg' : String(entry.game || '').trim().toLowerCase();
+        const setName = String(entry.set || '').trim();
+        if (state.setOptions[game] && setName) pushUnique(state.setOptions[game], setName);
+      }
     }
-  }
 
-  const expansions = Array.isArray(pokemonDataset?.expansions) ? pokemonDataset.expansions : [];
-  for (const expansion of expansions) {
-    const setName = String(expansion.name || '').trim();
-    if (setName) pushUnique(state.setOptions.pokemon, setName);
-  }
+    const expansions = Array.isArray(pokemonData?.expansions) ? pokemonData.expansions : [];
+    for (const e of expansions) {
+      const name = String(e.name || '').trim();
+      if (name) pushUnique(state.setOptions.pokemon, name);
+    }
 
-  Object.keys(state.setOptions).forEach(game => {
-    state.setOptions[game].sort((a, b) => a.localeCompare(b));
-  });
+    Object.keys(state.setOptions).forEach(g => state.setOptions[g].sort((a, b) => a.localeCompare(b)));
+  } catch { /* silent — fallback to defaults */ }
 }
 
 function render() {
@@ -150,27 +147,27 @@ function getFilteredCards() {
   const condition = elements.conditionFilter?.value || '';
   const sort = elements.sortSelect?.value || 'recent';
 
-  const filtered = state.cards.filter(card => {
-    if (search && !`${card.name} ${card.notes || ''}`.toLowerCase().includes(search)) return false;
-    if (game && card.game !== game) return false;
-    if (set && card.setId !== set) return false;
-    if (condition && card.condition !== condition) return false;
+  let cards = getCards().filter(c => {
+    if (search && !`${c.name} ${c.notes || ''}`.toLowerCase().includes(search)) return false;
+    if (game && c.game !== game) return false;
+    if (set && c.setId !== set) return false;
+    if (condition && c.condition !== condition) return false;
     return true;
   });
 
-  filtered.sort((a, b) => {
+  cards.sort((a, b) => {
     if (sort === 'name') return a.name.localeCompare(b.name);
-    if (sort === 'valueDesc') return totalCardValue(b) - totalCardValue(a);
+    if (sort === 'valueDesc') return cardValue(b) - cardValue(a);
     if (sort === 'qtyDesc') return Number(b.quantity || 0) - Number(a.quantity || 0);
     return Number(b.updatedAt || 0) - Number(a.updatedAt || 0);
   });
 
-  return filtered;
+  return cards;
 }
 
 function renderSummary(cards) {
-  const total = cards.reduce((sum, c) => sum + Number(c.quantity || 0), 0);
-  const value = cards.reduce((sum, c) => sum + totalCardValue(c), 0);
+  const total = cards.reduce((s, c) => s + Number(c.quantity || 0), 0);
+  const value = cards.reduce((s, c) => s + cardValue(c), 0);
   if (elements.totalCards) elements.totalCards.textContent = String(total);
   if (elements.totalValue) elements.totalValue.textContent = formatCurrency(value);
 }
@@ -181,17 +178,17 @@ function renderGrid(cards) {
   elements.binderGrid.innerHTML = '';
   if (!cards.length) return;
 
-  const fragment = document.createDocumentFragment();
+  const frag = document.createDocumentFragment();
   for (const card of cards) {
     const article = document.createElement('article');
-    article.className = 'binder-card card-item';
+    article.className = 'binder-card card-anim';
     article.tabIndex = 0;
     article.setAttribute('role', 'button');
-    article.setAttribute('aria-label', `Edit ${card.name}`);
+    article.setAttribute('aria-label', `View or edit ${card.name}`);
 
     const imgSrc = card.imageUrl || card.externalImageUrl || '';
     const imgMarkup = imgSrc
-      ? `<img src="${escapeAttribute(imgSrc)}" alt="${escapeAttribute(card.name)}" loading="lazy">`
+      ? `<img src="${escapeAttr(imgSrc)}" alt="${escapeAttr(card.name)}" loading="lazy">`
       : '<div class="binder-card__placeholder">No image</div>';
 
     article.innerHTML = `
@@ -202,34 +199,34 @@ function renderGrid(cards) {
           <span class="qty-pill">x${Number(card.quantity || 0)}</span>
         </div>
         <h3>${escapeHtml(card.name)}</h3>
-        <p class="binder-card__set">${escapeHtml(card.setId)}</p>
+        <p class="binder-card__set">${escapeHtml(card.setId || '')}</p>
         <dl class="binder-card__meta">
           <div><dt>Condition</dt><dd>${escapeHtml(card.condition)}</dd></div>
           <div><dt>Number</dt><dd>${escapeHtml(card.cardNumber || 'N/A')}</dd></div>
-          <div><dt>Current</dt><dd>${formatCurrency(Number(card.currentValue || 0))}</dd></div>
+          <div><dt>Value</dt><dd>${formatCurrency(Number(card.currentValue || 0))}</dd></div>
           <div><dt>Foil</dt><dd>${card.foil ? 'Yes' : 'No'}</dd></div>
         </dl>
         <div class="binder-card__actions">
-          <a href="card-detail.html?id=${encodeURIComponent(card.id)}" class="btn" aria-label="View details for ${escapeAttribute(card.name)}">View Detail</a>
+          <a href="card-detail.html?id=${encodeURIComponent(card.id)}"
+             class="btn" style="font-size:13px;padding:6px 14px;"
+             aria-label="View detail for ${escapeAttr(card.name)}"
+             onclick="event.stopPropagation()">View Detail</a>
         </div>
       </div>`;
 
-    article.addEventListener('click', (e) => {
-      if (e.target.closest('a')) return;
-      openModal(card.id);
-    });
-    article.addEventListener('keydown', (e) => {
+    article.addEventListener('click', e => { if (!e.target.closest('a')) openModal(card.id); });
+    article.addEventListener('keydown', e => {
       if (e.key !== 'Enter' && e.key !== ' ') return;
       e.preventDefault();
       openModal(card.id);
     });
+    article.querySelector('img')?.addEventListener('error', function () {
+      this.replaceWith(Object.assign(document.createElement('div'), { className: 'binder-card__placeholder', textContent: 'No image' }));
+    });
 
-    const img = article.querySelector('img');
-    img?.addEventListener('error', () => img.replaceWith(createPlaceholder()));
-    fragment.appendChild(article);
+    frag.appendChild(article);
   }
-
-  elements.binderGrid.appendChild(fragment);
+  elements.binderGrid.appendChild(frag);
 }
 
 function openModal(cardId = '') {
@@ -237,13 +234,13 @@ function openModal(cardId = '') {
   state.editingId = cardId;
   state.uploadedImageDataUrl = '';
   elements.cardForm?.reset();
-  elements.cardId.value = cardId;
+  if (elements.cardId) elements.cardId.value = cardId;
 
   if (cardId) {
-    const card = state.cards.find(c => c.id === cardId);
+    const card = findCardById(cardId);
     if (!card) return;
-    elements.modalTitle.textContent = 'Edit Card';
-    elements.deleteBtn.hidden = false;
+    if (elements.modalTitle) elements.modalTitle.textContent = 'Edit Card';
+    if (elements.deleteBtn) elements.deleteBtn.hidden = false;
     elements.game.value = card.game;
     populateSetSelect(card.game, card.setId);
     elements.name.value = card.name;
@@ -251,33 +248,37 @@ function openModal(cardId = '') {
     elements.condition.value = card.condition;
     elements.quantity.value = String(card.quantity);
     elements.foil.checked = Boolean(card.foil);
-    elements.purchasePrice.value = formatNumberInput(card.purchasePrice);
-    elements.currentValue.value = formatNumberInput(card.currentValue);
+    elements.purchasePrice.value = card.purchasePrice > 0 ? String(card.purchasePrice) : '';
+    elements.currentValue.value = card.currentValue > 0 ? String(card.currentValue) : '';
     elements.imageUrl.value = card.externalImageUrl || card.imageUrl || '';
     elements.notes.value = card.notes || '';
-    setPreviewImage(card.imageUrl || card.externalImageUrl || '');
+    setPreview(card.imageUrl || card.externalImageUrl || '');
   } else {
-    elements.modalTitle.textContent = 'Add Card';
-    elements.deleteBtn.hidden = true;
+    if (elements.modalTitle) elements.modalTitle.textContent = 'Add Card';
+    if (elements.deleteBtn) elements.deleteBtn.hidden = true;
     elements.quantity.value = '1';
-    populateSetSelect(elements.game.value);
-    setPreviewImage('');
+    populateSetSelect(elements.game?.value || '');
+    setPreview('');
   }
 
-  elements.modalOverlay.hidden = false;
-  elements.modalOverlay.removeAttribute('aria-hidden');
+  if (elements.modalOverlay) {
+    elements.modalOverlay.hidden = false;
+    elements.modalOverlay.removeAttribute('aria-hidden');
+  }
   document.body.classList.add('modal-open');
-  elements.name.focus();
+  elements.name?.focus();
 }
 
 function closeModal() {
   state.editingId = '';
   state.uploadedImageDataUrl = '';
-  elements.modalOverlay.hidden = true;
-  elements.modalOverlay.setAttribute('aria-hidden', 'true');
+  if (elements.modalOverlay) {
+    elements.modalOverlay.hidden = true;
+    elements.modalOverlay.setAttribute('aria-hidden', 'true');
+  }
   document.body.classList.remove('modal-open');
   clearErrors();
-  setPreviewImage('');
+  setPreview('');
 }
 
 async function handleSubmit(e) {
@@ -285,15 +286,11 @@ async function handleSubmit(e) {
   clearErrors();
 
   if (elements.imageFile?.files?.[0]) {
-    try {
-      state.uploadedImageDataUrl = await readFileAsDataUrl(elements.imageFile.files[0]);
-    } catch {
-      showErrors([['imageFile', 'The selected image could not be read.']]);
-      return;
-    }
+    try { state.uploadedImageDataUrl = await fileToDataUrl(elements.imageFile.files[0]); }
+    catch { showFieldError('imageFile', 'Could not read image.'); return; }
   }
 
-  const payload = {
+  const card = {
     id: state.editingId || createId(),
     game: elements.game.value,
     name: elements.name.value.trim(),
@@ -307,26 +304,15 @@ async function handleSubmit(e) {
     imageUrl: state.uploadedImageDataUrl || elements.imageUrl.value.trim(),
     externalImageUrl: elements.imageUrl.value.trim(),
     notes: elements.notes.value.trim(),
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
   };
 
-  const errors = validate(payload);
+  const errors = validate(card);
   if (errors.length) { showErrors(errors); return; }
 
-  if (state.editingId) {
-    const existing = state.cards.find(c => c.id === state.editingId);
-    payload.createdAt = existing?.createdAt || payload.createdAt;
-    state.cards = state.cards.map(c => c.id === state.editingId ? payload : c);
-    showToast('Card updated.');
-  } else {
-    state.cards.unshift(payload);
-    showToast('Card added to binder.');
-  }
-
-  pushUnique(state.setOptions[payload.game], payload.setId);
-  state.setOptions[payload.game].sort((a, b) => a.localeCompare(b));
-  saveCards(state.cards);
+  saveCard(card);
+  pushUnique(state.setOptions[card.game], card.setId);
+  state.setOptions[card.game]?.sort((a, b) => a.localeCompare(b));
+  showToast(state.editingId ? 'Card updated.' : 'Card added!');
   populateFilterSets();
   render();
   closeModal();
@@ -334,43 +320,45 @@ async function handleSubmit(e) {
 
 function deleteCurrentCard() {
   if (!state.editingId) return;
-  state.cards = state.cards.filter(c => c.id !== state.editingId);
-  saveCards(state.cards);
+  const card = findCardById(state.editingId);
+  if (!confirm(`Delete "${card?.name}"?`)) return;
+  deleteCard(state.editingId);
+  showToast('Card removed.');
   populateFilterSets();
   render();
   closeModal();
-  showToast('Card removed.');
 }
 
 function validate(card) {
-  const issues = [];
-  if (!card.game) issues.push(['game', 'Choose a game.']);
-  if (!card.name || card.name.length < 2) issues.push(['name', 'Enter a card name (at least 2 characters).']);
-  if (!card.setId) issues.push(['setId', 'Choose a set.']);
-  if (!card.condition) issues.push(['condition', 'Choose a condition.']);
-  if (!Number.isInteger(card.quantity) || card.quantity < 1) issues.push(['quantity', 'Quantity must be at least 1.']);
-  if (card.purchasePrice < 0) issues.push(['purchasePrice', 'Cannot be negative.']);
-  if (card.currentValue < 0) issues.push(['currentValue', 'Cannot be negative.']);
-  if (state.uploadedImageDataUrl && !state.uploadedImageDataUrl.startsWith('data:image/')) {
-    issues.push(['imageFile', 'Uploaded file must be an image.']);
-  }
+  const e = [];
+  if (!card.game) e.push(['game', 'Choose a game.']);
+  if (!card.name || card.name.length < 2) e.push(['name', 'Name needs at least 2 characters.']);
+  if (!card.setId) e.push(['setId', 'Choose a set.']);
+  if (!card.condition) e.push(['condition', 'Choose a condition.']);
+  if (!Number.isInteger(card.quantity) || card.quantity < 1) e.push(['quantity', 'Quantity must be at least 1.']);
+  if (card.purchasePrice < 0) e.push(['purchasePrice', 'Cannot be negative.']);
+  if (card.currentValue < 0) e.push(['currentValue', 'Cannot be negative.']);
   if (card.externalImageUrl) {
-    try { new URL(card.externalImageUrl); } catch { issues.push(['imageUrl', 'Must be a valid URL.']); }
+    try { new URL(card.externalImageUrl); } catch { e.push(['imageUrl', 'Must be a valid URL.']); }
   }
-  return issues;
+  return e;
 }
 
 function showErrors(errors) {
   const seen = new Set();
-  for (const [field, message] of errors) {
-    if (!seen.has(field)) { errorNodes.get(field)?.replaceChildren(message); seen.add(field); }
+  for (const [field, msg] of errors) {
+    if (!seen.has(field)) { errorNodes.get(field)?.replaceChildren(msg); seen.add(field); }
   }
-  const firstField = errors[0]?.[0];
-  if (firstField && elements[firstField]) elements[firstField].focus();
+  const first = errors[0]?.[0];
+  if (first && elements[first]) elements[first].focus();
+}
+
+function showFieldError(field, msg) {
+  errorNodes.get(field)?.replaceChildren(msg);
 }
 
 function clearErrors() {
-  errorNodes.forEach(node => { node.textContent = ''; });
+  errorNodes.forEach(n => { n.textContent = ''; });
 }
 
 function clearFilters() {
@@ -384,28 +372,26 @@ function clearFilters() {
 
 function toggleFilters() {
   state.filtersOpen = !state.filtersOpen;
-  elements.filters.classList.toggle('is-collapsed', !state.filtersOpen);
-  elements.toggleFiltersBtn.setAttribute('aria-expanded', String(state.filtersOpen));
+  elements.filters?.classList.toggle('is-collapsed', !state.filtersOpen);
+  elements.toggleFiltersBtn?.setAttribute('aria-expanded', String(state.filtersOpen));
 }
 
-function populateSetSelect(game, selectedValue = '') {
+function populateSetSelect(game, selected = '') {
   if (!elements.setId) return;
-  const options = state.setOptions[game] || [];
+  const opts = state.setOptions[game] || [];
   elements.setId.innerHTML = '<option value="">Select a set…</option>';
-  for (const setName of options) {
-    const opt = document.createElement('option');
-    opt.value = setName;
-    opt.textContent = setName;
-    elements.setId.appendChild(opt);
-  }
-  if (selectedValue && options.includes(selectedValue)) {
-    elements.setId.value = selectedValue;
-  } else if (selectedValue) {
-    const opt = document.createElement('option');
-    opt.value = selectedValue;
-    opt.textContent = selectedValue;
-    elements.setId.appendChild(opt);
-    elements.setId.value = selectedValue;
+  opts.forEach(s => {
+    const o = document.createElement('option');
+    o.value = s; o.textContent = s;
+    elements.setId.appendChild(o);
+  });
+  if (selected) {
+    if (!opts.includes(selected)) {
+      const o = document.createElement('option');
+      o.value = selected; o.textContent = selected;
+      elements.setId.appendChild(o);
+    }
+    elements.setId.value = selected;
   }
 }
 
@@ -415,82 +401,51 @@ function populateFilterSets() {
   const sets = new Set();
   if (game) {
     (state.setOptions[game] || []).forEach(s => sets.add(s));
-    state.cards.filter(c => c.game === game).forEach(c => sets.add(c.setId));
+    getCards().filter(c => c.game === game).forEach(c => c.setId && sets.add(c.setId));
   } else {
     Object.values(state.setOptions).flat().forEach(s => sets.add(s));
-    state.cards.forEach(c => sets.add(c.setId));
+    getCards().forEach(c => c.setId && sets.add(c.setId));
   }
-  const previous = elements.setFilter.value;
+  const prev = elements.setFilter.value;
   elements.setFilter.innerHTML = '<option value="">All sets</option>';
-  Array.from(sets).sort((a, b) => a.localeCompare(b)).forEach(setName => {
-    const opt = document.createElement('option');
-    opt.value = setName;
-    opt.textContent = setName;
-    elements.setFilter.appendChild(opt);
+  Array.from(sets).sort((a, b) => a.localeCompare(b)).forEach(s => {
+    const o = document.createElement('option');
+    o.value = s; o.textContent = s;
+    elements.setFilter.appendChild(o);
   });
-  elements.setFilter.value = sets.has(previous) ? previous : '';
-}
-
-function totalCardValue(card) {
-  return Number(card.currentValue || 0) * Number(card.quantity || 0);
-}
-
-function formatNumberInput(value) {
-  return Number(value || 0) > 0 ? String(value) : '';
-}
-
-function showToast(message) {
-  if (!elements.toast) return;
-  elements.toast.textContent = message;
-  elements.toast.hidden = false;
-  elements.toast.classList.add('is-visible');
-  window.clearTimeout(showToast.timeoutId);
-  showToast.timeoutId = window.setTimeout(() => {
-    elements.toast.classList.remove('is-visible');
-    elements.toast.hidden = true;
-  }, 2200);
+  elements.setFilter.value = sets.has(prev) ? prev : '';
 }
 
 function syncPreviewFromUrl() {
   if (elements.imageFile?.files?.length) return;
-  setPreviewImage(elements.imageUrl?.value.trim() || '');
+  setPreview(elements.imageUrl?.value.trim() || '');
 }
 
 async function syncPreviewFromFile() {
   const file = elements.imageFile?.files?.[0];
   if (!file) { state.uploadedImageDataUrl = ''; syncPreviewFromUrl(); return; }
   try {
-    state.uploadedImageDataUrl = await readFileAsDataUrl(file);
-    clearFieldError('imageFile');
-    setPreviewImage(state.uploadedImageDataUrl);
+    state.uploadedImageDataUrl = await fileToDataUrl(file);
+    setPreview(state.uploadedImageDataUrl);
   } catch {
     state.uploadedImageDataUrl = '';
-    showErrors([['imageFile', 'Could not read the selected image.']]);
-    setPreviewImage('');
+    showFieldError('imageFile', 'Could not read image.');
+    setPreview('');
   }
 }
 
-function setPreviewImage(source) {
+function setPreview(src) {
   if (!elements.imagePreviewImg || !elements.imagePreviewPlaceholder) return;
-  if (!source) {
+  if (!src) {
     elements.imagePreviewImg.hidden = true;
     elements.imagePreviewImg.removeAttribute('src');
     elements.imagePreviewPlaceholder.hidden = false;
-    return;
+  } else {
+    elements.imagePreviewImg.src = src;
+    elements.imagePreviewImg.hidden = false;
+    elements.imagePreviewPlaceholder.hidden = true;
   }
-  elements.imagePreviewImg.src = source;
-  elements.imagePreviewImg.hidden = false;
-  elements.imagePreviewPlaceholder.hidden = true;
 }
 
-function clearFieldError(field) {
-  const node = errorNodes.get(field);
-  if (node) node.textContent = '';
-}
-
-function createPlaceholder() {
-  const div = document.createElement('div');
-  div.className = 'binder-card__placeholder';
-  div.textContent = 'No image';
-  return div;
-}
+function cardValue(c) { return Number(c.currentValue || 0) * Number(c.quantity || 0); }
+function pushUnique(arr, val) { if (Array.isArray(arr) && val && !arr.includes(val)) arr.push(val); }

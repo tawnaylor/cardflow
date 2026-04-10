@@ -1,122 +1,114 @@
-const binderList = document.getElementById("binderList");
-const clearAllBtn = document.getElementById("clearAll");
-const saveBinderBtn = document.getElementById("saveBinder");
-const binderNameInput = document.getElementById("binderName");
-const binderDescInput = document.getElementById("binderDesc");
-const binderImageInput = document.getElementById("binderImage");
+// binders.js — Binders page
+import { getBinders, saveBinder, deleteBinder, createId, fileToDataUrl } from './storage.js';
+import { escapeHtml, showToast, initNav } from './utils.js';
 
-let binders = JSON.parse(localStorage.getItem("binders") || "[]");
+initNav();
 
-function saveBinders(){
-  localStorage.setItem("binders", JSON.stringify(binders));
+const binderList    = document.getElementById('binderList');
+const openModalBtn  = document.getElementById('openBinderModalBtn');
+const closeModalBtn = document.getElementById('closeBinderModalBtn');
+const cancelBtn     = document.getElementById('cancelBinderBtn');
+const clearAllBtn   = document.getElementById('clearAllBtn');
+const modalOverlay  = document.getElementById('binderModalOverlay');
+const binderForm    = document.getElementById('binderForm');
+
+// ── Modal ──────────────────────────────────────────────────────────────
+function openModal() {
+  modalOverlay.hidden = false;
+  modalOverlay.removeAttribute('aria-hidden');
+  document.body.classList.add('modal-open');
+  document.getElementById('binderName')?.focus();
 }
 
-function renderBinders(){
-  binderList.innerHTML = "";
-
-  binders.forEach((binder, index) => {
-
-    const div = document.createElement("div");
-    div.className = "binder-item";
-
-    let imgSrc = binder.image || "https://via.placeholder.com/200";
-
-    div.innerHTML = `
-      <img src="${imgSrc}" alt="${binder.name} binder cover" onerror="this.src='https://via.placeholder.com/200'">
-      <h3>${binder.name}</h3>
-      <p>${binder.description}</p>
-    `;
-
-    div.addEventListener("dblclick", () => {
-      if(confirm(`Delete binder "${binder.name}"?`)){
-        binders.splice(index,1);
-        saveBinders();
-        renderBinders();
-      }
-    });
-
-    binderList.appendChild(div);
-
-  });
-
+function closeModal() {
+  modalOverlay.hidden = true;
+  modalOverlay.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('modal-open');
+  binderForm?.reset();
+  const errEl = document.getElementById('err-binder-name');
+  if (errEl) errEl.textContent = '';
 }
 
-// Save binder
-saveBinderBtn.addEventListener("click", () => {
+openModalBtn?.addEventListener('click', openModal);
+closeModalBtn?.addEventListener('click', closeModal);
+cancelBtn?.addEventListener('click', closeModal);
+modalOverlay?.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !modalOverlay?.hidden) closeModal(); });
 
-  const name = binderNameInput.value.trim();
-  const desc = binderDescInput.value.trim();
-  const file = binderImageInput.files[0];
-
-  if(!name){
-    alert("Please enter a binder name.");
+// ── Render binders ─────────────────────────────────────────────────────
+function render() {
+  const binders = getBinders();
+  if (!binders.length) {
+    binderList.innerHTML = `
+      <div class="empty-state">
+        <h2>No binders yet</h2>
+        <p>Create your first binder to organise your collection.</p>
+      </div>`;
     return;
   }
+  binderList.innerHTML = `
+    <div class="binder-list">
+      ${binders.map(b => `
+        <article class="binder-item card-anim" data-id="${escapeHtml(b.id)}">
+          ${b.cover
+            ? `<img src="${escapeHtml(b.cover)}" alt="Cover for ${escapeHtml(b.name)}" />`
+            : `<div style="aspect-ratio:4/3;background:rgba(255,255,255,0.04);border-radius:8px;display:grid;place-items:center;color:var(--muted);font-size:13px;">No cover</div>`}
+          <h3>${escapeHtml(b.name)}</h3>
+          <p>${escapeHtml(b.description || '')}</p>
+          <div class="binder-meta">
+            <button class="btn danger del-btn" data-id="${escapeHtml(b.id)}" style="font-size:13px;padding:6px 12px;">Delete</button>
+          </div>
+        </article>`).join('')}
+    </div>`;
 
-  if(file){
-
-    const reader = new FileReader();
-
-    reader.onload = (e)=>{
-
-      binders.push({
-        name:name,
-        description:desc,
-        image:e.target.result
-      });
-
-      saveBinders();
-      renderBinders();
-
-      binderNameInput.value="";
-      binderDescInput.value="";
-      binderImageInput.value="";
-    }
-
-    reader.readAsDataURL(file);
-
-  }else{
-
-    binders.push({
-      name:name,
-      description:desc,
-      image:""
+  binderList.querySelectorAll('.del-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const b = getBinders().find(x => x.id === btn.dataset.id);
+      if (b && confirm(`Delete binder "${b.name}"?`)) {
+        deleteBinder(btn.dataset.id);
+        showToast(`"${b.name}" deleted.`);
+        render();
+      }
     });
+  });
+}
 
-    saveBinders();
-    renderBinders();
-
-    binderNameInput.value="";
-    binderDescInput.value="";
-    binderImageInput.value="";
-
+// ── Form submit ────────────────────────────────────────────────────────
+binderForm?.addEventListener('submit', async e => {
+  e.preventDefault();
+  const nameInput = document.getElementById('binderName');
+  const errEl     = document.getElementById('err-binder-name');
+  if (!nameInput.value.trim()) {
+    errEl.textContent = 'Binder name is required.';
+    nameInput.focus();
+    return;
   }
+  errEl.textContent = '';
 
+  const file = document.getElementById('binderImage')?.files?.[0];
+  let cover = '';
+  if (file) try { cover = await fileToDataUrl(file); } catch {}
+
+  saveBinder({
+    id: createId(),
+    name: nameInput.value.trim(),
+    description: document.getElementById('binderDesc')?.value.trim() || '',
+    cover,
+  });
+
+  showToast('Binder created!');
+  closeModal();
+  render();
 });
 
-// Clear binders
-clearAllBtn.addEventListener("click", () => {
-
-  if(confirm("Clear all binders?")){
-    binders=[];
-    saveBinders();
-    renderBinders();
+// ── Clear all ──────────────────────────────────────────────────────────
+clearAllBtn?.addEventListener('click', () => {
+  if (!getBinders().length) { showToast('No binders to clear.'); return; }
+  if (confirm('Delete ALL binders?')) {
+    getBinders().forEach(b => deleteBinder(b.id));
+    showToast('All binders cleared.');
+    render();
   }
-
 });
 
-
-// --------------------
-// NAVBAR DROPDOWN
-// --------------------
-
-const navToggle = document.querySelector(".nav-toggle");
-const nav = document.querySelector(".nav");
-
-navToggle.addEventListener("click", () => {
-  nav.classList.toggle("show");
-});
-
-
-// Initial render
-renderBinders();
+render();

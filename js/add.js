@@ -1,251 +1,202 @@
-import { upsertCard, fileToDataUrl, getCards } from "./storage.js";
-import { fetchTcgdexCard } from "./tcgdex.js";
+// add.js — Add Cards page
+import { saveCard, createId, fileToDataUrl } from './storage.js';
+import { showToast, initNav, getParam } from './utils.js';
+import { fetchTcgdexCard } from './tcgdex.js';
 
-const form = document.getElementById("cardForm");
-const status = document.getElementById("status");
-const imageInput = document.getElementById("imageInput");
-const imageUrlInput = document.getElementById("imageUrl");
-const seedBtn = document.getElementById("seedDemo");
-const seriesSelect = document.getElementById('seriesSelect');
-const expansionSelect = document.getElementById('expansionSelect');
-const tcgdexCardIdInput = document.getElementById('tcgdexCardId');
-const lookupTcgdexBtn = document.getElementById('lookupTcgdexBtn');
-const CARD_NUMBER_PATTERN = /^[A-Za-z0-9/-]{1,20}$/;
+initNav();
 
-function setStatus(msg) {
-  status.textContent = msg;
+const form        = document.getElementById('cardForm');
+const statusEl    = document.getElementById('status');
+const imageInput  = document.getElementById('imageInput');
+const imageUrlIn  = document.getElementById('imageUrl');
+const seedBtn     = document.getElementById('seedDemo');
+const seriesSel   = document.getElementById('seriesSelect');
+const expansionSel= document.getElementById('expansionSelect');
+const tcgIdInput  = document.getElementById('tcgdexCardId');
+const lookupBtn   = document.getElementById('lookupTcgdexBtn');
+const autofillStatus = document.getElementById('autofillStatus');
+
+let _seriesMap = {};
+
+function setStatus(msg) { if (statusEl) statusEl.textContent = msg; }
+function setAutofillStatus(msg) { if (autofillStatus) autofillStatus.textContent = msg; }
+
+// ── Field-level error helpers ──────────────────────────────────────────
+function showFieldError(id, msg) {
+  const el = document.getElementById(id);
+  if (el) { el.textContent = msg; el.hidden = false; }
+}
+function clearErrors() {
+  ['err-name','err-series','err-expansion','err-rarity','err-number'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = '';
+  });
 }
 
-function ensureSelectOption(selectEl, value) {
-  if (!selectEl || !value) return;
-  const existing = Array.from(selectEl.options).find(option => option.value === value);
-  if (existing) return;
-
-  const option = document.createElement('option');
-  option.value = value;
-  option.textContent = value;
-  selectEl.appendChild(option);
-}
-
-function updateExpansionOptions(selectedSeries, selectedExpansion = '') {
-  if (!seriesSelect || !expansionSelect) return;
-
-  expansionSelect.querySelectorAll('option:not([disabled])')?.forEach(option => option.remove());
-
-  const expansions = _seriesMap[selectedSeries]
-    ? Array.from(_seriesMap[selectedSeries]).sort((a, b) => a.localeCompare(b))
-    : [];
-
-  for (const expansion of expansions) {
-    const option = document.createElement('option');
-    option.value = expansion;
-    option.textContent = expansion;
-    expansionSelect.appendChild(option);
-  }
-
-  if (selectedExpansion) {
-    ensureSelectOption(expansionSelect, selectedExpansion);
-    expansionSelect.value = selectedExpansion;
-  }
-}
-
-async function autofillFromTcgdex() {
-  if (!tcgdexCardIdInput || !lookupTcgdexBtn) return;
-
-  const cardId = tcgdexCardIdInput.value.trim();
-  if (!cardId) {
-    setStatus('Enter a TCGdex card ID to autofill the form.');
-    return;
-  }
-
-  lookupTcgdexBtn.disabled = true;
-  setStatus('Looking up card details from TCGdex...');
-
+// ── TCGdex autofill ────────────────────────────────────────────────────
+async function autofill() {
+  const id = tcgIdInput?.value.trim();
+  if (!id) { setAutofillStatus('Enter a TCGdex card ID first.'); return; }
+  if (lookupBtn) lookupBtn.disabled = true;
+  setAutofillStatus('Looking up…');
   try {
-    const card = await fetchTcgdexCard(cardId);
-
-    form.elements.name.value = card.name || form.elements.name.value;
-    form.elements.number.value = card.number || form.elements.number.value;
-
+    const card = await fetchTcgdexCard(id);
+    const nameEl = form.elements.name;
+    if (nameEl) nameEl.value = card.name || nameEl.value;
+    const numberEl = form.elements.number;
+    if (numberEl) numberEl.value = card.number || numberEl.value;
     if (card.series) {
-      ensureSelectOption(seriesSelect, card.series);
-      seriesSelect.value = card.series;
-      updateExpansionOptions(card.series, card.expansion);
+      ensureOption(seriesSel, card.series);
+      seriesSel.value = card.series;
+      updateExpansions(card.series, card.expansion);
     }
-
     if (card.rarity) {
-      ensureSelectOption(form.elements.rarity, card.rarity);
+      ensureOption(form.elements.rarity, card.rarity);
       form.elements.rarity.value = card.rarity;
     }
-
-    if (card.imageUrl && !imageUrlInput.value.trim()) {
-      imageUrlInput.value = card.imageUrl;
+    if (card.imageUrl && imageUrlIn && !imageUrlIn.value.trim()) {
+      imageUrlIn.value = card.imageUrl;
     }
-
-    setStatus(`Loaded ${card.name || card.id} from TCGdex.`);
-  } catch (error) {
-    setStatus(error instanceof Error ? error.message : 'Unable to fetch card details from TCGdex.');
+    setAutofillStatus(`✅ Loaded "${card.name}" from TCGdex.`);
+  } catch (err) {
+    setAutofillStatus(`❌ ${err instanceof Error ? err.message : 'Card not found.'}`);
   } finally {
-    lookupTcgdexBtn.disabled = false;
+    if (lookupBtn) lookupBtn.disabled = false;
   }
 }
 
-function validate(formEl) {
-  const name = formEl.elements.name;
-  const series = formEl.elements.series;
-  const expansion = formEl.elements.expansion;
-  const rarity = formEl.elements.rarity;
-  const number = formEl.elements.number;
+lookupBtn?.addEventListener('click', autofill);
+tcgIdInput?.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); autofill(); } });
 
-  const problems = [];
-
-  if (!name.value.trim() || name.value.trim().length < 2) problems.push("Card name is required (min 2 chars).");
-  if (!series.value.trim()) problems.push("Series is required.");
-  if (!expansion.value.trim()) problems.push("Series expansion is required.");
-  if (!rarity.value) problems.push("Rarity is required.");
-  if (!CARD_NUMBER_PATTERN.test(number.value.trim())) problems.push("Card number must be 1-20 characters using letters, numbers, /, or -.");
-
-  return problems;
-}
-
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  setStatus("");
-
-  const problems = validate(form);
-  if (problems.length) {
-    setStatus(problems.join(" "));
-    return;
-  }
-
-  // Priority: file input (local upload) -> image URL (fetch & convert) -> empty
-  const file = imageInput.files?.[0] || null;
-  let imageDataUrl = "";
-
-  if (file) {
-    imageDataUrl = await fileToDataUrl(file);
-  } else if (imageUrlInput && imageUrlInput.value.trim()) {
-    const url = imageUrlInput.value.trim();
-    try {
-      const resp = await fetch(url, { mode: 'cors' });
-      if (!resp.ok) throw new Error('Network response not ok');
-      const blob = await resp.blob();
-      // ensure it's an image
-      if (blob.type && blob.type.startsWith('image/')) {
-        imageDataUrl = await fileToDataUrl(blob);
-      } else {
-        setStatus('Fetched resource is not an image; ignoring.');
-      }
-    } catch (err) {
-      console.warn('Failed to fetch image URL:', err);
-      setStatus('Unable to fetch image URL — it may be blocked by CORS. Upload a file instead.');
-    }
-  }
-
-  const payload = {
-    name: form.elements.name.value,
-    series: form.elements.series.value,
-    expansion: form.elements.expansion.value,
-    rarity: form.elements.rarity.value,
-    number: form.elements.number.value,
-    qty: form.elements.qty.value,
-    imageDataUrl
-  };
-
-  const result = upsertCard(payload);
-
-  if (result.merged) {
-    setStatus(`Merged quantity! Now x${result.card.qty} for #${result.card.number} (${result.card.series} → ${result.card.expansion}).`);
-  } else {
-    setStatus(`Added! "${result.card.name}" saved to your binder.`);
-  }
-
-  form.reset();
-  form.elements.qty.value = 1;
-});
-
-seedBtn.addEventListener("click", () => {
-  const existing = getCards();
-  if (existing.length > 0) {
-    setStatus("You already have cards. Clear them on the Binders page if you want a fresh demo.");
-    return;
-  }
-
-  const demo = [
-    { name:"Pikachu", series:"Scarlet & Violet", expansion:"Paldea Evolved", rarity:"Rare", number:"1", qty:2, imageDataUrl:"" },
-    { name:"Charizard", series:"Scarlet & Violet", expansion:"Obsidian Flames", rarity:"Ultra Rare", number:"2", qty:2, imageDataUrl:"" },
-    { name:"Gengar", series:"Sword & Shield", expansion:"Lost Origin", rarity:"Holo Rare", number:"3", qty:1, imageDataUrl:"" },
-    { name:"Mewtwo", series:"Sun & Moon", expansion:"Unified Minds", rarity:"Rare", number:"4", qty:1, imageDataUrl:"" },
-    { name:"Eevee", series:"Sword & Shield", expansion:"Evolving Skies", rarity:"Uncommon", number:"5", qty:1, imageDataUrl:"" },
-    { name:"Snorlax", series:"Sun & Moon", expansion:"Team Up", rarity:"Rare", number:"6", qty:1, imageDataUrl:"" },
-    { name:"Lucario", series:"Diamond & Pearl", expansion:"Majestic Dawn", rarity:"Holo Rare", number:"7", qty:1, imageDataUrl:"" },
-    { name:"Infernape", series:"Diamond & Pearl", expansion:"Stormfront", rarity:"Rare", number:"8", qty:1, imageDataUrl:"" },
-    { name:"Blastoise", series:"Base Set", expansion:"Base Set", rarity:"Rare Holo", number:"9", qty:1, imageDataUrl:"" },
-    { name:"Venusaur", series:"Base Set", expansion:"Base Set", rarity:"Rare Holo", number:"10", qty:1, imageDataUrl:"" },
-  ];
-
-  for (const c of demo) upsertCard(c);
-  setStatus("Demo seeded! Check your Binders page to see the cards.");
-});
-
-lookupTcgdexBtn?.addEventListener('click', () => {
-  autofillFromTcgdex();
-});
-
-tcgdexCardIdInput?.addEventListener('keydown', (event) => {
-  if (event.key !== 'Enter') return;
-  event.preventDefault();
-  autofillFromTcgdex();
-});
-
-// (dataset seeding and local image import buttons removed)
-
-// Populate series & expansions selects from dataset JSON
-let _seriesMap = {}; // series -> Set of expansions
-async function populateSeriesFromDataset() {
-  if (!seriesSelect || !expansionSelect) return;
+// ── Series / Expansion dropdowns (fetched from JSON — API requirement) ─
+async function populateSeries() {
+  if (!seriesSel || !expansionSel) return;
   try {
     const resp = await fetch('./database/cardflow-pokemon-dataset.json');
     if (!resp.ok) return;
     const data = await resp.json();
     const exps = Array.isArray(data.expansions) ? data.expansions : [];
-
     _seriesMap = {};
     for (const e of exps) {
       const s = (e.series || 'Unknown').trim();
-      const name = (e.name || e.set_abb || '').trim();
-      if (!s) continue;
+      const name = (e.name || '').trim();
       if (!_seriesMap[s]) _seriesMap[s] = new Set();
       if (name) _seriesMap[s].add(name);
     }
-
-    // sort series
-    const seriesList = Object.keys(_seriesMap).sort((a,b)=>a.localeCompare(b));
-    const selectedSeries = seriesSelect.value;
-    const selectedExpansion = expansionSelect.value;
-    // clear existing options except the placeholder
-    seriesSelect.querySelectorAll('option:not([disabled])')?.forEach(o=>o.remove());
-    for (const s of seriesList) {
-      const opt = document.createElement('option');
-      opt.value = s;
-      opt.textContent = s;
-      seriesSelect.appendChild(opt);
-    }
-
-    if (selectedSeries) {
-      ensureSelectOption(seriesSelect, selectedSeries);
-      seriesSelect.value = selectedSeries;
-      updateExpansionOptions(selectedSeries, selectedExpansion);
-    }
-
-    // when series changes, populate expansions
-    seriesSelect.addEventListener('change', () => {
-      updateExpansionOptions(seriesSelect.value);
+    const seriesList = Object.keys(_seriesMap).sort((a,b) => a.localeCompare(b));
+    seriesSel.querySelectorAll('option:not([disabled])').forEach(o => o.remove());
+    seriesList.forEach(s => {
+      const o = document.createElement('option');
+      o.value = s; o.textContent = s;
+      seriesSel.appendChild(o);
     });
-  } catch (err) {
-    console.warn('Failed to load dataset for series/expansions:', err);
+    seriesSel.addEventListener('change', () => updateExpansions(seriesSel.value));
+  } catch { /* fallback: user types manually */ }
+}
+
+function updateExpansions(series, selected = '') {
+  expansionSel.querySelectorAll('option:not([disabled])').forEach(o => o.remove());
+  const exps = _seriesMap[series] ? Array.from(_seriesMap[series]).sort((a,b) => a.localeCompare(b)) : [];
+  exps.forEach(e => {
+    const o = document.createElement('option');
+    o.value = e; o.textContent = e;
+    expansionSel.appendChild(o);
+  });
+  if (selected) { ensureOption(expansionSel, selected); expansionSel.value = selected; }
+}
+
+function ensureOption(sel, val) {
+  if (!sel || !val) return;
+  if (!Array.from(sel.options).find(o => o.value === val)) {
+    const o = document.createElement('option');
+    o.value = val; o.textContent = val;
+    sel.appendChild(o);
   }
 }
 
-// initialize selects on load
-populateSeriesFromDataset();
+// ── Validation ─────────────────────────────────────────────────────────
+function validate() {
+  clearErrors();
+  const CARD_NUM_RE = /^[A-Za-z0-9/\-]{1,20}$/;
+  const errors = [];
+  const name = form.elements.name?.value.trim();
+  const series = form.elements.series?.value.trim();
+  const expansion = form.elements.expansion?.value.trim();
+  const rarity = form.elements.rarity?.value;
+  const number = form.elements.number?.value.trim();
+
+  if (!name || name.length < 2) errors.push(['err-name', 'Card name is required (min 2 chars).']);
+  if (!series) errors.push(['err-series', 'Series is required.']);
+  if (!expansion) errors.push(['err-expansion', 'Expansion is required.']);
+  if (!rarity) errors.push(['err-rarity', 'Rarity is required.']);
+  if (!CARD_NUM_RE.test(number)) errors.push(['err-number', 'Card number must be 1–20 chars (letters, numbers, / or -).']);
+
+  errors.forEach(([id, msg]) => showFieldError(id, msg));
+  return errors.length === 0;
+}
+
+// ── Form submit ────────────────────────────────────────────────────────
+form?.addEventListener('submit', async e => {
+  e.preventDefault();
+  if (!validate()) return;
+  setStatus('Saving…');
+
+  const file = imageInput?.files?.[0] || null;
+  let imageDataUrl = '';
+  if (file) {
+    imageDataUrl = await fileToDataUrl(file);
+  } else if (imageUrlIn?.value.trim()) {
+    try {
+      const r = await fetch(imageUrlIn.value.trim(), { mode: 'cors' });
+      if (r.ok) {
+        const blob = await r.blob();
+        if (blob.type.startsWith('image/')) imageDataUrl = await fileToDataUrl(blob);
+      }
+    } catch { /* CORS blocked — skip */ }
+  }
+
+  const card = {
+    id: createId(),
+    // store in the unified schema used by app.js
+    game: 'pokemon',
+    name: form.elements.name.value.trim(),
+    setId: form.elements.expansion.value.trim(),
+    cardNumber: form.elements.number.value.trim(),
+    condition: 'NM',
+    quantity: Math.max(1, Number(form.elements.qty.value || 1)),
+    foil: false,
+    purchasePrice: 0,
+    currentValue: 0,
+    imageUrl: imageDataUrl,
+    externalImageUrl: imageUrlIn?.value.trim() || '',
+    notes: `Series: ${form.elements.series.value} | Rarity: ${form.elements.rarity.value}`,
+  };
+
+  saveCard(card);
+  setStatus(`✅ "${card.name}" added to your collection!`);
+  showToast(`"${card.name}" added!`);
+  form.reset();
+  form.elements.qty.value = 1;
+
+  // ── URL parameter: redirect to card detail page ────────────────────
+  setTimeout(() => {
+    window.location.href = `card-detail.html?id=${encodeURIComponent(card.id)}`;
+  }, 1000);
+});
+
+// ── Demo seed ──────────────────────────────────────────────────────────
+seedBtn?.addEventListener('click', () => {
+  const demo = [
+    { name:'Pikachu',   setId:'Paldea Evolved',  cardNumber:'1',  condition:'NM', quantity:2, game:'pokemon', foil:false, purchasePrice:5,  currentValue:8,  imageUrl:'', externalImageUrl:'', notes:'Rarity: Rare' },
+    { name:'Charizard', setId:'Obsidian Flames',  cardNumber:'2',  condition:'NM', quantity:1, game:'pokemon', foil:true,  purchasePrice:80, currentValue:120,imageUrl:'', externalImageUrl:'', notes:'Rarity: Ultra Rare' },
+    { name:'Mewtwo',    setId:'Unified Minds',    cardNumber:'3',  condition:'LP', quantity:1, game:'pokemon', foil:false, purchasePrice:20, currentValue:30, imageUrl:'', externalImageUrl:'', notes:'Rarity: Rare' },
+    { name:'Gengar',    setId:'Lost Origin',      cardNumber:'4',  condition:'NM', quantity:2, game:'pokemon', foil:false, purchasePrice:10, currentValue:15, imageUrl:'', externalImageUrl:'', notes:'Rarity: Holo Rare' },
+    { name:'Black Lotus',setId:'Alpha',           cardNumber:'232',condition:'NM', quantity:1, game:'mtg',     foil:false, purchasePrice:500,currentValue:800,imageUrl:'', externalImageUrl:'', notes:'Rarity: Rare' },
+  ];
+  demo.forEach(c => saveCard({ ...c, id: createId() }));
+  showToast('5 demo cards added!');
+  setStatus('Demo cards added! Redirecting to collection…');
+  setTimeout(() => { window.location.href = 'index.html'; }, 1200);
+});
+
+populateSeries();

@@ -1,112 +1,77 @@
-/* css/animations.css — CSS Animations & Toast styles */
+/* animations.css — all CSS animations for CardFlow */
 
-/* Card flip animation on hover (used on index/binder pages) */
+/* Card entrance animation */
 @keyframes cardFlipIn {
-  0%   { transform: rotateY(90deg) scale(0.8); opacity: 0; }
-  60%  { transform: rotateY(-10deg) scale(1.03); opacity: 1; }
-  100% { transform: rotateY(0deg) scale(1); opacity: 1; }
+  0%   { opacity: 0; transform: rotateY(60deg) scale(0.9); }
+  60%  { transform: rotateY(-8deg) scale(1.02); }
+  100% { opacity: 1; transform: rotateY(0deg) scale(1); }
 }
 
-.card-item {
-  animation: cardFlipIn 0.45s ease both;
+.card-anim {
+  animation: cardFlipIn 0.4s ease both;
 }
 
-/* Stagger each card */
-.card-item:nth-child(1)  { animation-delay: 0.05s; }
-.card-item:nth-child(2)  { animation-delay: 0.10s; }
-.card-item:nth-child(3)  { animation-delay: 0.15s; }
-.card-item:nth-child(4)  { animation-delay: 0.20s; }
-.card-item:nth-child(5)  { animation-delay: 0.25s; }
-.card-item:nth-child(6)  { animation-delay: 0.30s; }
+/* Stagger children */
+.binder-grid .card-anim:nth-child(1)  { animation-delay: 0.04s; }
+.binder-grid .card-anim:nth-child(2)  { animation-delay: 0.08s; }
+.binder-grid .card-anim:nth-child(3)  { animation-delay: 0.12s; }
+.binder-grid .card-anim:nth-child(4)  { animation-delay: 0.16s; }
+.binder-grid .card-anim:nth-child(5)  { animation-delay: 0.20s; }
+.binder-grid .card-anim:nth-child(6)  { animation-delay: 0.24s; }
+.binder-grid .card-anim:nth-child(7)  { animation-delay: 0.28s; }
+.binder-grid .card-anim:nth-child(8)  { animation-delay: 0.32s; }
 
-/* Pulse on successful save */
-@keyframes successPulse {
-  0%   { box-shadow: 0 0 0 0 rgba(72, 199, 116, 0.7); }
-  70%  { box-shadow: 0 0 0 12px rgba(72, 199, 116, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(72, 199, 116, 0); }
+/* Pulse on save success */
+@keyframes savePulse {
+  0%   { box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.5); }
+  70%  { box-shadow: 0 0 0 14px rgba(0, 229, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 229, 255, 0); }
 }
 
-.form--saved {
-  animation: successPulse 0.8s ease;
+.save-pulse {
+  animation: savePulse 0.7s ease;
 }
 
-/* Modal animations */
-.modal {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.55);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.25s ease;
-  z-index: 1000;
-}
-
-.modal--open {
-  opacity: 1;
-  pointer-events: all;
-}
-
-.modal__box {
-  background: #fff;
-  border-radius: 12px;
-  padding: 2rem;
-  max-width: 480px;
-  width: 90%;
-  transform: translateY(30px);
-  transition: transform 0.25s ease;
-}
-
-.modal--open .modal__box {
-  transform: translateY(0);
-}
-
-/* Toast notifications */
-#toast-container {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  z-index: 2000;
-}
-
-.toast {
-  background: #323232;
-  color: #fff;
-  padding: 0.75rem 1.25rem;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  opacity: 0;
-  transform: translateX(60px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  max-width: 300px;
-}
-
-.toast--visible {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.toast--success { border-left: 4px solid #48c774; }
-.toast--error   { border-left: 4px solid #f14668; }
-
-/* Spinner for API loading */
+/* Spinner */
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
 
 .spinner {
   display: inline-block;
-  width: 18px;
-  height: 18px;
-  border: 3px solid rgba(0,0,0,0.15);
-  border-top-color: #3273dc;
+  width: 16px; height: 16px;
+  border: 2px solid rgba(255,255,255,0.2);
+  border-top-color: var(--primary);
   border-radius: 50%;
   animation: spin 0.6s linear infinite;
   vertical-align: middle;
   margin-right: 6px;
+}
+
+/* Rarity glow animations (used on card cards) */
+@keyframes pulse-cyan {
+  0%, 100% { box-shadow: 0 6px 18px rgba(0,229,255,0.08); }
+  50%       { box-shadow: 0 10px 32px rgba(0,229,255,0.22); }
+}
+
+@keyframes pulse-magenta {
+  0%, 100% { box-shadow: 0 6px 18px rgba(255,50,208,0.08); }
+  50%       { box-shadow: 0 12px 36px rgba(255,50,208,0.22); }
+}
+
+@keyframes rainbow-spin {
+  0%   { box-shadow: 0 8px 28px rgba(255,0,128,0.14); }
+  25%  { box-shadow: 0 8px 28px rgba(255,200,0,0.14); }
+  50%  { box-shadow: 0 8px 28px rgba(0,229,255,0.14); }
+  75%  { box-shadow: 0 8px 28px rgba(128,0,255,0.14); }
+  100% { box-shadow: 0 8px 28px rgba(255,0,128,0.14); }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .card-anim,
+  .save-pulse,
+  .spinner {
+    animation: none !important;
+  }
 }
