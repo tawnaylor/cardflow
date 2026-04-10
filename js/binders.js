@@ -1,13 +1,8 @@
-console.log("🔥 binders.js: Persistent Storage & Card Count Fix");
-
-// 1. DATABASE CONFIGURATION
 const DB_NAME = "CardFlowDB";
 const STORE_NAME = "binders";
 let db;
 
-// Initialize IndexedDB
 const request = indexedDB.open(DB_NAME, 1);
-
 request.onupgradeneeded = (e) => {
   db = e.target.result;
   if (!db.objectStoreNames.contains(STORE_NAME)) {
@@ -15,27 +10,20 @@ request.onupgradeneeded = (e) => {
   }
 };
 
-// This ensures binders appear automatically every time the page loads
 request.onsuccess = (e) => {
   db = e.target.result;
-  console.log("Database connected.");
   render(); 
 };
-
-request.onerror = (e) => console.error("Database error:", e.target.error);
 
 document.addEventListener("DOMContentLoaded", () => {
   const binderList = document.getElementById("binderList");
   const saveBinderBtn = document.getElementById("saveBinder");
-  const clearAllBtn = document.getElementById("clearAll");
   const binderNameInput = document.getElementById("binderName");
   const binderDescInput = document.getElementById("binderDesc");
   const binderImageInput = document.getElementById("binderImage");
 
-  // Made global so it can be called by the Database success event
   window.render = function() {
     if (!db) return;
-
     const transaction = db.transaction([STORE_NAME], "readonly");
     const store = transaction.objectStore(STORE_NAME);
     const getAllRequest = store.getAll();
@@ -44,37 +32,34 @@ document.addEventListener("DOMContentLoaded", () => {
       const binders = getAllRequest.result;
       binderList.innerHTML = "";
 
-      if (!binders.length) {
-        binderList.innerHTML = "<p class='empty-msg'>No binders found. Create one above!</p>";
-        return;
-      }
-
-      // Fetch latest cards from LocalStorage for the count
       const allCards = JSON.parse(localStorage.getItem("cardflow_cards") || "[]");
 
       binders.forEach((b) => {
         const div = document.createElement("div");
         div.className = "binder-item";
 
-        // FIX: Ensure we compare IDs as Strings to avoid "0" counts
+        // Filter cards for this binder
         const binderCards = allCards.filter(card => String(card.binderId) === String(b.id));
 
+        // NEW: Sum of all quantities for a "Total Count"
+        const totalQty = binderCards.reduce((sum, card) => sum + (parseInt(card.qty) || 0), 0);
+
+        // Persistent Image Handling (Blobs)
         let imgUrl = 'https://via.placeholder.com/300x400?text=No+Image';
         if (b.image) {
-          imgUrl = URL.createObjectURL(b.image);
+          imgUrl = (typeof b.image === 'string') ? b.image : URL.createObjectURL(b.image);
         }
 
         div.innerHTML = `
           <div class="binder-card">
-            <div class="binder-img-container">
-              <img src="${imgUrl}" alt="${b.name}">
-            </div>
+            <img src="${imgUrl}" alt="${b.name}">
             <div class="binder-info">
-              <h3 class="binder-name">${b.name}</h3>
-              <p class="binder-desc">${b.description || "No description provided."}</p>
-              <p class="card-count" style="color: #00f2ff; font-weight: bold; margin-top: 5px;">
-                Cards in Binder: ${binderCards.length}
+              <h3>${b.name}</h3>
+              <p>${b.description || "No description."}</p>
+              <p class="card-count" style="color: #00f2ff; font-weight: bold;">
+                Total Cards: ${totalQty}
               </p>
+              <p style="font-size: 0.8rem; opacity: 0.8;">Unique Entries: ${binderCards.length}</p>
             </div>
           </div>
         `;
@@ -85,37 +70,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   saveBinderBtn.addEventListener("click", () => {
     const name = binderNameInput.value.trim();
-    const desc = binderDescInput.value.trim();
-    const file = binderImageInput.files?.[0];
-
-    if (!name) {
-      alert("Please enter a binder name.");
-      return;
-    }
+    if (!name) return alert("Name required");
 
     const transaction = db.transaction([STORE_NAME], "readwrite");
     const store = transaction.objectStore(STORE_NAME);
-
-    const newBinder = {
-      name: name,
-      description: desc,
-      image: file || null,
+    store.add({
+      name,
+      description: binderDescInput.value.trim(),
+      image: binderImageInput.files[0] || null,
       createdAt: new Date().getTime()
+    }).onsuccess = () => {
+      render();
+      document.getElementById("binderForm").reset();
     };
-
-    const addRequest = store.add(newBinder);
-    addRequest.onsuccess = () => {
-      binderNameInput.value = "";
-      binderDescInput.value = "";
-      binderImageInput.value = "";
-      render(); 
-    };
-  });
-
-  clearAllBtn.addEventListener("click", () => {
-    if (!confirm("Delete all binders?")) return;
-    const transaction = db.transaction([STORE_NAME], "readwrite");
-    const store = transaction.objectStore(STORE_NAME);
-    store.clear().onsuccess = () => render();
   });
 });
