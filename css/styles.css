@@ -2,8 +2,8 @@
   /* Dark Neon theme colors */
   --bg: #1d6897; /* page background (fallback dark blue) */
   --card-bg: #000000;
-  --panel-bg: #526b9c;
-  --ink: #e6f7ff; /* light text */
+  --panel-bg: none;
+  --ink: #e8f8ff; /* light text */
   --muted: hsl(194, 13%, 81%); /* softer text */
   --line: rgba(0,229,255,0.12);
   --soft: #4f6694;
@@ -810,7 +810,7 @@ input, select, textarea{ background: rgb(22, 21, 21); color:var(--ink); border-c
   gap: 12px;
   margin-bottom: 18px;
   padding: 14px;
-  border: 2px solid rgba(0,229,255,0.06);
+  border: 2px solid rgba(97, 106, 111, 0.452);
   border-radius: 12px;
   background: var(--panel-bg);
 }
