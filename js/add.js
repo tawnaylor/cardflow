@@ -1,5 +1,5 @@
 import { upsertCard, fileToDataUrl } from "./storage.js";
-import { fetchTcgdexCard } from "./tcgdex.js";
+import { fetchTcgdexCard, fetchTcgdexCardCatalog } from "./tcgdex.js";
 
 const form = document.getElementById("cardForm");
 const status = document.getElementById("status");
@@ -9,12 +9,63 @@ const seedBtn = document.getElementById("seedDemo");
 const seriesSelect = document.getElementById('seriesSelect');
 const expansionSelect = document.getElementById('expansionSelect');
 const binderSelect = document.getElementById('binderSelect'); // CRITICAL: Added for Binder Link
+const tcgdexCardSearchInput = document.getElementById('tcgdexCardSearch');
+const tcgdexCardOptions = document.getElementById('tcgdexCardOptions');
+const tcgdexCatalogHint = document.getElementById('tcgdexCatalogHint');
 const tcgdexCardIdInput = document.getElementById('tcgdexCardId');
 const lookupTcgdexBtn = document.getElementById('lookupTcgdexBtn');
 const CARD_NUMBER_PATTERN = /^[A-Za-z0-9/-]{1,20}$/;
+const tcgdexCardSearchMap = new Map();
 
 function setStatus(msg) {
   if (status) status.textContent = msg;
+}
+
+function setTcgdexCatalogHint(msg) {
+  if (tcgdexCatalogHint) tcgdexCatalogHint.textContent = msg;
+}
+
+function formatTcgdexCardChoice(card) {
+  const cardNumber = card.localId ? `#${card.localId}` : 'No number';
+  return `${card.name} (${cardNumber}) - ${card.id}`;
+}
+
+async function populateTcgdexCardPicker() {
+  if (!tcgdexCardSearchInput || !tcgdexCardOptions) return;
+
+  setTcgdexCatalogHint('Loading TCGdex card list...');
+
+  try {
+    const cards = await fetchTcgdexCardCatalog();
+    const fragment = document.createDocumentFragment();
+
+    tcgdexCardSearchMap.clear();
+    tcgdexCardOptions.innerHTML = '';
+
+    for (const card of cards) {
+      const choice = formatTcgdexCardChoice(card);
+      const option = document.createElement('option');
+      option.value = choice;
+      fragment.appendChild(option);
+      tcgdexCardSearchMap.set(choice, card.id);
+    }
+
+    tcgdexCardOptions.appendChild(fragment);
+    setTcgdexCatalogHint(`Loaded ${cards.length.toLocaleString()} TCGdex cards. Pick one to autofill the form.`);
+  } catch (error) {
+    console.warn('Failed to load TCGdex catalog:', error);
+    setTcgdexCatalogHint('Could not load the TCGdex card list. You can still enter a card ID manually.');
+  }
+}
+
+async function applyTcgdexPickerSelection() {
+  if (!tcgdexCardSearchInput || !tcgdexCardIdInput) return;
+
+  const selectedCardId = tcgdexCardSearchMap.get(tcgdexCardSearchInput.value.trim());
+  if (!selectedCardId) return;
+
+  tcgdexCardIdInput.value = selectedCardId;
+  await autofillFromTcgdex();
 }
 
 /**
@@ -228,6 +279,9 @@ seedBtn?.addEventListener("click", () => {
 });
 
 lookupTcgdexBtn?.addEventListener('click', autofillFromTcgdex);
+tcgdexCardSearchInput?.addEventListener('change', () => {
+  void applyTcgdexPickerSelection();
+});
 
 // (dataset seeding and local image import buttons removed)
 
@@ -277,3 +331,4 @@ async function populateSeriesFromDataset() {
 // Initialization
 loadBindersIntoSelect();
 populateSeriesFromDataset();
+populateTcgdexCardPicker();

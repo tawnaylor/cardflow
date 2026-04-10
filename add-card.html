@@ -46,6 +46,12 @@
 
         <label class="field field-wide">
           <span>TCGdex Card ID</span>
+          <input id="tcgdexCardSearch"
+                 type="search"
+                 list="tcgdexCardOptions"
+                 placeholder="Search Pokemon cards by name or number..." />
+          <datalist id="tcgdexCardOptions"></datalist>
+          <span id="tcgdexCatalogHint" class="hint">Loading TCGdex card list...</span>
           <div class="field-inline">
             <input id="tcgdexCardId" type="text" placeholder="e.g., swsh3-136" />
             <button class="btn" type="button" id="lookupTcgdexBtn">Autofill</button>
