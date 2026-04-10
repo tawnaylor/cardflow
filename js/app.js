@@ -13,7 +13,7 @@ const GAME_LABELS = { pokemon:'Pokémon', mtg:'Magic: The Gathering', onepiece:'
 const CONDITION_LABELS = { NM: 'Near Mint (NM)', LP: 'Lightly Played (LP)', MP: 'Moderately Played (MP)', HP: 'Heavily Played (HP)', DMG: 'Damaged (DMG)' };
 
 const state = {
-  filtersOpen: true, editingId: '', uploadedImageDataUrl: '',
+  filtersOpen: true, editingId: '', uploadedImageDataUrl: '', expandedCardId: '',
   setOptions: {
     pokemon: [...DEFAULT_SETS.pokemon],
     mtg: [...DEFAULT_SETS.mtg],
@@ -140,15 +140,19 @@ function renderGrid(cards) {
   const frag = document.createDocumentFragment();
   for (const card of cards) {
     const art = document.createElement('article');
-    art.className = 'binder-card card-anim';
+    const isExpanded = state.expandedCardId === card.id;
+    art.className = `binder-card collection-card card-anim${isExpanded ? ' collection-card--expanded' : ''}`;
     art.tabIndex = 0;
     art.setAttribute('role','button');
-    art.setAttribute('aria-label', `View or edit ${card.name}`);
+    art.setAttribute('aria-expanded', String(isExpanded));
+    art.setAttribute('aria-label', `${isExpanded ? 'Hide' : 'Show'} details for ${card.name}`);
     const imgSrc = card.imageUrl || card.imageDataUrl || card.externalImageUrl || '';
     art.innerHTML = `
       <div class="binder-card__image">${imgSrc
         ? `<img src="${escapeAttr(imgSrc)}" alt="${escapeAttr(card.name)}" loading="lazy">`
-        : '<div class="binder-card__placeholder">No image</div>'}</div>
+        : '<div class="binder-card__placeholder">No image</div>'}
+        <span class="collection-card__prompt">${isExpanded ? 'Tap again to collapse' : 'Tap to view details'}</span>
+      </div>
       <div class="binder-card__body">
         <div class="binder-card__topline">
           <span class="binder-card__game">${escapeHtml(GAME_LABELS[card.game]||card.game)}</span>
@@ -167,8 +171,18 @@ function renderGrid(cards) {
              style="font-size:13px;padding:6px 14px;" onclick="event.stopPropagation()">View Detail</a>
         </div>
       </div>`;
-    art.addEventListener('click', e => { if (!e.target.closest('a')) openModal(card.id); });
-    art.addEventListener('keydown', e => { if (e.key==='Enter'||e.key===' ') { e.preventDefault(); openModal(card.id); } });
+    art.addEventListener('click', e => {
+      if (e.target.closest('a')) return;
+      state.expandedCardId = isExpanded ? '' : card.id;
+      render();
+    });
+    art.addEventListener('keydown', e => {
+      if (e.key==='Enter'||e.key===' ') {
+        e.preventDefault();
+        state.expandedCardId = isExpanded ? '' : card.id;
+        render();
+      }
+    });
     art.querySelector('img')?.addEventListener('error', function() {
       this.replaceWith(Object.assign(document.createElement('div'), {className:'binder-card__placeholder', textContent:'No image'}));
     });

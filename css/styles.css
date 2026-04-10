@@ -1860,6 +1860,56 @@ input, select, textarea{ background: rgb(22, 21, 21); color:var(--ink); border-c
   margin-top: 10px;
 }
 
+.collection-card {
+  grid-template-columns: 1fr;
+  padding: 12px;
+}
+
+.collection-card .binder-card__image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+}
+
+.collection-card .binder-card__body {
+  display: none;
+}
+
+.collection-card.collection-card--expanded {
+  grid-template-columns: 110px 1fr;
+  padding: 14px;
+}
+
+.collection-card.collection-card--expanded .binder-card__image {
+  width: 110px;
+}
+
+.collection-card.collection-card--expanded .binder-card__body {
+  display: block;
+}
+
+.collection-card__prompt {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  display: inline-flex;
+  justify-content: center;
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: rgba(4, 10, 24, 0.76);
+  color: rgba(255,255,255,0.86);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(10px);
+}
+
+.collection-card.collection-card--expanded .collection-card__prompt {
+  opacity: 0;
+  pointer-events: none;
+}
+
 
 /* -- animations (merged from animations.css) --------------------------- */
 @keyframes cardFlipIn {
