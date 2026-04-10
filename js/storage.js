@@ -128,3 +128,51 @@ export async function fileToDataUrl(file) {
     r.readAsDataURL(file);
   });
 }
+// js/storage.js — Module for all localStorage operations
+
+const CARDS_KEY = 'cardflow_cards';
+const BINDERS_KEY = 'cardflow_binders';
+
+export function getCards() {
+  return JSON.parse(localStorage.getItem(CARDS_KEY) || '[]');
+}
+
+export function saveCard(card) {
+  const cards = getCards();
+  card.id = card.id || Date.now().toString();
+  card.dateAdded = new Date().toISOString();
+  cards.push(card);
+  localStorage.setItem(CARDS_KEY, JSON.stringify(cards));
+  return card.id;
+}
+
+export function getCardById(id) {
+  return getCards().find(c => c.id === id) || null;
+}
+
+export function deleteCard(id) {
+  const cards = getCards().filter(c => c.id !== id);
+  localStorage.setItem(CARDS_KEY, JSON.stringify(cards));
+}
+
+export function getBinders() {
+  return JSON.parse(localStorage.getItem(BINDERS_KEY) || '[]');
+}
+
+export function saveBinder(binder) {
+  const binders = getBinders();
+  binder.id = binder.id || Date.now().toString();
+  binders.push(binder);
+  localStorage.setItem(BINDERS_KEY, JSON.stringify(binders));
+  return binder.id;
+}
+
+export function deleteBinder(id) {
+  const binders = getBinders().filter(b => b.id !== id);
+  localStorage.setItem(BINDERS_KEY, JSON.stringify(binders));
+}
+
+export function clearAll() {
+  localStorage.removeItem(CARDS_KEY);
+  localStorage.removeItem(BINDERS_KEY);
+}
