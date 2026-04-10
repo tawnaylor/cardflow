@@ -40,7 +40,6 @@
       </section>
     </main>
 
-    <!-- Modal: Create New Binder -->
     <div id="binderModalOverlay" class="modal-overlay" hidden aria-hidden="true">
       <div class="modal" role="dialog" aria-modal="true" aria-labelledby="binderModalTitle">
         <div class="modal-header">
@@ -49,26 +48,21 @@
         </div>
         <form id="binderForm" class="modal-body" novalidate>
           <div class="form-grid">
-
             <label class="field full">
               <span class="field-label">Binder Name <span class="req" aria-hidden="true">*</span></span>
               <input type="text" id="binderName" class="input" required minlength="1" maxlength="50"
                      aria-required="true" aria-describedby="err-binder-name" />
               <small class="error" id="err-binder-name" role="alert"></small>
             </label>
-
             <label class="field full">
               <span class="field-label">Description</span>
-              <textarea id="binderDesc" class="textarea" maxlength="200" rows="3"
-                        aria-label="Binder description"></textarea>
+              <textarea id="binderDesc" class="textarea" maxlength="200" rows="3"></textarea>
             </label>
-
             <label class="field full">
               <span class="field-label">Cover Image (optional)</span>
               <input type="file" id="binderImage" class="input" accept="image/*" />
               <small class="hint">Stored locally as base64.</small>
             </label>
-
           </div>
           <div class="modal-footer">
             <div class="spacer"></div>
