@@ -9,7 +9,7 @@ const DEFAULT_SETS = {
   mtg: ['Alpha','Beta','Unlimited','Modern Horizons 3','Foundations'],
   onepiece: ['Romance Dawn','Paramount War','Pillars of Strength','Awakening of the New Era'],
 };
-const GAME_LABELS = { pokemon:'PokÃ©mon', mtg:'Magic: The Gathering', onepiece:'One Piece' };
+const GAME_LABELS = { pokemon:'Pokémon', mtg:'Magic: The Gathering', onepiece:'One Piece' };
 
 const state = {
   filtersOpen: true, editingId: '', uploadedImageDataUrl: '',

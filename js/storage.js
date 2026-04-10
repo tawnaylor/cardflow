@@ -40,7 +40,7 @@ function normalizeCard(card = {}) {
     imageUrl,
     externalImageUrl: String(card.externalImageUrl ?? '').trim(),
     notes: String(card.notes || '').trim(),
-    series: String(card.series || 'Pokemon').trim(),
+    series: String(card.series || 'Pokémon').trim(),
     expansion: setId,
     rarity: String(card.rarity || '').trim(),
     number: cardNumber,

@@ -3,6 +3,7 @@ import { escapeAttr, escapeHtml, initNav, getParam, formatCurrency } from './uti
 
 const DB_NAME = 'CardFlowDB';
 const STORE_NAME = 'binders';
+const GAME_LABELS = { pokemon: 'Pokémon', mtg: 'Magic: The Gathering', onepiece: 'One Piece' };
 
 const hero = document.getElementById('binderDetailHero');
 const cardsGrid = document.getElementById('binderCardsGrid');
@@ -91,6 +92,7 @@ function renderBinderDetail(binder) {
     link.className = 'binder-card binder-card-link card-anim';
     link.href = `card-detail.html?id=${encodeURIComponent(card.id)}`;
     const imgSrc = card.imageUrl || card.imageDataUrl || card.externalImageUrl || '';
+    const gameLabel = GAME_LABELS[card.game] || card.game || 'Pokémon';
     link.innerHTML = `
       <div class="binder-card__image">${imgSrc
         ? `<img src="${escapeAttr(imgSrc)}" alt="${escapeAttr(card.name)}" loading="lazy">`
@@ -98,7 +100,7 @@ function renderBinderDetail(binder) {
       </div>
       <div class="binder-card__body">
         <div class="binder-card__topline">
-          <span class="binder-card__game">${escapeHtml(card.game || 'pokemon')}</span>
+          <span class="binder-card__game">${escapeHtml(gameLabel)}</span>
           <span class="qty-pill">x${Number(card.quantity || card.qty || 1)}</span>
         </div>
         <h3>${escapeHtml(card.name)}</h3>

@@ -1,6 +1,8 @@
 import { findCardById, deleteCard, updateCard, fileToDataUrl } from './storage.js';
 import { escapeHtml, formatCurrency, getParam, showToast, initNav } from './utils.js';
 
+const GAME_LABELS = { pokemon: 'Pokémon', mtg: 'Magic: The Gathering', onepiece: 'One Piece' };
+
 initNav();
 
 const id = getParam('id');
@@ -61,6 +63,7 @@ async function readImageUpdate() {
 
 function renderCard(card) {
   const imgSrc = card.imageUrl || card.externalImageUrl || '';
+  const gameLabel = GAME_LABELS[card.game] || card.game || '—';
   container.innerHTML = `
     <div class="details card-anim">
       <div class="details-image">
@@ -72,7 +75,7 @@ function renderCard(card) {
           <span class="qty-pill">x${card.quantity}</span>
         </div>
         <dl class="dl">
-          <div><dt>Game</dt><dd>${escapeHtml(card.game||'—')}</dd></div>
+          <div><dt>Game</dt><dd>${escapeHtml(gameLabel)}</dd></div>
           <div><dt>Set</dt><dd>${escapeHtml(card.setId||'—')}</dd></div>
           <div><dt>Card #</dt><dd>${escapeHtml(card.cardNumber||'—')}</dd></div>
           <div><dt>Condition</dt><dd>${escapeHtml(card.condition||'—')}</dd></div>
