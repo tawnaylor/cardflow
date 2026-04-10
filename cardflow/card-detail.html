@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CardFlow | Card Detail</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/animations.css"/>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo-link" aria-label="CardFlow Home">
+      <img src="images/cardflow logo.jpeg" alt="CardFlow logo" class="logo"/>
+      <span>CardFlow</span>
+    </a>
+    <button class="nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+    <nav id="main-nav">
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="add-card.html">Add Cards</a></li>
+        <li><a href="binders.html">Binders</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <a href="index.html" class="back-link">← Back to Collection</a>
+    <div id="card-detail-container" aria-live="polite">
+      <p>Loading card…</p>
+    </div>
+  </main>
+
+  <footer><p>© 2026 CardFlow. All rights reserved.</p></footer>
+
+  <script type="module" src="js/card-detail.js"></script>
+</body>
+</html>
