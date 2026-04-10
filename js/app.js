@@ -1,4 +1,6 @@
-const STORAGE_KEY = 'cardflow_binder_cards_v1';
+import { loadCards, saveCards, STORAGE_KEY } from './storage.js';
+import { createId, escapeHtml, escapeAttribute, formatCurrency, pushUnique, readFileAsDataUrl } from './utils.js';
+
 const DEFAULT_SETS = {
   pokemon: ['Base Set', 'Jungle', 'Fossil', '151', 'Paldean Fates', 'Surging Sparks'],
   mtg: ['Alpha', 'Beta', 'Unlimited', 'Modern Horizons 3', 'Foundations'],
@@ -56,7 +58,6 @@ const elements = {
   currentValue: document.getElementById('currentValue'),
   imageUrl: document.getElementById('imageUrl'),
   imageFile: document.getElementById('imageFile'),
-  imagePreview: document.getElementById('imagePreview'),
   imagePreviewImg: document.getElementById('imagePreviewImg'),
   imagePreviewPlaceholder: document.getElementById('imagePreviewPlaceholder'),
   notes: document.getElementById('notes'),
@@ -74,6 +75,13 @@ hydrateSetOptions().finally(() => {
   render();
 });
 
+// Check for ?edit=id URL param on load — open modal for that card
+const editParam = new URLSearchParams(window.location.search).get('edit');
+if (editParam) {
+  window.addEventListener('DOMContentLoaded', () => openModal(editParam));
+  openModal(editParam);
+}
+
 function bindEvents() {
   elements.addCardBtn?.addEventListener('click', () => openModal());
   elements.emptyAddBtn?.addEventListener('click', () => openModal());
@@ -84,30 +92,17 @@ function bindEvents() {
   elements.game?.addEventListener('change', () => populateSetSelect(elements.game.value));
   elements.imageUrl?.addEventListener('input', syncPreviewFromUrl);
   elements.imageFile?.addEventListener('change', syncPreviewFromFile);
-
   elements.searchInput?.addEventListener('input', render);
-  elements.gameFilter?.addEventListener('change', () => {
-    populateFilterSets();
-    render();
-  });
+  elements.gameFilter?.addEventListener('change', () => { populateFilterSets(); render(); });
   elements.setFilter?.addEventListener('change', render);
   elements.conditionFilter?.addEventListener('change', render);
   elements.sortSelect?.addEventListener('change', render);
   elements.clearFiltersBtn?.addEventListener('click', clearFilters);
   elements.toggleFiltersBtn?.addEventListener('click', toggleFilters);
-
-  elements.modalOverlay?.addEventListener('click', (event) => {
-    if (event.target === elements.modalOverlay) closeModal();
-  });
-
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && !elements.modalOverlay?.hidden) {
-      closeModal();
-    }
-  });
-
-  window.addEventListener('storage', (event) => {
-    if (event.key !== STORAGE_KEY) return;
+  elements.modalOverlay?.addEventListener('click', (e) => { if (e.target === elements.modalOverlay) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !elements.modalOverlay?.hidden) closeModal(); });
+  window.addEventListener('storage', (e) => {
+    if (e.key !== STORAGE_KEY) return;
     state.cards = loadCards();
     populateFilterSets();
     render();
@@ -116,12 +111,9 @@ function bindEvents() {
 
 async function hydrateSetOptions() {
   const requests = [
-    fetch('../data/cards.json').then((response) => (response.ok ? response.json() : [])).catch(() => []),
-    fetch('../database/cardflow-pokemon-dataset.json')
-      .then((response) => (response.ok ? response.json() : null))
-      .catch(() => null),
+    fetch('../data/cards.json').then(r => r.ok ? r.json() : []).catch(() => []),
+    fetch('../database/cardflow-pokemon-dataset.json').then(r => r.ok ? r.json() : null).catch(() => null),
   ];
-
   const [seedCards, pokemonDataset] = await Promise.all(requests);
 
   if (Array.isArray(seedCards)) {
@@ -140,23 +132,9 @@ async function hydrateSetOptions() {
     if (setName) pushUnique(state.setOptions.pokemon, setName);
   }
 
-  Object.keys(state.setOptions).forEach((game) => {
-    state.setOptions[game].sort((left, right) => left.localeCompare(right));
+  Object.keys(state.setOptions).forEach(game => {
+    state.setOptions[game].sort((a, b) => a.localeCompare(b));
   });
-}
-
-function loadCards() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    const parsed = raw ? JSON.parse(raw) : [];
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveCards() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state.cards));
 }
 
 function render() {
@@ -166,61 +144,58 @@ function render() {
 }
 
 function getFilteredCards() {
-  const searchValue = elements.searchInput?.value.trim().toLowerCase() || '';
-  const gameValue = elements.gameFilter?.value || '';
-  const setValue = elements.setFilter?.value || '';
-  const conditionValue = elements.conditionFilter?.value || '';
-  const sortValue = elements.sortSelect?.value || 'recent';
+  const search = elements.searchInput?.value.trim().toLowerCase() || '';
+  const game = elements.gameFilter?.value || '';
+  const set = elements.setFilter?.value || '';
+  const condition = elements.conditionFilter?.value || '';
+  const sort = elements.sortSelect?.value || 'recent';
 
-  const filtered = state.cards.filter((card) => {
-    if (searchValue && !`${card.name} ${card.notes || ''}`.toLowerCase().includes(searchValue)) return false;
-    if (gameValue && card.game !== gameValue) return false;
-    if (setValue && card.setId !== setValue) return false;
-    if (conditionValue && card.condition !== conditionValue) return false;
+  const filtered = state.cards.filter(card => {
+    if (search && !`${card.name} ${card.notes || ''}`.toLowerCase().includes(search)) return false;
+    if (game && card.game !== game) return false;
+    if (set && card.setId !== set) return false;
+    if (condition && card.condition !== condition) return false;
     return true;
   });
 
-  filtered.sort((left, right) => {
-    if (sortValue === 'name') return left.name.localeCompare(right.name);
-    if (sortValue === 'valueDesc') return totalCardValue(right) - totalCardValue(left);
-    if (sortValue === 'qtyDesc') return Number(right.quantity || 0) - Number(left.quantity || 0);
-    return Number(right.updatedAt || 0) - Number(left.updatedAt || 0);
+  filtered.sort((a, b) => {
+    if (sort === 'name') return a.name.localeCompare(b.name);
+    if (sort === 'valueDesc') return totalCardValue(b) - totalCardValue(a);
+    if (sort === 'qtyDesc') return Number(b.quantity || 0) - Number(a.quantity || 0);
+    return Number(b.updatedAt || 0) - Number(a.updatedAt || 0);
   });
 
   return filtered;
 }
 
 function renderSummary(cards) {
-  const totalCards = cards.reduce((sum, card) => sum + Number(card.quantity || 0), 0);
-  const totalValue = cards.reduce((sum, card) => sum + totalCardValue(card), 0);
-
-  if (elements.totalCards) elements.totalCards.textContent = String(totalCards);
-  if (elements.totalValue) elements.totalValue.textContent = formatCurrency(totalValue);
+  const total = cards.reduce((sum, c) => sum + Number(c.quantity || 0), 0);
+  const value = cards.reduce((sum, c) => sum + totalCardValue(c), 0);
+  if (elements.totalCards) elements.totalCards.textContent = String(total);
+  if (elements.totalValue) elements.totalValue.textContent = formatCurrency(value);
 }
 
 function renderGrid(cards) {
   if (!elements.binderGrid || !elements.emptyState) return;
-
   elements.emptyState.hidden = cards.length > 0;
   elements.binderGrid.innerHTML = '';
-
   if (!cards.length) return;
 
   const fragment = document.createDocumentFragment();
   for (const card of cards) {
     const article = document.createElement('article');
-    article.className = 'binder-card';
+    article.className = 'binder-card card-item';
     article.tabIndex = 0;
     article.setAttribute('role', 'button');
     article.setAttribute('aria-label', `Edit ${card.name}`);
 
-    const imageSource = card.imageUrl || card.externalImageUrl || '';
-    const imageMarkup = imageSource
-      ? `<img src="${escapeAttribute(imageSource)}" alt="${escapeAttribute(card.name)}" loading="lazy">`
+    const imgSrc = card.imageUrl || card.externalImageUrl || '';
+    const imgMarkup = imgSrc
+      ? `<img src="${escapeAttribute(imgSrc)}" alt="${escapeAttribute(card.name)}" loading="lazy">`
       : '<div class="binder-card__placeholder">No image</div>';
 
     article.innerHTML = `
-      <div class="binder-card__image">${imageMarkup}</div>
+      <div class="binder-card__image">${imgMarkup}</div>
       <div class="binder-card__body">
         <div class="binder-card__topline">
           <span class="binder-card__game">${escapeHtml(GAME_LABELS[card.game] || card.game)}</span>
@@ -234,22 +209,23 @@ function renderGrid(cards) {
           <div><dt>Current</dt><dd>${formatCurrency(Number(card.currentValue || 0))}</dd></div>
           <div><dt>Foil</dt><dd>${card.foil ? 'Yes' : 'No'}</dd></div>
         </dl>
-      </div>
-    `;
+        <div class="binder-card__actions">
+          <a href="card-detail.html?id=${encodeURIComponent(card.id)}" class="btn" aria-label="View details for ${escapeAttribute(card.name)}">View Detail</a>
+        </div>
+      </div>`;
 
-    const open = () => openModal(card.id);
-    article.addEventListener('click', open);
-    article.addEventListener('keydown', (event) => {
-      if (event.key !== 'Enter' && event.key !== ' ') return;
-      event.preventDefault();
-      open();
+    article.addEventListener('click', (e) => {
+      if (e.target.closest('a')) return;
+      openModal(card.id);
+    });
+    article.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      e.preventDefault();
+      openModal(card.id);
     });
 
-    const image = article.querySelector('img');
-    image?.addEventListener('error', () => {
-      image.replaceWith(createPlaceholder());
-    });
-
+    const img = article.querySelector('img');
+    img?.addEventListener('error', () => img.replaceWith(createPlaceholder()));
     fragment.appendChild(article);
   }
 
@@ -264,12 +240,10 @@ function openModal(cardId = '') {
   elements.cardId.value = cardId;
 
   if (cardId) {
-    const card = state.cards.find((entry) => entry.id === cardId);
+    const card = state.cards.find(c => c.id === cardId);
     if (!card) return;
-
     elements.modalTitle.textContent = 'Edit Card';
     elements.deleteBtn.hidden = false;
-
     elements.game.value = card.game;
     populateSetSelect(card.game, card.setId);
     elements.name.value = card.name;
@@ -291,6 +265,7 @@ function openModal(cardId = '') {
   }
 
   elements.modalOverlay.hidden = false;
+  elements.modalOverlay.removeAttribute('aria-hidden');
   document.body.classList.add('modal-open');
   elements.name.focus();
 }
@@ -299,20 +274,21 @@ function closeModal() {
   state.editingId = '';
   state.uploadedImageDataUrl = '';
   elements.modalOverlay.hidden = true;
+  elements.modalOverlay.setAttribute('aria-hidden', 'true');
   document.body.classList.remove('modal-open');
   clearErrors();
   setPreviewImage('');
 }
 
-async function handleSubmit(event) {
-  event.preventDefault();
+async function handleSubmit(e) {
+  e.preventDefault();
   clearErrors();
 
   if (elements.imageFile?.files?.[0]) {
     try {
       state.uploadedImageDataUrl = await readFileAsDataUrl(elements.imageFile.files[0]);
     } catch {
-      showErrors([['imageFile', 'The selected image could not be read. Try a different file.']]);
+      showErrors([['imageFile', 'The selected image could not be read.']]);
       return;
     }
   }
@@ -336,15 +312,12 @@ async function handleSubmit(event) {
   };
 
   const errors = validate(payload);
-  if (errors.length) {
-    showErrors(errors);
-    return;
-  }
+  if (errors.length) { showErrors(errors); return; }
 
   if (state.editingId) {
-    const existing = state.cards.find((card) => card.id === state.editingId);
+    const existing = state.cards.find(c => c.id === state.editingId);
     payload.createdAt = existing?.createdAt || payload.createdAt;
-    state.cards = state.cards.map((card) => (card.id === state.editingId ? payload : card));
+    state.cards = state.cards.map(c => c.id === state.editingId ? payload : c);
     showToast('Card updated.');
   } else {
     state.cards.unshift(payload);
@@ -352,8 +325,8 @@ async function handleSubmit(event) {
   }
 
   pushUnique(state.setOptions[payload.game], payload.setId);
-  state.setOptions[payload.game].sort((left, right) => left.localeCompare(right));
-  saveCards();
+  state.setOptions[payload.game].sort((a, b) => a.localeCompare(b));
+  saveCards(state.cards);
   populateFilterSets();
   render();
   closeModal();
@@ -361,8 +334,8 @@ async function handleSubmit(event) {
 
 function deleteCurrentCard() {
   if (!state.editingId) return;
-  state.cards = state.cards.filter((card) => card.id !== state.editingId);
-  saveCards();
+  state.cards = state.cards.filter(c => c.id !== state.editingId);
+  saveCards(state.cards);
   populateFilterSets();
   render();
   closeModal();
@@ -371,48 +344,33 @@ function deleteCurrentCard() {
 
 function validate(card) {
   const issues = [];
-
   if (!card.game) issues.push(['game', 'Choose a game.']);
-  if (!card.name || card.name.length < 2) issues.push(['name', 'Enter a card name with at least 2 characters.']);
+  if (!card.name || card.name.length < 2) issues.push(['name', 'Enter a card name (at least 2 characters).']);
   if (!card.setId) issues.push(['setId', 'Choose a set.']);
   if (!card.condition) issues.push(['condition', 'Choose a condition.']);
-  if (!Number.isInteger(card.quantity) || card.quantity < 1) issues.push(['quantity', 'Quantity must be a whole number of at least 1.']);
-  if (card.purchasePrice < 0) issues.push(['purchasePrice', 'Purchase price cannot be negative.']);
-  if (card.currentValue < 0) issues.push(['currentValue', 'Current value cannot be negative.']);
+  if (!Number.isInteger(card.quantity) || card.quantity < 1) issues.push(['quantity', 'Quantity must be at least 1.']);
+  if (card.purchasePrice < 0) issues.push(['purchasePrice', 'Cannot be negative.']);
+  if (card.currentValue < 0) issues.push(['currentValue', 'Cannot be negative.']);
   if (state.uploadedImageDataUrl && !state.uploadedImageDataUrl.startsWith('data:image/')) {
     issues.push(['imageFile', 'Uploaded file must be an image.']);
   }
-
   if (card.externalImageUrl) {
-    try {
-      new URL(card.externalImageUrl);
-    } catch {
-      issues.push(['imageUrl', 'Image URL must be a valid absolute URL.']);
-    }
+    try { new URL(card.externalImageUrl); } catch { issues.push(['imageUrl', 'Must be a valid URL.']); }
   }
-
   return issues;
 }
 
 function showErrors(errors) {
   const seen = new Set();
   for (const [field, message] of errors) {
-    if (!seen.has(field)) {
-      errorNodes.get(field)?.replaceChildren(message);
-      seen.add(field);
-    }
+    if (!seen.has(field)) { errorNodes.get(field)?.replaceChildren(message); seen.add(field); }
   }
-
   const firstField = errors[0]?.[0];
-  if (firstField && elements[firstField]) {
-    elements[firstField].focus();
-  }
+  if (firstField && elements[firstField]) elements[firstField].focus();
 }
 
 function clearErrors() {
-  errorNodes.forEach((node) => {
-    node.textContent = '';
-  });
+  errorNodes.forEach(node => { node.textContent = ''; });
 }
 
 function clearFilters() {
@@ -432,68 +390,49 @@ function toggleFilters() {
 
 function populateSetSelect(game, selectedValue = '') {
   if (!elements.setId) return;
-
   const options = state.setOptions[game] || [];
   elements.setId.innerHTML = '<option value="">Select a set…</option>';
   for (const setName of options) {
-    const option = document.createElement('option');
-    option.value = setName;
-    option.textContent = setName;
-    elements.setId.appendChild(option);
+    const opt = document.createElement('option');
+    opt.value = setName;
+    opt.textContent = setName;
+    elements.setId.appendChild(opt);
   }
-
   if (selectedValue && options.includes(selectedValue)) {
     elements.setId.value = selectedValue;
   } else if (selectedValue) {
-    const customOption = document.createElement('option');
-    customOption.value = selectedValue;
-    customOption.textContent = selectedValue;
-    elements.setId.appendChild(customOption);
+    const opt = document.createElement('option');
+    opt.value = selectedValue;
+    opt.textContent = selectedValue;
+    elements.setId.appendChild(opt);
     elements.setId.value = selectedValue;
   }
 }
 
 function populateFilterSets() {
   if (!elements.setFilter) return;
-
   const game = elements.gameFilter?.value || '';
   const sets = new Set();
-  const addSet = (value) => {
-    if (value) sets.add(value);
-  };
-
   if (game) {
-    (state.setOptions[game] || []).forEach(addSet);
-    state.cards.filter((card) => card.game === game).forEach((card) => addSet(card.setId));
+    (state.setOptions[game] || []).forEach(s => sets.add(s));
+    state.cards.filter(c => c.game === game).forEach(c => sets.add(c.setId));
   } else {
-    Object.values(state.setOptions).flat().forEach(addSet);
-    state.cards.forEach((card) => addSet(card.setId));
+    Object.values(state.setOptions).flat().forEach(s => sets.add(s));
+    state.cards.forEach(c => sets.add(c.setId));
   }
-
   const previous = elements.setFilter.value;
   elements.setFilter.innerHTML = '<option value="">All sets</option>';
-
-  Array.from(sets)
-    .sort((left, right) => left.localeCompare(right))
-    .forEach((setName) => {
-      const option = document.createElement('option');
-      option.value = setName;
-      option.textContent = setName;
-      elements.setFilter.appendChild(option);
-    });
-
+  Array.from(sets).sort((a, b) => a.localeCompare(b)).forEach(setName => {
+    const opt = document.createElement('option');
+    opt.value = setName;
+    opt.textContent = setName;
+    elements.setFilter.appendChild(opt);
+  });
   elements.setFilter.value = sets.has(previous) ? previous : '';
 }
 
 function totalCardValue(card) {
   return Number(card.currentValue || 0) * Number(card.quantity || 0);
-}
-
-function formatCurrency(value) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  }).format(Number(value || 0));
 }
 
 function formatNumberInput(value) {
@@ -505,7 +444,6 @@ function showToast(message) {
   elements.toast.textContent = message;
   elements.toast.hidden = false;
   elements.toast.classList.add('is-visible');
-
   window.clearTimeout(showToast.timeoutId);
   showToast.timeoutId = window.setTimeout(() => {
     elements.toast.classList.remove('is-visible');
@@ -520,33 +458,26 @@ function syncPreviewFromUrl() {
 
 async function syncPreviewFromFile() {
   const file = elements.imageFile?.files?.[0];
-  if (!file) {
-    state.uploadedImageDataUrl = '';
-    syncPreviewFromUrl();
-    return;
-  }
-
+  if (!file) { state.uploadedImageDataUrl = ''; syncPreviewFromUrl(); return; }
   try {
     state.uploadedImageDataUrl = await readFileAsDataUrl(file);
     clearFieldError('imageFile');
     setPreviewImage(state.uploadedImageDataUrl);
   } catch {
     state.uploadedImageDataUrl = '';
-    showErrors([['imageFile', 'The selected image could not be read. Try a different file.']]);
+    showErrors([['imageFile', 'Could not read the selected image.']]);
     setPreviewImage('');
   }
 }
 
 function setPreviewImage(source) {
   if (!elements.imagePreviewImg || !elements.imagePreviewPlaceholder) return;
-
   if (!source) {
     elements.imagePreviewImg.hidden = true;
     elements.imagePreviewImg.removeAttribute('src');
     elements.imagePreviewPlaceholder.hidden = false;
     return;
   }
-
   elements.imagePreviewImg.src = source;
   elements.imagePreviewImg.hidden = false;
   elements.imagePreviewPlaceholder.hidden = true;
@@ -558,39 +489,8 @@ function clearFieldError(field) {
 }
 
 function createPlaceholder() {
-  const placeholder = document.createElement('div');
-  placeholder.className = 'binder-card__placeholder';
-  placeholder.textContent = 'No image';
-  return placeholder;
-}
-
-function createId() {
-  return crypto.randomUUID ? crypto.randomUUID() : `card-${Date.now()}-${Math.random().toString(16).slice(2)}`;
-}
-
-function pushUnique(items, value) {
-  if (!Array.isArray(items) || !value || items.includes(value)) return;
-  items.push(value);
-}
-
-function readFileAsDataUrl(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => resolve(String(reader.result || '')));
-    reader.addEventListener('error', () => reject(reader.error));
-    reader.readAsDataURL(file);
-  });
-}
-
-function escapeHtml(value) {
-  return String(value ?? '')
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&#039;');
-}
-
-function escapeAttribute(value) {
-  return escapeHtml(value).replaceAll('`', '&#096;');
+  const div = document.createElement('div');
+  div.className = 'binder-card__placeholder';
+  div.textContent = 'No image';
+  return div;
 }
