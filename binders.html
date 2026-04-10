@@ -1,77 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CardFlow | Binders</title>
-<link rel="stylesheet" href="./css/styles.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CardFlow | Binders</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/animations.css"/>
 </head>
+<body>
+  <header>
+    <a href="index.html" class="logo-link" aria-label="CardFlow Home">
+      <img src="images/cardflow logo.jpeg" alt="CardFlow logo" class="logo"/>
+      <span>CardFlow</span>
+    </a>
+    <button class="nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+    <nav id="main-nav">
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="add-card.html">Add Cards</a></li>
+        <li><a href="binders.html" aria-current="page">Binders</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<body class="neon-street">
-
-<div class="bg-effects" aria-hidden="true"></div>
-
-<header class="topbar">
-  <div class="brand">
-    <div class="logo">
-      <img src="./images/cardflow%20logo.jpeg" alt="CardFlow logo">
+  <main>
+    <h1>Binders</h1>
+    <div class="binders-toolbar">
+      <button class="btn btn--primary" id="new-binder-btn" aria-haspopup="dialog">+ New Binder</button>
+      <button class="btn btn--danger" id="clear-binders-btn">Clear All Binders</button>
     </div>
-    <span class="brand-name">CardFlow</span>
+    <section id="binders-list" aria-label="Your binders" aria-live="polite">
+      <p>Loading binders…</p>
+    </section>
+  </main>
+
+  <!-- ✅ MODAL — Create New Binder -->
+  <div id="binder-modal" class="modal" role="dialog" aria-modal="true"
+       aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal__box">
+      <h2 id="modal-title">Create New Binder</h2>
+      <form id="binder-form" novalidate aria-label="New binder form">
+
+        <div class="form-group">
+          <label for="binder-name">Binder Name <span aria-hidden="true">*</span></label>
+          <input type="text" id="binder-name" required minlength="1" maxlength="50"
+                 aria-required="true" aria-describedby="binder-name-error"/>
+          <span class="field-error" id="binder-name-error" role="alert"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="binder-desc">Description</label>
+          <textarea id="binder-desc" maxlength="200" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="binder-cover">Cover Image</label>
+          <input type="file" id="binder-cover" accept="image/*"/>
+          <span class="hint">Optional. Stored locally as base64.</span>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn--primary">Save Binder</button>
+          <button type="button" class="btn btn--secondary" data-close-modal="binder-modal">Cancel</button>
+        </div>
+      </form>
+    </div>
   </div>
 
-  <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
-
-  <nav class="nav">
-    <a class="nav-link" href="./index.html">Home</a>
-    <a class="nav-link" href="./add-card.html">Add Cards</a>
-    <a class="nav-link" href="./binders.html">Binders</a>
-  </nav>
-</header>
-
-<main class="page glass-panel">
-
-  <h1 class="page-title">Binders</h1>
-
-  <section class="panel">
-
-    <div class="panel-head">
-      <h2>Your Binders</h2>
-      <button class="btn danger" id="clearAll">Clear All Binders</button>
-    </div>
-
-    <div id="binderForm" class="binder-form">
-
-      <label>
-        Binder Name:
-        <input type="text" id="binderName" placeholder="Enter binder name">
-      </label>
-
-      <label>
-        Description:
-        <input type="text" id="binderDesc" placeholder="Enter description">
-      </label>
-
-      <label>
-        Cover Image:
-        <input type="file" id="binderImage" accept="image/*">
-        <small>Optional: Choose a local image for the binder cover</small>
-      </label>
-
-      <div class="form-actions">
-        <button class="btn primary" id="saveBinder">Save</button>
-      </div>
-
-    </div>
-
-    <div id="binderList" class="binder-list"></div>
-
-  </section>
-
-</main>
-        <footer class="footer">
-    <p>&copy; 2026 CardFlow. All rights reserved.</p>
-  </footer
-<script type="module" src="./js/home.js"></script>
-  <script src="./js/navbar.js"></script>
+  <footer><p>© 2026 CardFlow. All rights reserved.</p></footer>
+  <script type="module" src="js/binders.js"></script>
 </body>
 </html>
