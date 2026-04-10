@@ -122,7 +122,7 @@ function render() {
   if (!status) return;
 
   if (!id) {
-    status.textContent = "Missing id in the URL. Example: card.html?id=...";
+    window.location.replace('index.html');
     return;
   }
 
