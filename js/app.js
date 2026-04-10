@@ -9,7 +9,7 @@ const DEFAULT_SETS = {
   mtg: ['Alpha','Beta','Unlimited','Modern Horizons 3','Foundations'],
   onepiece: ['Romance Dawn','Paramount War','Pillars of Strength','Awakening of the New Era'],
 };
-const GAME_LABELS = { pokemon:'Pokémon', mtg:'Magic: The Gathering', onepiece:'One Piece' };
+const GAME_LABELS = { pokemon:'PokÃ©mon', mtg:'Magic: The Gathering', onepiece:'One Piece' };
 
 const state = {
   filtersOpen: true, editingId: '', uploadedImageDataUrl: '',
@@ -265,7 +265,7 @@ function toggleFilters() { state.filtersOpen=!state.filtersOpen; els.filters?.cl
 function populateSetSelect(game, selected='') {
   if (!els.setId) return;
   const opts = state.setOptions[game]||[];
-  els.setId.innerHTML='<option value="">Select a set…</option>';
+  els.setId.innerHTML='<option value="">Select a setâ€¦</option>';
   opts.forEach(s => { const o=document.createElement('option'); o.value=s; o.textContent=s; els.setId.appendChild(o); });
   if (selected) {
     if (!opts.includes(selected)) { const o=document.createElement('option'); o.value=selected; o.textContent=selected; els.setId.appendChild(o); }
@@ -301,159 +301,4 @@ function setPreview(src) {
 
 function cardVal(c) { return Number(c.currentValue||0)*Number(c.quantity||0); }
 function pushUnique(arr,val) { if (Array.isArray(arr)&&val&&!arr.includes(val)) arr.push(val); }
-
-File 6 of 8 — js/add.js
-Go to: https://github.com/tawnaylor/cardflow/edit/main/js/add.js
-jsimport { saveCard, createId, fileToDataUrl } from './storage.js';
-import { showToast, initNav } from './utils.js';
-import { fetchTcgdexCard } from './tcgdex.js';
-
-initNav();
-
-const form         = document.getElementById('cardForm');
-const statusEl     = document.getElementById('status');
-const imageInput   = document.getElementById('imageInput');
-const imageUrlIn   = document.getElementById('imageUrl');
-const seedBtn      = document.getElementById('seedDemo');
-const seriesSel    = document.getElementById('seriesSelect');
-const expansionSel = document.getElementById('expansionSelect');
-const tcgIdInput   = document.getElementById('tcgdexCardId');
-const lookupBtn    = document.getElementById('lookupTcgdexBtn');
-const autofillSt   = document.getElementById('autofillStatus');
-
-let _seriesMap = {};
-
-function setStatus(msg) { if (statusEl) statusEl.textContent = msg; }
-function setAutofill(msg) { if (autofillSt) autofillSt.textContent = msg; }
-function showErr(id, msg) { const el = document.getElementById(id); if (el) el.textContent = msg; }
-function clearErrors() {
-  ['err-name','err-series','err-expansion','err-rarity','err-number']
-    .forEach(id => { const el = document.getElementById(id); if (el) el.textContent = ''; });
-}
-
-async function autofill() {
-  const id = tcgIdInput?.value.trim();
-  if (!id) { setAutofill('Enter a TCGdex card ID first.'); return; }
-  if (lookupBtn) lookupBtn.disabled = true;
-  setAutofill('Looking up…');
-  try {
-    const card = await fetchTcgdexCard(id);
-    if (form.elements.name) form.elements.name.value = card.name || form.elements.name.value;
-    if (form.elements.number) form.elements.number.value = card.number || form.elements.number.value;
-    if (card.series) { ensureOption(seriesSel, card.series); seriesSel.value = card.series; updateExpansions(card.series, card.expansion); }
-    if (card.rarity) { ensureOption(form.elements.rarity, card.rarity); form.elements.rarity.value = card.rarity; }
-    if (card.imageUrl && imageUrlIn && !imageUrlIn.value.trim()) imageUrlIn.value = card.imageUrl;
-    setAutofill(`✅ Loaded "${card.name}" from TCGdex.`);
-  } catch (err) {
-    setAutofill(`❌ ${err instanceof Error ? err.message : 'Card not found.'}`);
-  } finally {
-    if (lookupBtn) lookupBtn.disabled = false;
-  }
-}
-
-lookupBtn?.addEventListener('click', autofill);
-tcgIdInput?.addEventListener('keydown', e => { if (e.key==='Enter') { e.preventDefault(); autofill(); } });
-
-async function populateSeries() {
-  if (!seriesSel || !expansionSel) return;
-  try {
-    const resp = await fetch('./database/cardflow-pokemon-dataset.json');
-    if (!resp.ok) return;
-    const data = await resp.json();
-    _seriesMap = {};
-    for (const e of (data.expansions || [])) {
-      const s = (e.series||'Unknown').trim();
-      const name = (e.name||'').trim();
-      if (!_seriesMap[s]) _seriesMap[s] = new Set();
-      if (name) _seriesMap[s].add(name);
-    }
-    seriesSel.querySelectorAll('option:not([disabled])').forEach(o => o.remove());
-    Object.keys(_seriesMap).sort((a,b)=>a.localeCompare(b)).forEach(s => {
-      const o = document.createElement('option'); o.value=s; o.textContent=s; seriesSel.appendChild(o);
-    });
-    seriesSel.addEventListener('change', () => updateExpansions(seriesSel.value));
-  } catch {}
-}
-
-function updateExpansions(series, selected='') {
-  expansionSel.querySelectorAll('option:not([disabled])').forEach(o => o.remove());
-  Array.from(_seriesMap[series]||[]).sort((a,b)=>a.localeCompare(b)).forEach(e => {
-    const o = document.createElement('option'); o.value=e; o.textContent=e; expansionSel.appendChild(o);
-  });
-  if (selected) { ensureOption(expansionSel, selected); expansionSel.value = selected; }
-}
-
-function ensureOption(sel, val) {
-  if (!sel||!val) return;
-  if (!Array.from(sel.options).find(o=>o.value===val)) {
-    const o = document.createElement('option'); o.value=val; o.textContent=val; sel.appendChild(o);
-  }
-}
-
-function validate() {
-  clearErrors();
-  const CARD_NUM_RE = /^[A-Za-z0-9/\-]{1,20}$/;
-  const errors = [];
-  const name = form.elements.name?.value.trim();
-  const series = form.elements.series?.value.trim();
-  const expansion = form.elements.expansion?.value.trim();
-  const rarity = form.elements.rarity?.value;
-  const number = form.elements.number?.value.trim();
-  if (!name||name.length<2) errors.push(['err-name','Card name required (min 2 chars).']);
-  if (!series) errors.push(['err-series','Series is required.']);
-  if (!expansion) errors.push(['err-expansion','Expansion is required.']);
-  if (!rarity) errors.push(['err-rarity','Rarity is required.']);
-  if (!CARD_NUM_RE.test(number)) errors.push(['err-number','1–20 chars: letters, numbers, / or -.']);
-  errors.forEach(([id,msg]) => showErr(id, msg));
-  return errors.length === 0;
-}
-
-form?.addEventListener('submit', async e => {
-  e.preventDefault();
-  if (!validate()) return;
-  setStatus('Saving…');
-  const file = imageInput?.files?.[0] || null;
-  let imageDataUrl = '';
-  if (file) {
-    imageDataUrl = await fileToDataUrl(file);
-  } else if (imageUrlIn?.value.trim()) {
-    try {
-      const r = await fetch(imageUrlIn.value.trim(), { mode:'cors' });
-      if (r.ok) { const blob=await r.blob(); if (blob.type.startsWith('image/')) imageDataUrl=await fileToDataUrl(blob); }
-    } catch {}
-  }
-  const card = {
-    id: createId(), game: 'pokemon',
-    name: form.elements.name.value.trim(),
-    setId: form.elements.expansion.value.trim(),
-    cardNumber: form.elements.number.value.trim(),
-    condition: 'NM',
-    quantity: Math.max(1, Number(form.elements.qty.value||1)),
-    foil: false, purchasePrice: 0, currentValue: 0,
-    imageUrl: imageDataUrl,
-    externalImageUrl: imageUrlIn?.value.trim()||'',
-    notes: `Series: ${form.elements.series.value} | Rarity: ${form.elements.rarity.value}`,
-  };
-  saveCard(card);
-  showToast(`"${card.name}" added!`);
-  setStatus(`✅ "${card.name}" added to your collection!`);
-  form.reset();
-  if (form.elements.qty) form.elements.qty.value = 1;
-  setTimeout(() => { window.location.href = `card-detail.html?id=${encodeURIComponent(card.id)}`; }, 1000);
-});
-
-seedBtn?.addEventListener('click', () => {
-  const demos = [
-    { name:'Pikachu',    setId:'Paldea Evolved',  cardNumber:'1',   condition:'NM', quantity:2, game:'pokemon', foil:false, purchasePrice:5,   currentValue:8,   notes:'Rarity: Rare' },
-    { name:'Charizard',  setId:'Obsidian Flames', cardNumber:'2',   condition:'NM', quantity:1, game:'pokemon', foil:true,  purchasePrice:80,  currentValue:120, notes:'Rarity: Ultra Rare' },
-    { name:'Mewtwo',     setId:'Unified Minds',   cardNumber:'3',   condition:'LP', quantity:1, game:'pokemon', foil:false, purchasePrice:20,  currentValue:30,  notes:'Rarity: Rare' },
-    { name:'Gengar',     setId:'Lost Origin',     cardNumber:'4',   condition:'NM', quantity:2, game:'pokemon', foil:false, purchasePrice:10,  currentValue:15,  notes:'Rarity: Holo Rare' },
-    { name:'Black Lotus',setId:'Alpha',           cardNumber:'232', condition:'NM', quantity:1, game:'mtg',     foil:false, purchasePrice:500, currentValue:800, notes:'Rarity: Rare' },
-  ];
-  demos.forEach(c => saveCard({ ...c, id: createId(), imageUrl:'', externalImageUrl:'' }));
-  showToast('5 demo cards added!');
-  setStatus('Demo cards added! Redirecting…');
-  setTimeout(() => { window.location.href = 'index.html'; }, 1200);
-});
-
-populateSeries();
+
