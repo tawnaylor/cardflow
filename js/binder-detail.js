@@ -4,6 +4,7 @@ import { escapeAttr, escapeHtml, initNav, getParam, formatCurrency } from './uti
 const DB_NAME = 'CardFlowDB';
 const STORE_NAME = 'binders';
 const GAME_LABELS = { pokemon: 'Pokémon', mtg: 'Magic: The Gathering', onepiece: 'One Piece' };
+const CONDITION_LABELS = { NM: 'Near Mint (NM)', LP: 'Lightly Played (LP)', MP: 'Moderately Played (MP)', HP: 'Heavily Played (HP)', DMG: 'Damaged (DMG)' };
 
 const hero = document.getElementById('binderDetailHero');
 const cardsGrid = document.getElementById('binderCardsGrid');
@@ -49,8 +50,8 @@ function loadBinderDetail(id) {
 
 function renderBinderDetail(binder) {
   const binderCards = getCards().filter(card => String(card.binderId) === String(binder.id));
-  const totalCards = binderCards.reduce((sum, card) => sum + Number(card.quantity || card.qty || 1), 0);
-  const totalValue = binderCards.reduce((sum, card) => sum + (Number(card.currentValue || 0) * Number(card.quantity || card.qty || 1)), 0);
+  const totalCards = binderCards.reduce((sum, card) => sum + Number(card.quantity || 1), 0);
+  const totalValue = binderCards.reduce((sum, card) => sum + (Number(card.currentValue || 0) * Number(card.quantity || 1)), 0);
   const coverImage = binderCards[0]?.imageUrl || binderCards[0]?.imageDataUrl || (binder.image ? URL.createObjectURL(binder.image) : './images/cardflow%20logo.jpeg');
 
   hero.innerHTML = `
@@ -93,6 +94,7 @@ function renderBinderDetail(binder) {
     link.href = `card-detail.html?id=${encodeURIComponent(card.id)}`;
     const imgSrc = card.imageUrl || card.imageDataUrl || card.externalImageUrl || '';
     const gameLabel = GAME_LABELS[card.game] || card.game || 'Pokémon';
+    const conditionLabel = CONDITION_LABELS[card.condition] || card.condition || 'Near Mint (NM)';
     link.innerHTML = `
       <div class="binder-card__image">${imgSrc
         ? `<img src="${escapeAttr(imgSrc)}" alt="${escapeAttr(card.name)}" loading="lazy">`
@@ -101,12 +103,12 @@ function renderBinderDetail(binder) {
       <div class="binder-card__body">
         <div class="binder-card__topline">
           <span class="binder-card__game">${escapeHtml(gameLabel)}</span>
-          <span class="qty-pill">x${Number(card.quantity || card.qty || 1)}</span>
+          <span class="qty-pill">x${Number(card.quantity || 1)}</span>
         </div>
         <h3>${escapeHtml(card.name)}</h3>
         <p class="binder-card__set">${escapeHtml(card.setId || card.expansion || 'No set')}</p>
         <dl class="binder-card__meta">
-          <div><dt>Condition</dt><dd>${escapeHtml(card.condition || 'Near Mint')}</dd></div>
+          <div><dt>Condition</dt><dd>${escapeHtml(conditionLabel)}</dd></div>
           <div><dt>Number</dt><dd>${escapeHtml(card.cardNumber || card.number || 'N/A')}</dd></div>
           <div><dt>Value</dt><dd>${escapeHtml(formatCurrency(Number(card.currentValue || 0)))}</dd></div>
           <div><dt>Foil</dt><dd>${card.foil ? 'Yes' : 'No'}</dd></div>

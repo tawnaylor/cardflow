@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
         div.className = "binder-item";
 
         const binderCards = allCards.filter(card => String(card.binderId) === String(b.id));
-        const binderQtyTotal = binderCards.reduce((sum, card) => sum + Number(card.quantity || card.qty || 1), 0);
+        const binderQtyTotal = binderCards.reduce((sum, card) => sum + Number(card.quantity || 1), 0);
         const accentHue = 180 + ((Number(b.id) * 23) % 120);
         const featureCard = binderCards[0] || null;
         const featureImage = featureCard ? featureCard.imageUrl || featureCard.imageDataUrl || featureCard.externalImageUrl || '' : '';

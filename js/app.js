@@ -10,6 +10,7 @@ const DEFAULT_SETS = {
   onepiece: ['Romance Dawn','Paramount War','Pillars of Strength','Awakening of the New Era'],
 };
 const GAME_LABELS = { pokemon:'Pokémon', mtg:'Magic: The Gathering', onepiece:'One Piece' };
+const CONDITION_LABELS = { NM: 'Near Mint (NM)', LP: 'Lightly Played (LP)', MP: 'Moderately Played (MP)', HP: 'Heavily Played (HP)', DMG: 'Damaged (DMG)' };
 
 const state = {
   filtersOpen: true, editingId: '', uploadedImageDataUrl: '',
@@ -118,14 +119,14 @@ function getFiltered() {
   cards.sort((a,b) => {
     if (sort==='name') return a.name.localeCompare(b.name);
     if (sort==='valueDesc') return cardVal(b)-cardVal(a);
-    if (sort==='qtyDesc') return Number(b.quantity||0)-Number(a.quantity||0);
+    if (sort==='qtyDesc') return Number(b.quantity||b.qty||0)-Number(a.quantity||a.qty||0);
     return Number(b.updatedAt||0)-Number(a.updatedAt||0);
   });
   return cards;
 }
 
 function renderSummary(cards) {
-  const total = cards.reduce((s,c) => s+Number(c.quantity||0), 0);
+  const total = cards.reduce((s,c) => s+Number(c.quantity||c.qty||0), 0);
   const val = cards.reduce((s,c) => s+cardVal(c), 0);
   if (els.totalCards) els.totalCards.textContent = String(total);
   if (els.totalValue) els.totalValue.textContent = formatCurrency(val);
@@ -143,7 +144,7 @@ function renderGrid(cards) {
     art.tabIndex = 0;
     art.setAttribute('role','button');
     art.setAttribute('aria-label', `View or edit ${card.name}`);
-    const imgSrc = card.imageUrl || card.externalImageUrl || '';
+    const imgSrc = card.imageUrl || card.imageDataUrl || card.externalImageUrl || '';
     art.innerHTML = `
       <div class="binder-card__image">${imgSrc
         ? `<img src="${escapeAttr(imgSrc)}" alt="${escapeAttr(card.name)}" loading="lazy">`
@@ -151,12 +152,12 @@ function renderGrid(cards) {
       <div class="binder-card__body">
         <div class="binder-card__topline">
           <span class="binder-card__game">${escapeHtml(GAME_LABELS[card.game]||card.game)}</span>
-          <span class="qty-pill">x${Number(card.quantity||0)}</span>
+          <span class="qty-pill">x${Number(card.quantity||card.qty||0)}</span>
         </div>
         <h3>${escapeHtml(card.name)}</h3>
         <p class="binder-card__set">${escapeHtml(card.setId||'')}</p>
         <dl class="binder-card__meta">
-          <div><dt>Condition</dt><dd>${escapeHtml(card.condition)}</dd></div>
+          <div><dt>Condition</dt><dd>${escapeHtml(CONDITION_LABELS[card.condition] || card.condition || '—')}</dd></div>
           <div><dt>Number</dt><dd>${escapeHtml(card.cardNumber||'N/A')}</dd></div>
           <div><dt>Value</dt><dd>${formatCurrency(Number(card.currentValue||0))}</dd></div>
           <div><dt>Foil</dt><dd>${card.foil?'Yes':'No'}</dd></div>
@@ -191,9 +192,9 @@ function openModal(cardId='') {
     els.foil.checked = Boolean(card.foil);
     els.purchasePrice.value = card.purchasePrice>0 ? String(card.purchasePrice) : '';
     els.currentValue.value = card.currentValue>0 ? String(card.currentValue) : '';
-    els.imageUrl.value = card.externalImageUrl||card.imageUrl||'';
+    els.imageUrl.value = card.externalImageUrl||card.imageUrl||card.imageDataUrl||'';
     els.notes.value = card.notes||'';
-    setPreview(card.imageUrl||card.externalImageUrl||'');
+    setPreview(card.imageUrl||card.imageDataUrl||card.externalImageUrl||'');
   } else {
     if (els.modalTitle) els.modalTitle.textContent = 'Add Card';
     if (els.deleteBtn) els.deleteBtn.hidden = true;

@@ -2,6 +2,7 @@ import { findCardById, deleteCard, updateCard, fileToDataUrl } from './storage.j
 import { escapeHtml, formatCurrency, getParam, showToast, initNav } from './utils.js';
 
 const GAME_LABELS = { pokemon: 'Pokémon', mtg: 'Magic: The Gathering', onepiece: 'One Piece' };
+const CONDITION_LABELS = { NM: 'Near Mint (NM)', LP: 'Lightly Played (LP)', MP: 'Moderately Played (MP)', HP: 'Heavily Played (HP)', DMG: 'Damaged (DMG)' };
 
 initNav();
 
@@ -26,7 +27,7 @@ function populateEditForm(card) {
   editForm.elements.name.value = card.name || '';
   editForm.elements.setId.value = card.setId || '';
   editForm.elements.cardNumber.value = card.cardNumber || '';
-  editForm.elements.condition.value = card.condition || 'Near Mint';
+  editForm.elements.condition.value = card.condition || 'NM';
   editForm.elements.quantity.value = String(card.quantity || 1);
   editForm.elements.foil.checked = Boolean(card.foil);
   editForm.elements.purchasePrice.value = card.purchasePrice > 0 ? String(card.purchasePrice) : '';
@@ -62,8 +63,9 @@ async function readImageUpdate() {
 }
 
 function renderCard(card) {
-  const imgSrc = card.imageUrl || card.externalImageUrl || '';
+  const imgSrc = card.imageUrl || card.imageDataUrl || card.externalImageUrl || '';
   const gameLabel = GAME_LABELS[card.game] || card.game || '—';
+  const conditionLabel = CONDITION_LABELS[card.condition] || card.condition || '—';
   container.innerHTML = `
     <div class="details card-anim">
       <div class="details-image">
@@ -78,7 +80,7 @@ function renderCard(card) {
           <div><dt>Game</dt><dd>${escapeHtml(gameLabel)}</dd></div>
           <div><dt>Set</dt><dd>${escapeHtml(card.setId||'—')}</dd></div>
           <div><dt>Card #</dt><dd>${escapeHtml(card.cardNumber||'—')}</dd></div>
-          <div><dt>Condition</dt><dd>${escapeHtml(card.condition||'—')}</dd></div>
+          <div><dt>Condition</dt><dd>${escapeHtml(conditionLabel)}</dd></div>
           <div><dt>Foil</dt><dd>${card.foil?'Yes':'No'}</dd></div>
           <div><dt>Purchase</dt><dd>${formatCurrency(card.purchasePrice)}</dd></div>
           <div><dt>Value</dt><dd>${formatCurrency(card.currentValue)}</dd></div>

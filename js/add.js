@@ -135,12 +135,14 @@ function validate(formEl) {
   const expansionField = formEl.elements.expansion;
   const rarityField = formEl.elements.rarity;
   const numberField = formEl.elements.number;
+  const conditionField = formEl.elements.condition;
 
   if (binderSelect && !binderSelect.value) problems.push("You must select a binder.");
   if (!nameField.value.trim() || nameField.value.trim().length < 2) problems.push("Card name is required (min 2 chars).");
   if (!seriesField.value.trim()) problems.push("Series is required.");
   if (!expansionField.value.trim()) problems.push("Series expansion is required.");
   if (!rarityField.value) problems.push("Rarity is required.");
+  if (!conditionField.value) problems.push("Condition is required.");
   if (!CARD_NUMBER_PATTERN.test(numberField.value.trim())) problems.push("Card number must be 1-20 characters using letters, numbers, /, or -.");
 
   return problems;
@@ -183,21 +185,22 @@ form?.addEventListener("submit", async (e) => {
     series: form.elements.series.value,
     expansion: form.elements.expansion.value,
     rarity: form.elements.rarity.value,
+    condition: form.elements.condition.value,
     number: form.elements.number.value,
-    qty: Number(form.elements.qty.value) || 1, 
+    quantity: Number(form.elements.quantity.value) || 1,
     imageDataUrl
   };
 
   const result = upsertCard(payload);
 
   if (result.merged) {
-    setStatus(`Merged quantity! Now x${result.card.qty} for #${result.card.number}.`);
+    setStatus(`Merged quantity! Now x${result.card.quantity} for #${result.card.number}.`);
   } else {
     setStatus(`Added! "${result.card.name}" saved to your binder.`);
   }
 
   form.reset();
-  form.elements.qty.value = 1;
+  form.elements.quantity.value = 1;
   if (binderSelect) binderSelect.value = selectedBinderId;
   loadBindersIntoSelect();
 });
@@ -209,16 +212,16 @@ seedBtn?.addEventListener("click", () => {
   }
 
   const demo = [
-    { name:"Pikachu", series:"Scarlet & Violet", expansion:"Paldea Evolved", rarity:"Rare", number:"1", qty:2, imageDataUrl:"", binderId: binderSelect.value },
-    { name:"Charizard", series:"Scarlet & Violet", expansion:"Obsidian Flames", rarity:"Ultra Rare", number:"2", qty:2, imageDataUrl:"", binderId: binderSelect.value },
-    { name:"Gengar", series:"Sword & Shield", expansion:"Lost Origin", rarity:"Holo Rare", number:"3", qty:1, imageDataUrl:"", binderId: binderSelect.value },
-    { name:"Mewtwo", series:"Sun & Moon", expansion:"Unified Minds", rarity:"Rare", number:"4", qty:1, imageDataUrl:"", binderId: binderSelect.value },
-    { name:"Eevee", series:"Sword & Shield", expansion:"Evolving Skies", rarity:"Uncommon", number:"5", qty:1, imageDataUrl:"", binderId: binderSelect.value },
-    { name:"Snorlax", series:"Sun & Moon", expansion:"Team Up", rarity:"Rare", number:"6", qty:1, imageDataUrl:"", binderId: binderSelect.value },
-    { name:"Lucario", series:"Diamond & Pearl", expansion:"Majestic Dawn", rarity:"Holo Rare", number:"7", qty:1, imageDataUrl:"", binderId: binderSelect.value },
-    { name:"Infernape", series:"Diamond & Pearl", expansion:"Stormfront", rarity:"Rare", number:"8", qty:1, imageDataUrl:"", binderId: binderSelect.value },
-    { name:"Blastoise", series:"Base Set", expansion:"Base Set", rarity:"Rare Holo", number:"9", qty:1, imageDataUrl:"", binderId: binderSelect.value },
-    { name:"Venusaur", series:"Base Set", expansion:"Base Set", rarity:"Rare Holo", number:"10", qty:1, imageDataUrl:"", binderId: binderSelect.value },
+    { name:"Pikachu", series:"Scarlet & Violet", expansion:"Paldea Evolved", rarity:"Rare", condition:"NM", number:"1", quantity:2, imageDataUrl:"", binderId: binderSelect.value },
+    { name:"Charizard", series:"Scarlet & Violet", expansion:"Obsidian Flames", rarity:"Ultra Rare", condition:"NM", number:"2", quantity:2, imageDataUrl:"", binderId: binderSelect.value },
+    { name:"Gengar", series:"Sword & Shield", expansion:"Lost Origin", rarity:"Holo Rare", condition:"LP", number:"3", quantity:1, imageDataUrl:"", binderId: binderSelect.value },
+    { name:"Mewtwo", series:"Sun & Moon", expansion:"Unified Minds", rarity:"Rare", condition:"NM", number:"4", quantity:1, imageDataUrl:"", binderId: binderSelect.value },
+    { name:"Eevee", series:"Sword & Shield", expansion:"Evolving Skies", rarity:"Uncommon", condition:"NM", number:"5", quantity:1, imageDataUrl:"", binderId: binderSelect.value },
+    { name:"Snorlax", series:"Sun & Moon", expansion:"Team Up", rarity:"Rare", condition:"MP", number:"6", quantity:1, imageDataUrl:"", binderId: binderSelect.value },
+    { name:"Lucario", series:"Diamond & Pearl", expansion:"Majestic Dawn", rarity:"Holo Rare", condition:"LP", number:"7", quantity:1, imageDataUrl:"", binderId: binderSelect.value },
+    { name:"Infernape", series:"Diamond & Pearl", expansion:"Stormfront", rarity:"Rare", condition:"NM", number:"8", quantity:1, imageDataUrl:"", binderId: binderSelect.value },
+    { name:"Blastoise", series:"Base Set", expansion:"Base Set", rarity:"Rare Holo", condition:"HP", number:"9", quantity:1, imageDataUrl:"", binderId: binderSelect.value },
+    { name:"Venusaur", series:"Base Set", expansion:"Base Set", rarity:"Rare Holo", condition:"DMG", number:"10", quantity:1, imageDataUrl:"", binderId: binderSelect.value },
   ];
   for (const c of demo) upsertCard(c);
   setStatus("Demo seeded! Check your Binders page to see the cards.");

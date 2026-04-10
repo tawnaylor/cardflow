@@ -10,6 +10,24 @@ export function load(key, fallback=null){
 
 export function remove(key){ localStorage.removeItem(key); }
 const KEY = "cardflow_cards_v1";
+const CONDITION_MAP = {
+  mint: 'NM',
+  nm: 'NM',
+  'near mint': 'NM',
+  lp: 'LP',
+  'lightly played': 'LP',
+  mp: 'MP',
+  'moderately played': 'MP',
+  hp: 'HP',
+  'heavily played': 'HP',
+  dmg: 'DMG',
+  damaged: 'DMG',
+};
+
+function normalizeCondition(value) {
+  const key = String(value || '').trim().toLowerCase();
+  return CONDITION_MAP[key] || 'NM';
+}
 
 function inferGame(card = {}) {
   if (card.game) return String(card.game).trim().toLowerCase();
@@ -24,7 +42,9 @@ function normalizeCard(card = {}) {
   const quantity = Math.max(1, Number(card.quantity ?? card.qty ?? 1) || 1);
   const setId = String(card.setId ?? card.expansion ?? '').trim();
   const cardNumber = String(card.cardNumber ?? card.number ?? '').trim();
-  const imageUrl = String(card.imageUrl ?? card.externalImageUrl ?? card.imageDataUrl ?? '').trim();
+  const imageUrl = String(card.imageUrl ?? card.imageDataUrl ?? card.externalImageUrl ?? '').trim();
+  const externalImageUrl = String(card.externalImageUrl ?? '').trim();
+  const imageDataUrl = String(card.imageDataUrl ?? imageUrl).trim();
   const normalized = {
     id: card.id || uid(),
     binderId: card.binderId ?? '',
@@ -32,26 +52,30 @@ function normalizeCard(card = {}) {
     name: String(card.name || '').trim(),
     setId,
     cardNumber,
-    condition: String(card.condition || 'Near Mint').trim(),
+    condition: normalizeCondition(card.condition),
     quantity,
     foil: typeof card.foil === 'boolean' ? card.foil : /holo|foil/i.test(String(card.rarity || '')),
     purchasePrice: Number(card.purchasePrice || 0),
     currentValue: Number(card.currentValue || 0),
     imageUrl,
-    externalImageUrl: String(card.externalImageUrl ?? '').trim(),
+    externalImageUrl,
     notes: String(card.notes || '').trim(),
     series: String(card.series || 'Pokémon').trim(),
     expansion: setId,
     rarity: String(card.rarity || '').trim(),
     number: cardNumber,
     qty: quantity,
-    imageDataUrl: String(card.imageDataUrl ?? imageUrl).trim(),
+    imageDataUrl,
     createdAt: Number(card.createdAt || Date.now()),
     updatedAt: Number(card.updatedAt || Date.now()),
   };
 
-  if (!normalized.externalImageUrl && normalized.imageUrl === normalized.imageDataUrl) {
-    normalized.externalImageUrl = '';
+  if (!normalized.imageUrl && normalized.externalImageUrl) {
+    normalized.imageUrl = normalized.externalImageUrl;
+  }
+
+  if (!normalized.imageDataUrl && normalized.imageUrl) {
+    normalized.imageDataUrl = normalized.imageUrl;
   }
 
   return normalized;
@@ -168,7 +192,7 @@ export function toGroupedBinders(cards = getCards()) {
     if (!map.has(key)) map.set(key, { series: s, expansion: e, count: 0, qtyTotal: 0 });
     const item = map.get(key);
     item.count += 1;
-    item.qtyTotal += Number(c.qty || 1);
+    item.qtyTotal += Number(c.quantity || c.qty || 1);
   }
   return Array.from(map.values())
     .sort((a, b) => (a.series + a.expansion).localeCompare(b.series + b.expansion));

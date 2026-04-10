@@ -85,9 +85,21 @@
           <input name="number" type="text" required />
         </label>
 
+        <label class="field">
+          <span>Condition *</span>
+          <select name="condition" required>
+            <option value="" disabled selected>Select…</option>
+            <option value="NM">Near Mint (NM)</option>
+            <option value="LP">Lightly Played (LP)</option>
+            <option value="MP">Moderately Played (MP)</option>
+            <option value="HP">Heavily Played (HP)</option>
+            <option value="DMG">Damaged (DMG)</option>
+          </select>
+        </label>
+
             <label class="field">
               <span class="field-label">Quantity</span>
-              <input id="qtyInput" name="qty" class="input" type="number" min="1" value="1" />
+              <input id="qtyInput" name="quantity" class="input" type="number" min="1" value="1" />
             </label>
 
         <label class="field">

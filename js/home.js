@@ -101,8 +101,9 @@ function render() {
     article.className = `card ${rarityCls}`;
     article.tabIndex = 0;
 
-    const imgHtml = c.imageDataUrl
-      ? `<img src="${c.imageDataUrl}" alt="${escapeHtml(c.name || "Card image")}" width="240" height="336" loading="lazy" decoding="async" />`
+    const imageSrc = c.imageUrl || c.imageDataUrl || c.externalImageUrl || '';
+    const imgHtml = imageSrc
+      ? `<img src="${imageSrc}" alt="${escapeHtml(c.name || "Card image")}" width="240" height="336" loading="lazy" decoding="async" />`
       : `<div class="ph">Image</div>`;
 
     article.innerHTML = `
@@ -111,7 +112,7 @@ function render() {
       <div class="card-title">${escapeHtml(c.name || "Title")}</div>
       <div class="card-details">
         <span>Details</span>
-        <span class="qty-pill">x${Number(c.qty || 1)}</span>
+        <span class="qty-pill">x${Number(c.quantity || c.qty || 1)}</span>
       </div>
     `;
 
@@ -127,7 +128,7 @@ function render() {
       });
     }
 
-    const go = () => (location.href = `./card.html?id=${encodeURIComponent(c.id)}`);
+    const go = () => (location.href = `./card-detail.html?id=${encodeURIComponent(c.id)}`);
     article.addEventListener("click", go);
     article.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " " || e.code === 'Space') {
