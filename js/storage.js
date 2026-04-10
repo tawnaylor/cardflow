@@ -175,4 +175,27 @@ export function deleteBinder(id) {
 export function clearAll() {
   localStorage.removeItem(CARDS_KEY);
   localStorage.removeItem(BINDERS_KEY);
+}export const STORAGE_KEY = 'cardflow_binder_cards_v1';
+
+export function loadCards() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+export function saveCards(cards) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(cards));
+}
+
+export function getCardById(id) {
+  return loadCards().find(c => c.id === id) || null;
+}
+
+export function deleteCardById(id) {
+  const cards = loadCards().filter(c => c.id !== id);
+  saveCards(cards);
 }
