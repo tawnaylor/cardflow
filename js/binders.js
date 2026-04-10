@@ -1,6 +1,6 @@
-console.log("🔥 binders.js: Persistent Storage & Card Count Fix");
+import { getCards } from "./storage.js";
 
-const CARD_STORAGE_KEY = "cardflow_cards_v1";
+console.log("🔥 binders.js: Persistent Storage & Card Count Fix");
 
 // 1. DATABASE CONFIGURATION
 const DB_NAME = "CardFlowDB";
@@ -67,8 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-      // Fetch latest cards from LocalStorage for the count
-      const allCards = JSON.parse(localStorage.getItem(CARD_STORAGE_KEY) || localStorage.getItem("cardflow_cards") || "[]");
+      const allCards = getCards();
 
       binders.forEach((b) => {
         const div = document.createElement("div");
@@ -76,6 +75,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // FIX: Ensure we compare IDs as Strings to avoid "0" counts
         const binderCards = allCards.filter(card => String(card.binderId) === String(b.id));
+        const binderQtyTotal = binderCards.reduce((sum, card) => sum + Number(card.quantity || card.qty || 1), 0);
+        const cardPreviewMarkup = binderCards.length
+          ? `
+            <div class="binder-card-list">
+              ${binderCards.slice(0, 4).map(card => {
+                const imageSrc = card.imageUrl || card.imageDataUrl || card.externalImageUrl || '';
+                return `
+                  <article class="binder-card-preview">
+                    <div class="binder-card-preview__thumb">${imageSrc
+                      ? `<img src="${imageSrc}" alt="${card.name}">`
+                      : '<div class="binder-card__placeholder">No image</div>'}</div>
+                    <div class="binder-card-preview__body">
+                      <h4>${card.name}</h4>
+                      <p>${card.setId || card.expansion || 'No set'}</p>
+                      <span class="qty-pill">x${Number(card.quantity || card.qty || 1)}</span>
+                    </div>
+                  </article>
+                `;
+              }).join('')}
+            </div>`
+          : '<p class="binder-empty-copy">No cards in this binder yet.</p>';
 
         let imgUrl = 'https://via.placeholder.com/300x400?text=No+Image';
         if (b.image) {
@@ -91,8 +111,9 @@ document.addEventListener("DOMContentLoaded", () => {
               <h3 class="binder-name">${b.name}</h3>
               <p class="binder-desc">${b.description || "No description provided."}</p>
               <p class="card-count" style="color: #00f2ff; font-weight: bold; margin-top: 5px;">
-                Cards in Binder: ${binderCards.length}
+                Cards in Binder: ${binderQtyTotal}
               </p>
+              ${cardPreviewMarkup}
             </div>
           </div>
         `;
