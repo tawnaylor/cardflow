@@ -1,5 +1,5 @@
 import { getCards, findCardById, saveCard, deleteCard, createId, fileToDataUrl } from './storage.js';
-import { escapeHtml, escapeAttr, formatCurrency, getParam, showToast, initNav } from './utils.js';
+import { escapeHtml, escapeAttr, formatCurrency, showToast, initNav } from './utils.js';
 
 initNav();
 
@@ -48,8 +48,6 @@ hydrateSetOptions().finally(() => {
   populateSetSelect(els.game?.value || '');
   populateFilterSets();
   render();
-  const editParam = getParam('edit');
-  if (editParam) openModal(editParam);
 });
 
 function bindEvents() {
@@ -301,4 +299,4 @@ function setPreview(src) {
 
 function cardVal(c) { return Number(c.currentValue||0)*Number(c.quantity||0); }
 function pushUnique(arr,val) { if (Array.isArray(arr)&&val&&!arr.includes(val)) arr.push(val); }
-
+
