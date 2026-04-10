@@ -39,6 +39,7 @@
       <button class="btn danger" id="clearAll">Clear All Binders</button>
     </div>
 
+    <!-- FORM -->
     <div id="binderForm" class="binder-form">
 
       <label>
@@ -54,7 +55,6 @@
       <label>
         Cover Image:
         <input type="file" id="binderImage" accept="image/*">
-        <small>Optional: Choose a local image for the binder cover</small>
       </label>
 
       <div class="form-actions">
@@ -63,15 +63,18 @@
 
     </div>
 
+    <!-- RENDER AREA (IMPORTANT) -->
     <div id="binderList" class="binder-list"></div>
 
   </section>
 
 </main>
-        <footer class="footer">
-    <p>&copy; 2026 CardFlow. All rights reserved.</p>
-  </footer
-<script type="module" src="./js/home.js"></script>
-  <script src="./js/navbar.js"></script>
+
+<footer class="footer">
+  <p>&copy; 2026 CardFlow. All rights reserved.</p>
+</footer>
+
+<script src="./js/binders.js"></script>
+
 </body>
 </html>
