@@ -216,14 +216,12 @@ function validate(formEl) {
   const expansionField = formEl.elements.expansion;
   const rarityField = formEl.elements.rarity;
   const numberField = formEl.elements.number;
-  const conditionField = formEl.elements.condition;
 
   if (binderSelect && !binderSelect.value) problems.push("You must select a binder.");
   if (!nameField.value.trim() || nameField.value.trim().length < 2) problems.push("Card name is required (min 2 chars).");
   if (!seriesField.value.trim()) problems.push("Series is required.");
   if (!expansionField.value.trim()) problems.push("Series expansion is required.");
   if (!rarityField.value) problems.push("Rarity is required.");
-  if (!conditionField.value) problems.push("Condition is required.");
   if (!CARD_NUMBER_PATTERN.test(numberField.value.trim())) problems.push("Card number must be 1-20 characters using letters, numbers, /, or -.");
 
   return problems;
