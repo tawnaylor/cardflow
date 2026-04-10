@@ -1,128 +1,79 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CardFlow | Add Card</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/animations.css" />
-</head>
-<body>
-
-  <header>
-    <a href="index.html" class="logo-link" aria-label="CardFlow Home">
-      <img src="images/cardflow logo.jpeg" alt="CardFlow logo" class="logo" />
-      <span>CardFlow</span>
-    </a>
-    <button class="nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">☰</button>
-    <nav id="main-nav">
-      <ul class="nav-links" role="list">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="add-card.html" aria-current="page">Add Cards</a></li>
-        <li><a href="binders.html">Binders</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main>
-    <h1>Add Cards</h1>
-
-    <!-- TCGdex Autofill -->
-    <section class="autofill-section" aria-label="TCGdex Autofill">
-      <label for="tcgdex-id">TCGdex Card ID</label>
-      <div class="autofill-row">
-        <input type="text" id="tcgdex-id" placeholder="e.g. swsh1-1" aria-describedby="autofill-help" />
-        <button type="button" id="autofill-btn">Autofill</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CardFlow | Add Card</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-row">
+        <div>
+          <h1 class="brand">CardFlow</h1>
+          <p class="subtitle">Your digital trading card binder</p>
+        </div>
+        <div class="header-actions">
+          <button class="nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+          <nav id="main-nav">
+            <ul class="nav-links" role="list">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="add-card.html" aria-current="page">Add Cards</a></li>
+              <li><a href="binders.html">Binders</a></li>
+            </ul>
+          </nav>
+        </div>
       </div>
-      <p id="autofill-help" class="hint">Fetch card details from TCGdex and prefill the form.</p>
-      <p id="autofill-status" role="status" aria-live="polite"></p>
-    </section>
+    </header>
 
-    <!-- Add Card Form -->
-    <form id="add-card-form" novalidate aria-label="Add a new card">
+    <main class="container" style="padding-top: 32px;">
+      <h2 style="margin-bottom: 24px;">Add a Card</h2>
 
-      <div class="form-group">
-        <label for="card-name">Card Name <span aria-hidden="true">*</span></label>
-        <input type="text" id="card-name" name="cardName" required minlength="2"
-               aria-required="true" aria-describedby="card-name-error" />
-        <span class="field-error" id="card-name-error" role="alert"></span>
-      </div>
+      <section class="panel" style="margin-bottom: 24px;">
+        <h3 style="margin-top:0;">TCGdex Autofill</h3>
+        <div style="display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap;">
+          <label class="field" style="flex:1; min-width:200px;">
+            <span class="field-label">TCGdex Card ID</span>
+            <input id="tcgdex-id" class="input" type="text" placeholder="e.g. swsh1-1" aria-describedby="autofill-help" />
+          </label>
+          <button type="button" id="autofill-btn" class="btn primary">Autofill</button>
+        </div>
+        <small class="hint" id="autofill-help">Fetch card details from TCGdex and prefill the form below.</small>
+        <p id="autofill-status" role="status" aria-live="polite" style="margin-top:8px; font-size:14px;"></p>
+      </section>
 
-      <div class="form-group">
-        <label for="series">Series <span aria-hidden="true">*</span></label>
-        <select id="series" name="series" required aria-required="true" aria-describedby="series-error">
-          <option value="">Select a series…</option>
-        </select>
-        <span class="field-error" id="series-error" role="alert"></span>
-      </div>
+      <section class="panel">
+        <form id="add-card-form" novalidate aria-label="Add a new card">
+          <div class="form-grid">
 
-      <div class="form-group">
-        <label for="expansion">Series Expansion <span aria-hidden="true">*</span></label>
-        <select id="expansion" name="expansion" required aria-required="true" aria-describedby="expansion-error">
-          <option value="">Select an expansion…</option>
-        </select>
-        <span class="field-error" id="expansion-error" role="alert"></span>
-      </div>
+            <label class="field">
+              <span class="field-label">Card Name <span class="req" aria-hidden="true">*</span></span>
+              <input id="card-name" class="input" type="text" required minlength="2"
+                     aria-required="true" aria-describedby="err-card-name" />
+              <small class="error" id="err-card-name" role="alert"></small>
+              <small class="hint">At least 2 characters.</small>
+            </label>
 
-      <div class="form-group">
-        <label for="rarity">Rarity <span aria-hidden="true">*</span></label>
-        <select id="rarity" name="rarity" required aria-required="true" aria-describedby="rarity-error">
-          <option value="">Select…</option>
-          <option>Common</option>
-          <option>Uncommon</option>
-          <option>Rare</option>
-          <option>Holo Rare</option>
-          <option>Illustration Rare</option>
-          <option>Ultra Rare</option>
-          <option>Secret Rare</option>
-        </select>
-        <span class="field-error" id="rarity-error" role="alert"></span>
-      </div>
+            <label class="field">
+              <span class="field-label">Series <span class="req" aria-hidden="true">*</span></span>
+              <select id="series" class="select" required aria-required="true" aria-describedby="err-series">
+                <option value="">Select a series…</option>
+              </select>
+              <small class="error" id="err-series" role="alert"></small>
+            </label>
 
-      <div class="form-group">
-        <label for="card-number">Card Number <span aria-hidden="true">*</span></label>
-        <input type="text" id="card-number" name="cardNumber" required
-               pattern="[A-Za-z0-9\/\-]{1,20}"
-               aria-required="true" aria-describedby="card-number-error" />
-        <span class="field-error" id="card-number-error" role="alert"></span>
-        <span class="hint">1–20 characters: letters, numbers, /, or -</span>
-      </div>
+            <label class="field">
+              <span class="field-label">Series Expansion <span class="req" aria-hidden="true">*</span></span>
+              <select id="expansion" class="select" required aria-required="true" aria-describedby="err-expansion">
+                <option value="">Select an expansion…</option>
+              </select>
+              <small class="error" id="err-expansion" role="alert"></small>
+            </label>
 
-      <div class="form-group">
-        <label for="quantity">Quantity</label>
-        <input type="number" id="quantity" name="quantity" value="1" min="1" max="999" />
-      </div>
-
-      <div class="form-group">
-        <label for="image-url">Image URL (optional)</label>
-        <input type="url" id="image-url" name="imageUrl" placeholder="https://..." />
-        <span class="hint">Image will be fetched and stored as base64. CORS may block some remote images.</span>
-      </div>
-
-      <div class="form-group">
-        <label for="image-file">Or upload an image</label>
-        <input type="file" id="image-file" name="imageFile" accept="image/*" />
-        <span class="hint">Stored locally in your browser as base64.</span>
-      </div>
-
-      <div class="form-group">
-        <label for="binder-select">Add to Binder</label>
-        <select id="binder-select" name="binderId">
-          <option value="">— No binder —</option>
-        </select>
-      </div>
-
-      <div class="form-actions">
-        <button type="submit" class="btn btn--primary">Add Card</button>
-        <button type="button" id="demo-btn" class="btn btn--secondary">Add Demo Cards</button>
-      </div>
-    </form>
-  </main>
-
-  <footer>
-    <p>© 2026 CardFlow. All rights reserved.</p>
-  </footer>
-
-  <script type="module" src="js/add-card.js"></script>
-</body>
-</html>
+            <label class="field">
+              <span class="field-label">Rarity <span class="req" aria-hidden="true">*</span></span>
+              <select id="rarity" class="select" required aria-required="true" aria-describedby="err-rarity">
+                <option value="">Select…</option>
+                <option>Common</option>
+                <option>Uncommon</option>
