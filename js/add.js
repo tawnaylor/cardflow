@@ -6,6 +6,9 @@ const status = document.getElementById("status");
 const imageInput = document.getElementById("imageInput");
 const imageUrlInput = document.getElementById("imageUrl");
 const seedBtn = document.getElementById("seedDemo");
+const cardNameInput = form?.elements?.name || null;
+const pokemonNameOptions = document.getElementById('pokemonNameOptions');
+const pokemonNameHint = document.getElementById('pokemonNameHint');
 const seriesSelect = document.getElementById('seriesSelect');
 const expansionSelect = document.getElementById('expansionSelect');
 const binderSelect = document.getElementById('binderSelect'); // CRITICAL: Added for Binder Link
@@ -25,15 +28,40 @@ function setTcgdexCatalogHint(msg) {
   if (tcgdexCatalogHint) tcgdexCatalogHint.textContent = msg;
 }
 
+function setPokemonNameHint(msg) {
+  if (pokemonNameHint) pokemonNameHint.textContent = msg;
+}
+
 function formatTcgdexCardChoice(card) {
   const cardNumber = card.localId ? `#${card.localId}` : 'No number';
   return `${card.name} (${cardNumber}) - ${card.id}`;
+}
+
+function populatePokemonNamePicker(cards) {
+  if (!cardNameInput || !pokemonNameOptions) return;
+
+  const names = Array.from(
+    new Set(cards.map(card => String(card.name || '').trim()).filter(Boolean))
+  ).sort((left, right) => left.localeCompare(right));
+
+  const fragment = document.createDocumentFragment();
+  pokemonNameOptions.innerHTML = '';
+
+  for (const name of names) {
+    const option = document.createElement('option');
+    option.value = name;
+    fragment.appendChild(option);
+  }
+
+  pokemonNameOptions.appendChild(fragment);
+  setPokemonNameHint(`Loaded ${names.length.toLocaleString()} Pokemon names for quick search.`);
 }
 
 async function populateTcgdexCardPicker() {
   if (!tcgdexCardSearchInput || !tcgdexCardOptions) return;
 
   setTcgdexCatalogHint('Loading TCGdex card list...');
+  setPokemonNameHint('Loading Pokemon names...');
 
   try {
     const cards = await fetchTcgdexCardCatalog();
@@ -51,10 +79,12 @@ async function populateTcgdexCardPicker() {
     }
 
     tcgdexCardOptions.appendChild(fragment);
+    populatePokemonNamePicker(cards);
     setTcgdexCatalogHint(`Loaded ${cards.length.toLocaleString()} TCGdex cards. Pick one to autofill the form.`);
   } catch (error) {
     console.warn('Failed to load TCGdex catalog:', error);
     setTcgdexCatalogHint('Could not load the TCGdex card list. You can still enter a card ID manually.');
+    setPokemonNameHint('Could not load Pokemon names. You can still type a name manually.');
   }
 }
 

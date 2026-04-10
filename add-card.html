@@ -60,7 +60,14 @@
 
         <label class="field">
           <span>Card Name *</span>
-          <input name="name" type="text" required minlength="2" />
+          <input name="name"
+                 type="text"
+                 list="pokemonNameOptions"
+                 required
+                 minlength="2"
+                 placeholder="Search Pokemon names..." />
+          <datalist id="pokemonNameOptions"></datalist>
+          <span id="pokemonNameHint" class="hint">Loading Pokemon names...</span>
         </label>
 
         <label class="field">
