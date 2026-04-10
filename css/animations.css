@@ -1,77 +1,42 @@
-/* animations.css — all CSS animations for CardFlow */
-
-/* Card entrance animation */
 @keyframes cardFlipIn {
-  0%   { opacity: 0; transform: rotateY(60deg) scale(0.9); }
-  60%  { transform: rotateY(-8deg) scale(1.02); }
-  100% { opacity: 1; transform: rotateY(0deg) scale(1); }
+  0%   { opacity:0; transform:rotateY(60deg) scale(0.9); }
+  60%  { transform:rotateY(-8deg) scale(1.02); }
+  100% { opacity:1; transform:rotateY(0deg) scale(1); }
 }
-
-.card-anim {
-  animation: cardFlipIn 0.4s ease both;
-}
-
-/* Stagger children */
-.binder-grid .card-anim:nth-child(1)  { animation-delay: 0.04s; }
-.binder-grid .card-anim:nth-child(2)  { animation-delay: 0.08s; }
-.binder-grid .card-anim:nth-child(3)  { animation-delay: 0.12s; }
-.binder-grid .card-anim:nth-child(4)  { animation-delay: 0.16s; }
-.binder-grid .card-anim:nth-child(5)  { animation-delay: 0.20s; }
-.binder-grid .card-anim:nth-child(6)  { animation-delay: 0.24s; }
-.binder-grid .card-anim:nth-child(7)  { animation-delay: 0.28s; }
-.binder-grid .card-anim:nth-child(8)  { animation-delay: 0.32s; }
-
-/* Pulse on save success */
+.card-anim { animation: cardFlipIn 0.4s ease both; }
+.binder-grid .card-anim:nth-child(1) { animation-delay:0.04s; }
+.binder-grid .card-anim:nth-child(2) { animation-delay:0.08s; }
+.binder-grid .card-anim:nth-child(3) { animation-delay:0.12s; }
+.binder-grid .card-anim:nth-child(4) { animation-delay:0.16s; }
+.binder-grid .card-anim:nth-child(5) { animation-delay:0.20s; }
+.binder-grid .card-anim:nth-child(6) { animation-delay:0.24s; }
 @keyframes savePulse {
-  0%   { box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.5); }
-  70%  { box-shadow: 0 0 0 14px rgba(0, 229, 255, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(0, 229, 255, 0); }
+  0%   { box-shadow:0 0 0 0 rgba(0,229,255,0.5); }
+  70%  { box-shadow:0 0 0 14px rgba(0,229,255,0); }
+  100% { box-shadow:0 0 0 0 rgba(0,229,255,0); }
 }
-
-.save-pulse {
-  animation: savePulse 0.7s ease;
+.save-pulse { animation: savePulse 0.7s ease; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.spinner { display:inline-block; width:16px; height:16px; border:2px solid rgba(255,255,255,0.2); border-top-color:var(--primary); border-radius:50%; animation:spin 0.6s linear infinite; vertical-align:middle; margin-right:6px; }
+.nav-links { list-style:none; margin:0; padding:0; display:flex; gap:4px; align-items:center; }
+.nav-links a { text-decoration:none; color:var(--muted); font-weight:600; padding:8px 14px; border-radius:8px; transition:background 0.15s, color 0.15s; }
+.nav-links a:hover, .nav-links a[aria-current="page"] { background:rgba(0,229,255,0.08); color:var(--primary); }
+.nav-toggle { display:none; background:none; border:none; font-size:26px; color:var(--ink); cursor:pointer; padding:4px 8px; line-height:1; }
+@media (max-width:640px) {
+  .nav-toggle { display:block; }
+  #main-nav .nav-links { display:none; flex-direction:column; position:absolute; top:72px; right:16px; background:#071022; border:1px solid rgba(0,229,255,0.14); border-radius:12px; padding:10px; z-index:999; min-width:160px; }
+  #main-nav .nav-links.nav-links--open { display:flex; }
+  .site-header { position:relative; }
 }
-
-/* Spinner */
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.spinner {
-  display: inline-block;
-  width: 16px; height: 16px;
-  border: 2px solid rgba(255,255,255,0.2);
-  border-top-color: var(--primary);
-  border-radius: 50%;
-  animation: spin 0.6s linear infinite;
-  vertical-align: middle;
-  margin-right: 6px;
-}
-
-/* Rarity glow animations (used on card cards) */
-@keyframes pulse-cyan {
-  0%, 100% { box-shadow: 0 6px 18px rgba(0,229,255,0.08); }
-  50%       { box-shadow: 0 10px 32px rgba(0,229,255,0.22); }
-}
-
-@keyframes pulse-magenta {
-  0%, 100% { box-shadow: 0 6px 18px rgba(255,50,208,0.08); }
-  50%       { box-shadow: 0 12px 36px rgba(255,50,208,0.22); }
-}
-
-@keyframes rainbow-spin {
-  0%   { box-shadow: 0 8px 28px rgba(255,0,128,0.14); }
-  25%  { box-shadow: 0 8px 28px rgba(255,200,0,0.14); }
-  50%  { box-shadow: 0 8px 28px rgba(0,229,255,0.14); }
-  75%  { box-shadow: 0 8px 28px rgba(128,0,255,0.14); }
-  100% { box-shadow: 0 8px 28px rgba(255,0,128,0.14); }
-}
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .card-anim,
-  .save-pulse,
-  .spinner {
-    animation: none !important;
-  }
-}
+.site-footer { margin-top:60px; padding:24px 0; border-top:1px solid rgba(255,255,255,0.06); }
+.footer-inner { width:min(1180px, calc(100vw - 32px)); margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+.footer-brand { font-weight:700; font-size:18px; color:var(--primary); }
+.footer-center { display:flex; gap:20px; }
+.footer-center a { color:var(--muted); text-decoration:none; font-size:14px; }
+.footer-center a:hover { color:var(--ink); }
+.image-preview { width:100%; max-width:200px; aspect-ratio:4/5; border:1px solid rgba(255,255,255,0.1); border-radius:10px; overflow:hidden; background:rgba(255,255,255,0.03); display:grid; place-items:center; }
+.image-preview__placeholder { color:var(--muted); font-size:13px; }
+.image-preview__img { width:100%; height:100%; object-fit:contain; }
+.binder-card__actions { margin-top:10px; }
+.brand-block h1.brand { font-size:28px; margin:0; }
+@media (prefers-reduced-motion:reduce) { .card-anim, .save-pulse, .spinner { animation:none !important; } }
