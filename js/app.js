@@ -39,6 +39,13 @@ const els = {
   notes: g('notes'),
 };
 
+document.addEventListener('DOMContentLoaded', () => {
+  if (els.modalOverlay) {
+    els.modalOverlay.hidden = true;
+    els.modalOverlay.setAttribute('aria-hidden', 'true');
+  }
+});
+
 const errorNodes = new Map(
   Array.from(document.querySelectorAll('.error[data-for]')).map(n => [n.dataset.for, n])
 );
