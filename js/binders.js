@@ -1,4 +1,5 @@
 import { getCards } from "./storage.js";
+import { escapeAttr, escapeHtml } from "./utils.js";
 
 console.log("🔥 binders.js: Persistent Storage & Card Count Fix");
 
@@ -82,16 +83,16 @@ document.addEventListener("DOMContentLoaded", () => {
               ${binderCards.slice(0, 4).map(card => {
                 const imageSrc = card.imageUrl || card.imageDataUrl || card.externalImageUrl || '';
                 return `
-                  <article class="binder-card-preview">
+                  <a class="binder-card-preview" href="card-detail.html?id=${encodeURIComponent(card.id)}" aria-label="Open ${escapeAttr(card.name)} details">
                     <div class="binder-card-preview__thumb">${imageSrc
-                      ? `<img src="${imageSrc}" alt="${card.name}">`
+                      ? `<img src="${escapeAttr(imageSrc)}" alt="${escapeAttr(card.name)}">`
                       : '<div class="binder-card__placeholder">No image</div>'}</div>
                     <div class="binder-card-preview__body">
-                      <h4>${card.name}</h4>
-                      <p>${card.setId || card.expansion || 'No set'}</p>
+                      <h4>${escapeHtml(card.name)}</h4>
+                      <p>${escapeHtml(card.setId || card.expansion || 'No set')}</p>
                       <span class="qty-pill">x${Number(card.quantity || card.qty || 1)}</span>
                     </div>
-                  </article>
+                  </a>
                 `;
               }).join('')}
             </div>`

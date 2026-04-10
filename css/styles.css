@@ -880,6 +880,16 @@ input, select, textarea{ background: rgb(22, 21, 21); color:var(--ink); border-c
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 12px;
   background: rgba(255,255,255,0.03);
+  color: inherit;
+  text-decoration: none;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.binder-card-preview:hover,
+.binder-card-preview:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(0, 242, 255, 0.3);
+  background: rgba(255,255,255,0.05);
 }
 
 .binder-card-preview__thumb {
