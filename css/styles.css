@@ -158,7 +158,6 @@ body{
 }
 
 /* Rarity animations */
-.card.rarity-common { /* subtle default */ }
 .card.rarity-uncommon { box-shadow: 0 6px 18px rgba(0,200,150,0.04); border-color: rgba(0,200,150,0.06); }
 
 @keyframes pulse-cyan {
@@ -208,8 +207,6 @@ body{
 }
 .card.rarity-secret-rare { animation: rainbow-spin 4s linear infinite; border-color: rgba(255,77,109,0.12); }
 
-/* Apply same rarity styles to details section for large display */
-.details.rarity-common {}
 .details.rarity-uncommon { box-shadow: 0 10px 40px rgba(0,200,150,0.04); }
 .details.rarity-rare { animation: pulse-cyan 3s infinite; box-shadow: 0 14px 60px rgba(0,229,255,0.08); }
 .details.rarity-holo-rare { animation: pulse-magenta 3s infinite; box-shadow: 0 14px 60px rgba(255,50,208,0.08); }
