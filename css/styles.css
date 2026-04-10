@@ -2134,3 +2134,163 @@ input, select, textarea{ background: rgb(22, 21, 21); color:var(--ink); border-c
 .binder-card__actions { margin-top:10px; }
 .brand-block h1.brand { font-size:28px; margin:0; }
 @media (prefers-reduced-motion:reduce) { .card-anim, .save-pulse, .spinner { animation:none !important; } }
+/* ============================================================
+   CARDFLOW — Header / Brand Upgrade (Option A: Purple Glow)
+   Drop these rules into the bottom of your styles.css.
+   They override only the header/brand selectors — nothing else
+   in your stylesheet is touched.
+   ============================================================ */
+
+/* Google Font — add this <link> to the <head> of each HTML file
+   if you don't already have it:
+
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
+*/
+
+/* ── Topbar shell ─────────────────────────────────────────── */
+.topbar {
+  background: #080810 !important;
+  border-bottom: 1px solid rgba(120, 80, 255, 0.18) !important;
+  box-shadow: 0 4px 32px rgba(100, 60, 220, 0.18) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Grid texture behind everything */
+.topbar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(99, 77, 222, 0.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 77, 222, 0.10) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Purple glow orb centered above the brand */
+.topbar::after {
+  content: "";
+  position: absolute;
+  top: -70px;
+  left: 0;
+  right: 0;
+  height: 160px;
+  background: radial-gradient(
+    ellipse 60% 100% at 15% 50%,
+    rgba(120, 80, 255, 0.28) 0%,
+    rgba(80, 40, 200, 0.10) 50%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Glowing bottom border line */
+.topbar .scanline {
+  display: none; /* created via pseudo on .brand instead */
+}
+
+/* Make sure real content sits above the pseudo layers */
+.topbar > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Brand wrapper ────────────────────────────────────────── */
+.brand {
+  gap: 14px !important;
+}
+
+/* ── Logo box ─────────────────────────────────────────────── */
+.logo {
+  width: 44px !important;
+  height: 44px !important;
+  border: 1.5px solid rgba(139, 92, 246, 0.55) !important;
+  border-radius: 8px !important;
+  background: linear-gradient(135deg, #1a0a3e 0%, #0d0820 100%) !important;
+  box-shadow:
+    0 0 14px rgba(139, 92, 246, 0.35),
+    inset 0 0 8px rgba(139, 92, 246, 0.12) !important;
+}
+
+.logo img {
+  filter: drop-shadow(0 0 4px rgba(167, 139, 250, 0.5));
+}
+
+/* ── Brand name ───────────────────────────────────────────── */
+.brand-name {
+  font-family: 'Black Ops One', 'Impact', system-ui, sans-serif !important;
+  font-size: 30px !important;
+  font-weight: 400 !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase;
+
+  /* Purple → white gradient text */
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #c4b5ff 35%,
+    #8b5cf6 65%,
+    #6d28d9 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  /* Glow */
+  filter: drop-shadow(0 0 14px rgba(139, 92, 246, 0.65));
+
+  text-shadow: none !important; /* remove old cyan text-shadow */
+}
+
+/* ── Subtitle line (if you ever add one below the brand name) */
+.brand-subtitle {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(139, 92, 246, 0.65);
+  display: block;
+  margin-top: 2px;
+}
+
+/* ── Bottom accent bar on the topbar ─────────────────────── */
+.site-header {
+  border-bottom: 1px solid rgba(120, 80, 255, 0.20) !important;
+  background: rgba(6, 4, 16, 0.92) !important;
+  backdrop-filter: blur(18px) !important;
+}
+
+.site-header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  right: 5%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #7c3aed 25%,
+    #a78bfa 50%,
+    #7c3aed 75%,
+    transparent 100%
+  );
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.7);
+}
+
+/* ── Responsive — keep it clean on mobile ────────────────── */
+@media (max-width: 768px) {
+  .brand-name {
+    font-size: 24px !important;
+    letter-spacing: 1.5px !important;
+  }
+  .logo {
+    width: 38px !important;
+    height: 38px !important;
+  }
+}
