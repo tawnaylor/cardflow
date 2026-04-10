@@ -1,4 +1,4 @@
-import { getCards } from './storage.js';
+import { getCards, unassignBinderCards } from './storage.js';
 import { escapeAttr, escapeHtml, initNav, getParam, formatCurrency } from './utils.js';
 
 const DB_NAME = 'CardFlowDB';
@@ -10,6 +10,7 @@ const hero = document.getElementById('binderDetailHero');
 const cardsGrid = document.getElementById('binderCardsGrid');
 const emptyState = document.getElementById('binderCardsEmpty');
 const binderId = getParam('id');
+let activeDb = null;
 
 initNav();
 
@@ -28,6 +29,7 @@ function loadBinderDetail(id) {
 
   request.onsuccess = event => {
     const db = event.target.result;
+    activeDb = db;
     if (!db.objectStoreNames.contains(STORE_NAME)) {
       hero.innerHTML = '<div class="empty-state"><div><h2>No binders found</h2><p>Create a binder first.</p></div></div>';
       return;
@@ -65,6 +67,9 @@ function renderBinderDetail(binder) {
           <p class="summary-label">Binder</p>
           <h1 class="binder-detail-title">${escapeHtml(binder.name)}</h1>
         </div>
+        <div class="binder-detail-actions">
+          <button id="deleteBinderBtn" class="btn danger" type="button">Delete Binder</button>
+        </div>
         <p class="binder-detail-copy">${escapeHtml(binder.description || 'A custom binder for your collection. Open any card below to view its full detail page.')}</p>
         <div class="binder-detail-stats">
           <div class="binder-detail-stat">
@@ -82,6 +87,11 @@ function renderBinderDetail(binder) {
         </div>
       </div>
     </div>`;
+
+  const deleteBtn = document.getElementById('deleteBinderBtn');
+  deleteBtn?.addEventListener('click', () => {
+    deleteBinder(binder);
+  });
 
   cardsGrid.innerHTML = '';
   emptyState.hidden = binderCards.length > 0;
@@ -118,4 +128,20 @@ function renderBinderDetail(binder) {
     fragment.appendChild(link);
   }
   cardsGrid.appendChild(fragment);
+}
+
+function deleteBinder(binder) {
+  if (!activeDb || !binder) return;
+
+  const confirmed = confirm(`Delete the binder "${binder.name}" permanently?\n\nThis cannot be undone. Cards in this binder will stay in your collection, but they will be removed from the binder.`);
+  if (!confirmed) return;
+
+  const tx = activeDb.transaction([STORE_NAME], 'readwrite');
+  const store = tx.objectStore(STORE_NAME);
+  const deleteRequest = store.delete(Number(binder.id));
+
+  deleteRequest.onsuccess = () => {
+    unassignBinderCards(binder.id);
+    window.location.href = './binders.html';
+  };
 }

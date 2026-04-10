@@ -1,4 +1,4 @@
-import { getCards } from "./storage.js";
+import { getCards, unassignAllBinderCards, unassignBinderCards } from "./storage.js";
 import { escapeAttr, escapeHtml } from "./utils.js";
 
 console.log("🔥 binders.js: Persistent Storage & Card Count Fix");
@@ -15,6 +15,24 @@ const saveBinderBtn = document.getElementById("saveBinder");
 const binderNameInput = document.getElementById("binderName");
 const binderDescInput = document.getElementById("binderDesc");
 const binderImageInput = document.getElementById("binderImage");
+
+function confirmDeleteBinder(name) {
+  return confirm(`Delete the binder "${name}" permanently?\n\nThis cannot be undone. Cards in this binder will stay in your collection, but they will be removed from the binder.`);
+}
+
+function deleteBinderById(binderId, binderName = 'this binder') {
+  if (!db) return;
+  if (!confirmDeleteBinder(binderName)) return;
+
+  const transaction = db.transaction([STORE_NAME], "readwrite");
+  const store = transaction.objectStore(STORE_NAME);
+  const deleteRequest = store.delete(Number(binderId));
+
+  deleteRequest.onsuccess = () => {
+    unassignBinderCards(binderId);
+    render();
+  };
+}
 
 function render() {
   if (!db || !binderList) return;
@@ -53,21 +71,29 @@ function render() {
       }
 
       div.innerHTML = `
-        <a class="binder-book" href="binder-detail.html?id=${encodeURIComponent(b.id)}" aria-label="Open binder ${escapeAttr(b.name)}" style="--binder-hue:${accentHue};">
-          <span class="binder-book__spine"></span>
-          <span class="binder-book__pages"></span>
-          <span class="binder-book__cover">
-            <span class="binder-book__badge">Binder</span>
-            <span class="binder-book__title">${escapeHtml(b.name)}</span>
-            <span class="binder-book__subtitle">${escapeHtml(subtitle)}</span>
-            <span class="binder-book__description">${escapeHtml(b.description || 'Open this binder to browse the cards inside.')}</span>
-            <span class="binder-book__art">${featureImage
-              ? `<img src="${escapeAttr(featureImage)}" alt="${escapeAttr(featureCard?.name || b.name)}">`
-              : `<img src="${escapeAttr(imgUrl)}" alt="${escapeAttr(b.name)}">`}</span>
-          </span>
-        </a>
+        <div class="binder-item__actions">
+          <a class="binder-book" href="binder-detail.html?id=${encodeURIComponent(b.id)}" aria-label="Open binder ${escapeAttr(b.name)}" style="--binder-hue:${accentHue};">
+            <span class="binder-book__spine"></span>
+            <span class="binder-book__pages"></span>
+            <span class="binder-book__cover">
+              <span class="binder-book__badge">Binder</span>
+              <span class="binder-book__title">${escapeHtml(b.name)}</span>
+              <span class="binder-book__subtitle">${escapeHtml(subtitle)}</span>
+              <span class="binder-book__description">${escapeHtml(b.description || 'Open this binder to browse the cards inside.')}</span>
+              <span class="binder-book__art">${featureImage
+                ? `<img src="${escapeAttr(featureImage)}" alt="${escapeAttr(featureCard?.name || b.name)}">`
+                : `<img src="${escapeAttr(imgUrl)}" alt="${escapeAttr(b.name)}">`}</span>
+            </span>
+          </a>
+          <button class="btn danger binder-delete-btn" type="button" data-binder-id="${escapeAttr(b.id)}" data-binder-name="${escapeAttr(b.name)}">Delete Binder</button>
+        </div>
       `;
       binderList.appendChild(div);
+
+      const deleteBtn = div.querySelector('.binder-delete-btn');
+      deleteBtn?.addEventListener('click', () => {
+        deleteBinderById(b.id, b.name);
+      });
     });
   };
 }
@@ -105,10 +131,13 @@ function saveBinder() {
 
 function clearAllBinders() {
   if (!db) return;
-  if (!confirm("Delete all binders?")) return;
+  if (!confirm("Delete all binders permanently?\n\nThis cannot be undone. Cards in those binders will stay in your collection, but they will be removed from every binder.")) return;
   const transaction = db.transaction([STORE_NAME], "readwrite");
   const store = transaction.objectStore(STORE_NAME);
-  store.clear().onsuccess = () => render();
+  store.clear().onsuccess = () => {
+    unassignAllBinderCards();
+    render();
+  };
 }
 
 // Initialize IndexedDB

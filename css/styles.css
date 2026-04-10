@@ -764,6 +764,15 @@ input, select, textarea{ background: rgb(22, 21, 21); color:var(--ink); border-c
   display: block;
 }
 
+.binder-item__actions {
+  display: grid;
+  gap: 12px;
+}
+
+.binder-delete-btn {
+  width: 100%;
+}
+
 .binder-book {
   position: relative;
   display: block;
@@ -1089,6 +1098,11 @@ input, select, textarea{ background: rgb(22, 21, 21); color:var(--ink); border-c
 .binder-detail-meta {
   display: grid;
   gap: 14px;
+}
+
+.binder-detail-actions {
+  display: flex;
+  justify-content: flex-start;
 }
 
 .binder-detail-title {

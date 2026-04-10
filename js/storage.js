@@ -103,6 +103,20 @@ export function setCards(cards) {
   localStorage.setItem(KEY, JSON.stringify((cards || []).map(normalizeCard)));
 }
 
+export function unassignBinderCards(binderId) {
+  const targetBinderId = String(binderId ?? '');
+  const cards = getCards().map(card => {
+    if (String(card.binderId || '') !== targetBinderId) return card;
+    return normalizeCard({ ...card, binderId: '' });
+  });
+  setCards(cards);
+}
+
+export function unassignAllBinderCards() {
+  const cards = getCards().map(card => normalizeCard({ ...card, binderId: '' }));
+  setCards(cards);
+}
+
 export function findCardById(id) {
   return getCards().find(c => c.id === id) || null;
 }
