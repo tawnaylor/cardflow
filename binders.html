@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CardFlow | Binders</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-row">
+        <div class="brand-block">
+          <h1 class="brand">CardFlow</h1>
+          <p class="subtitle">Your digital trading card binder</p>
+        </div>
+        <div class="header-actions">
+          <button class="nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+          <nav id="main-nav" aria-label="Main navigation">
+            <ul class="nav-links" role="list">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="add-card.html">Add Cards</a></li>
+              <li><a href="binders.html" aria-current="page">Binders</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main class="container" style="padding-top:32px; padding-bottom:60px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:24px;">
+        <h2 style="margin:0;">Your Binders</h2>
+        <div style="display:flex;gap:10px;">
+          <button class="btn primary" id="openBinderModalBtn" aria-haspopup="dialog">+ New Binder</button>
+          <button class="btn danger" id="clearAllBtn">Clear All</button>
+        </div>
+      </div>
+      <section id="binderList" aria-label="Your binders" aria-live="polite">
+        <p>Loading…</p>
+      </section>
+    </main>
+
+    <!-- Modal: Create New Binder -->
+    <div id="binderModalOverlay" class="modal-overlay" hidden aria-hidden="true">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="binderModalTitle">
+        <div class="modal-header">
+          <h2 id="binderModalTitle">Create New Binder</h2>
+          <button class="icon-btn" type="button" id="closeBinderModalBtn" aria-label="Close dialog">✕</button>
+        </div>
+        <form id="binderForm" class="modal-body" novalidate>
+          <div class="form-grid">
+
+            <label class="field full">
+              <span class="field-label">Binder Name <span class="req" aria-hidden="true">*</span></span>
+              <input type="text" id="binderName" class="input" required minlength="1" maxlength="50"
+                     aria-required="true" aria-describedby="err-binder-name" />
+              <small class="error" id="err-binder-name" role="alert"></small>
+            </label>
+
+            <label class="field full">
+              <span class="field-label">Description</span>
+              <textarea id="binderDesc" class="textarea" maxlength="200" rows="3"
+                        aria-label="Binder description"></textarea>
+            </label>
+
+            <label class="field full">
+              <span class="field-label">Cover Image (optional)</span>
+              <input type="file" id="binderImage" class="input" accept="image/*" />
+              <small class="hint">Stored locally as base64.</small>
+            </label>
+
+          </div>
+          <div class="modal-footer">
+            <div class="spacer"></div>
+            <button type="button" class="btn" id="cancelBinderBtn">Cancel</button>
+            <button type="submit" class="btn primary">Save Binder</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="toast" class="toast" hidden aria-live="polite" aria-atomic="true"></div>
+
+    <footer class="site-footer" role="contentinfo">
+      <div class="footer-inner">
+        <div class="footer-brand">CardFlow</div>
+        <nav class="footer-center" aria-label="Footer navigation">
+          <a href="index.html">Home</a>
+          <a href="add-card.html">Add Cards</a>
+          <a href="binders.html" aria-current="page">Binders</a>
+        </nav>
+      </div>
+    </footer>
+
+    <script type="module" src="js/binders.js"></script>
+  </body>
+</html>
