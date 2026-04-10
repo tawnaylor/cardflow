@@ -1,5 +1,3 @@
-// utils.js — shared formatting and DOM helpers
-
 export function escapeHtml(value) {
   return String(value ?? '')
     .replaceAll('&', '&amp;')
