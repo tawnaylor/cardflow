@@ -1,44 +1,53 @@
-// js/card-detail.js — Reads URL param ?id= and displays card
-import { getCardById, deleteCard } from './storage.js';
-import { getParam, showToast, initHamburgerNav } from './ui.js';
+import { getCardById, deleteCardById } from './storage.js';
+import { escapeHtml, formatCurrency, getParam } from './utils.js';
 
-initHamburgerNav();
-
+const id = getParam('id');
 const container = document.getElementById('card-detail-container');
-const id = getParam('id');   // ← URL parameter read here
 
 if (!id) {
   container.innerHTML = '<p>No card ID provided. <a href="index.html">Go home</a></p>';
 } else {
   const card = getCardById(id);
   if (!card) {
-    container.innerHTML = `<p>Card not found. It may have been deleted. <a href="index.html">Go home</a></p>`;
+    container.innerHTML = '<p>Card not found. <a href="index.html">Go home</a></p>';
   } else {
+    const imgSrc = card.imageUrl || card.externalImageUrl || '';
     container.innerHTML = `
-      <article class="card-detail card-item" aria-label="Card: ${card.name}">
-        ${card.image ? `<img src="${card.image}" alt="Image of ${card.name}" class="card-detail__img" />` : ''}
-        <div class="card-detail__info">
-          <h1>${card.name}</h1>
-          <dl>
-            <dt>Series</dt>    <dd>${card.series || '—'}</dd>
-            <dt>Expansion</dt> <dd>${card.expansion || '—'}</dd>
-            <dt>Rarity</dt>    <dd>${card.rarity || '—'}</dd>
-            <dt>Number</dt>    <dd>${card.number || '—'}</dd>
-            <dt>Quantity</dt>  <dd>${card.quantity}</dd>
-            <dt>Added</dt>     <dd>${new Date(card.dateAdded).toLocaleDateString()}</dd>
-          </dl>
-          <div class="card-detail__actions">
-            <a href="index.html" class="btn btn--secondary">View Collection</a>
-            <button id="delete-card-btn" class="btn btn--danger">Delete Card</button>
+      <article class="card-detail card-item">
+        <div class="details">
+          <div class="details-image">
+            ${imgSrc
+              ? `<img src="${imgSrc}" alt="Image of ${escapeHtml(card.name)}" />`
+              : '<div class="ph">No image</div>'}
+          </div>
+          <div class="details-info">
+            <div class="details-row">
+              <h1>${escapeHtml(card.name)}</h1>
+            </div>
+            <dl class="dl">
+              <div><dt>Game</dt><dd>${escapeHtml(card.game)}</dd></div>
+              <div><dt>Set</dt><dd>${escapeHtml(card.setId)}</dd></div>
+              <div><dt>Condition</dt><dd>${escapeHtml(card.condition)}</dd></div>
+              <div><dt>Card #</dt><dd>${escapeHtml(card.cardNumber || '—')}</dd></div>
+              <div><dt>Quantity</dt><dd>${card.quantity}</dd></div>
+              <div><dt>Foil</dt><dd>${card.foil ? 'Yes' : 'No'}</dd></div>
+              <div><dt>Purchase</dt><dd>${formatCurrency(card.purchasePrice)}</dd></div>
+              <div><dt>Value</dt><dd>${formatCurrency(card.currentValue)}</dd></div>
+              ${card.notes ? `<div><dt>Notes</dt><dd>${escapeHtml(card.notes)}</dd></div>` : ''}
+            </dl>
+            <div class="details-actions">
+              <a href="index.html?edit=${encodeURIComponent(id)}" class="btn primary">Edit Card</a>
+              <a href="index.html" class="btn">← Collection</a>
+              <button id="deleteCardBtn" class="btn danger">Delete</button>
+            </div>
           </div>
         </div>
       </article>`;
 
-    document.getElementById('delete-card-btn').addEventListener('click', () => {
-      if (confirm(`Delete "${card.name}" from your collection?`)) {
-        deleteCard(id);
-        showToast(`"${card.name}" deleted.`);
-        setTimeout(() => window.location.href = 'index.html', 1000);
+    document.getElementById('deleteCardBtn').addEventListener('click', () => {
+      if (confirm(`Delete "${card.name}"?`)) {
+        deleteCardById(id);
+        window.location.href = 'index.html';
       }
     });
   }
