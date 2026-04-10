@@ -4,6 +4,7 @@ import { escapeHtml, escapeAttr, formatCurrency, showToast, initNav } from './ut
 initNav();
 
 const STORAGE_KEY = 'cardflow_cards_v1';
+const BINDER_PAGE_SIZE = 9;
 const DEFAULT_SETS = {
   pokemon: ['Base Set','Jungle','Fossil','151','Paldean Fates','Surging Sparks'],
   mtg: ['Alpha','Beta','Unlimited','Modern Horizons 3','Foundations'],
@@ -138,7 +139,24 @@ function renderGrid(cards) {
   els.binderGrid.innerHTML = '';
   if (!cards.length) return;
   const frag = document.createDocumentFragment();
-  for (const card of cards) {
+  const pageCount = Math.ceil(cards.length / BINDER_PAGE_SIZE);
+  for (let pageIndex = 0; pageIndex < pageCount; pageIndex += 1) {
+    const page = document.createElement('section');
+    page.className = 'binder-page';
+    page.setAttribute('aria-label', `Binder page ${pageIndex + 1}`);
+
+    const pageHeader = document.createElement('div');
+    pageHeader.className = 'binder-page__header';
+    pageHeader.innerHTML = `
+      <span class="binder-page__title">Page ${pageIndex + 1}</span>
+      <span class="binder-page__count">${Math.min(BINDER_PAGE_SIZE, cards.length - pageIndex * BINDER_PAGE_SIZE)} cards</span>`;
+    page.appendChild(pageHeader);
+
+    const pageGrid = document.createElement('div');
+    pageGrid.className = 'binder-page__grid';
+
+    const pageCards = cards.slice(pageIndex * BINDER_PAGE_SIZE, (pageIndex + 1) * BINDER_PAGE_SIZE);
+    for (const card of pageCards) {
     const art = document.createElement('article');
     art.className = 'binder-card collection-card card-anim';
     art.tabIndex = 0;
@@ -185,7 +203,11 @@ function renderGrid(cards) {
     art.querySelector('img')?.addEventListener('error', function() {
       this.replaceWith(Object.assign(document.createElement('div'), {className:'binder-card__placeholder', textContent:'No image'}));
     });
-    frag.appendChild(art);
+      pageGrid.appendChild(art);
+    }
+
+    page.appendChild(pageGrid);
+    frag.appendChild(page);
   }
   els.binderGrid.appendChild(frag);
 }
