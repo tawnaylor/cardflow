@@ -27,64 +27,50 @@
       </div>
     </header>
 
-    <main class="container" style="padding-top:32px; padding-bottom:60px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:24px;">
-        <h2 style="margin:0;">Your Binders</h2>
-        <div style="display:flex;gap:10px;">
-          <button class="btn primary" id="openBinderModalBtn" aria-haspopup="dialog">+ New Binder</button>
-          <button class="btn danger" id="clearAllBtn">Clear All</button>
-        </div>
-      </div>
-      <section id="binderList" aria-label="Your binders" aria-live="polite">
-        <p>Loading…</p>
-      </section>
-    </main>
+<main class="page glass-panel">
 
-    <div id="binderModalOverlay" class="modal-overlay" hidden aria-hidden="true">
-      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="binderModalTitle">
-        <div class="modal-header">
-          <h2 id="binderModalTitle">Create New Binder</h2>
-          <button class="icon-btn" type="button" id="closeBinderModalBtn" aria-label="Close dialog">✕</button>
-        </div>
-        <form id="binderForm" class="modal-body" novalidate>
-          <div class="form-grid">
-            <label class="field full">
-              <span class="field-label">Binder Name <span class="req" aria-hidden="true">*</span></span>
-              <input type="text" id="binderName" class="input" required minlength="1" maxlength="50"
-                     aria-required="true" aria-describedby="err-binder-name" />
-              <small class="error" id="err-binder-name" role="alert"></small>
-            </label>
-            <label class="field full">
-              <span class="field-label">Description</span>
-              <textarea id="binderDesc" class="textarea" maxlength="200" rows="3"></textarea>
-            </label>
-            <label class="field full">
-              <span class="field-label">Cover Image (optional)</span>
-              <input type="file" id="binderImage" class="input" accept="image/*" />
-              <small class="hint">Stored locally as base64.</small>
-            </label>
-          </div>
-          <div class="modal-footer">
-            <div class="spacer"></div>
-            <button type="button" class="btn" id="cancelBinderBtn">Cancel</button>
-            <button type="submit" class="btn primary">Save Binder</button>
-          </div>
-        </form>
+  <h1 class="page-title">Binders</h1>
+
+  <section class="panel">
+
+    <div class="panel-head">
+      <h2>Your Binders</h2>
+      <button class="btn danger" id="clearAll">Clear All Binders</button>
+    </div>
+
+    <!-- FORM -->
+    <div id="binderForm" class="binder-form">
+
+      <label>
+        Binder Name:
+        <input type="text" id="binderName" placeholder="Enter binder name">
+      </label>
+
+      <label>
+        Description:
+        <input type="text" id="binderDesc" placeholder="Enter description">
+      </label>
+
+      <label>
+        Cover Image:
+        <input type="file" id="binderImage" accept="image/*">
+      </label>
+
+      <div class="form-actions">
+        <button class="btn primary" id="saveBinder">Save</button>
       </div>
     </div>
 
-    <div id="toast" class="toast" hidden aria-live="polite" aria-atomic="true"></div>
+    <!-- RENDER AREA (IMPORTANT) -->
+    <div id="binderList" class="binder-list"></div>
 
-    <footer class="site-footer" role="contentinfo">
-      <div class="footer-inner">
-        <div class="footer-brand">CardFlow</div>
-        <nav class="footer-center" aria-label="Footer navigation">
-          <a href="index.html">Home</a>
-          <a href="add-card.html">Add Cards</a>
-          <a href="binders.html" aria-current="page">Binders</a>
-        </nav>
-      </div>
-    </footer>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>&copy; 2026 CardFlow. All rights reserved.</p>
+</footer>
 
     <script type="module" src="js/binders.js"></script>
   </body>

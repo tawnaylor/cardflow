@@ -391,11 +391,81 @@ small.error,
   gap:12px;
   margin-bottom:10px;
 }
-.binder-list{
+/* Container for all binders */
+.binder-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
-  margin-top: 16px;
+  padding: 20px 0;
+}
+
+/* Individual Card Styling */
+.binder-card {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05); /* Slight glass effect */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  backdrop-filter: blur(5px);
+}
+
+.binder-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 255, 255, 0.2);
+  border-color: #00f2ff; /* Neon highlight on hover */
+}
+
+/* Image container to keep everything uniform */
+.binder-img-container {
+  width: 100px;
+  height: 120px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-right: 20px;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.binder-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This prevents the image from looking squished */
+}
+
+/* Text Content */
+.binder-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.binder-name {
+  margin: 0 0 5px 0;
+  font-size: 1.4rem;
+  color: #00f2ff; /* Cyan neon text */
+  text-transform: capitalize;
+  letter-spacing: 1px;
+}
+
+.binder-desc {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #ccc;
+  line-height: 1.4;
+}
+
+/* Empty State */
+.empty-msg {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  grid-column: 1 / -1;
 }
 .binder-item{
   display: grid;
