@@ -34,9 +34,8 @@ export function findCardById(id) {
 }
 
 /**
- * Merge rule (per your earlier preference):
+ * Merge rule:
  * Merge quantities ONLY if same series + expansion + number + rarity.
- * (So different series/expansions never merge.)
  */
 export function upsertCard(newCard) {
   const cards = getCards();
@@ -55,11 +54,10 @@ export function upsertCard(newCard) {
 
   if (matchIndex >= 0) {
     const existing = cards[matchIndex];
+    // Addition: Ensures quantities are added as numbers
     existing.qty = Math.max(1, Number(existing.qty || 1) + Number(newCard.qty || 1));
     existing.updatedAt = Date.now();
-    // keep existing image if new one missing; otherwise update
     if (newCard.imageDataUrl) existing.imageDataUrl = newCard.imageDataUrl;
-    // keep name if new one provided
     if (newCard.name && newCard.name.trim()) existing.name = newCard.name.trim();
     cards[matchIndex] = existing;
     setCards(cards);
@@ -68,18 +66,19 @@ export function upsertCard(newCard) {
 
   const card = {
     id: uid(),
+    binderId: newCard.binderId, // Addition: Permanently links card to binder
     name: (newCard.name || "").trim(),
     series: (newCard.series || "").trim(),
     expansion: (newCard.expansion || "").trim(),
     rarity: (newCard.rarity || "").trim(),
     number: String(newCard.number || "").trim(),
-    qty: Math.max(1, Number(newCard.qty || 1)),
+    qty: Math.max(1, Number(newCard.qty || 1)), // Addition: Uses user-defined quantity
     imageDataUrl: newCard.imageDataUrl || "",
     createdAt: Date.now(),
     updatedAt: Date.now(),
   };
 
-  cards.unshift(card); // newest first
+  cards.unshift(card); 
   setCards(cards);
   return { merged: false, card };
 }
@@ -104,7 +103,6 @@ export function clearAll() {
 }
 
 export function toGroupedBinders(cards = getCards()) {
-  // group by series -> expansion
   const map = new Map();
   for (const c of cards) {
     const s = c.series || "Unknown Series";

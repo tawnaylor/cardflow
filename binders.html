@@ -1,38 +1,37 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>CardFlow | Binders</title>
-    <link rel="stylesheet" href="css/styles.css" />
-    <link rel="stylesheet" href="css/animations.css" />
-  </head>
-  <body>
-    <header class="site-header">
-      <div class="container header-row">
-        <div class="brand-block">
-          <h1 class="brand">CardFlow</h1>
-          <p class="subtitle">Your digital trading card binder</p>
-        </div>
-        <div class="header-actions">
-          <button class="nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">☰</button>
-          <nav id="main-nav" aria-label="Main navigation">
-            <ul class="nav-links" role="list">
-              <li><a href="index.html">Home</a></li>
-              <li><a href="add-card.html">Add Cards</a></li>
-              <li><a href="binders.html" aria-current="page">Binders</a></li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-    </header>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CardFlow | Binders</title>
+<link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body class="neon-street">
+
+<div class="bg-effects" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">
+      <img src="./images/cardflow%20logo.jpeg" alt="CardFlow logo">
+    </div>
+    <span class="brand-name">CardFlow</span>
+  </div>
+
+  <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+
+  <nav class="nav">
+    <a class="nav-link" href="./index.html">Home</a>
+    <a class="nav-link" href="./add-card.html">Add Cards</a>
+    <a class="nav-link" href="./binders.html">Binders</a>
+  </nav>
+</header>
 
 <main class="page glass-panel">
-
   <h1 class="page-title">Binders</h1>
 
   <section class="panel">
-
     <div class="panel-head">
       <h2>Your Binders</h2>
       <button class="btn danger" id="clearAll">Clear All Binders</button>
@@ -63,9 +62,7 @@
 
     <!-- RENDER AREA (IMPORTANT) -->
     <div id="binderList" class="binder-list"></div>
-
   </section>
-
 </main>
 
 <footer class="footer">
