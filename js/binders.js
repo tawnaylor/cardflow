@@ -1,55 +1,87 @@
+console.log("🔥 binders.js: Persistent Storage & Card Count Fix");
+
+// 1. DATABASE CONFIGURATION
+const DB_NAME = "CardFlowDB";
+const STORE_NAME = "binders";
+let db;
+
+// Initialize IndexedDB
+const request = indexedDB.open(DB_NAME, 1);
+
+request.onupgradeneeded = (e) => {
+  db = e.target.result;
+  if (!db.objectStoreNames.contains(STORE_NAME)) {
+    db.createObjectStore(STORE_NAME, { keyPath: "id", autoIncrement: true });
+  }
+};
+
+// This ensures binders appear automatically every time the page loads
+request.onsuccess = (e) => {
+  db = e.target.result;
+  console.log("Database connected.");
+  render(); 
+};
+
+request.onerror = (e) => console.error("Database error:", e.target.error);
+
 document.addEventListener("DOMContentLoaded", () => {
   const binderList = document.getElementById("binderList");
-  const clearAllBtn = document.getElementById("clearAll");
   const saveBinderBtn = document.getElementById("saveBinder");
+  const clearAllBtn = document.getElementById("clearAll");
   const binderNameInput = document.getElementById("binderName");
   const binderDescInput = document.getElementById("binderDesc");
   const binderImageInput = document.getElementById("binderImage");
 
-  if (!binderList || !saveBinderBtn || !binderNameInput) {
-    console.error("Missing binder DOM elements");
-    return;
-  }
+  // Made global so it can be called by the Database success event
+  window.render = function() {
+    if (!db) return;
 
-  let binders = JSON.parse(localStorage.getItem("binders") || "[]");
+    const transaction = db.transaction([STORE_NAME], "readonly");
+    const store = transaction.objectStore(STORE_NAME);
+    const getAllRequest = store.getAll();
 
-  function saveToStorage() {
-    localStorage.setItem("binders", JSON.stringify(binders));
-  }
+    getAllRequest.onsuccess = () => {
+      const binders = getAllRequest.result;
+      binderList.innerHTML = "";
 
-  function renderBinders() {
-    binderList.innerHTML = "";
+      if (!binders.length) {
+        binderList.innerHTML = "<p class='empty-msg'>No binders found. Create one above!</p>";
+        return;
+      }
 
-    if (binders.length === 0) {
-      binderList.innerHTML = `<p style="opacity:.7">No binders yet. Create one above.</p>`;
-      return;
-    }
+      // Fetch latest cards from LocalStorage for the count
+      const allCards = JSON.parse(localStorage.getItem("cardflow_cards") || "[]");
 
-    binders.forEach((binder, index) => {
-      const card = document.createElement("div");
-      card.className = "binder-item";
+      binders.forEach((b) => {
+        const div = document.createElement("div");
+        div.className = "binder-item";
 
-      const img = binder.image?.trim()
-        ? binder.image
-        : "https://via.placeholder.com/300x400";
+        // FIX: Ensure we compare IDs as Strings to avoid "0" counts
+        const binderCards = allCards.filter(card => String(card.binderId) === String(b.id));
 
-      card.innerHTML = `
-        <img src="${img}" alt="${binder.name}">
-        <h3>${binder.name}</h3>
-        <p>${binder.description || ""}</p>
-      `;
-
-      card.addEventListener("dblclick", () => {
-        if (confirm(`Delete "${binder.name}"?`)) {
-          binders.splice(index, 1);
-          saveToStorage();
-          renderBinders();
+        let imgUrl = 'https://via.placeholder.com/300x400?text=No+Image';
+        if (b.image) {
+          imgUrl = URL.createObjectURL(b.image);
         }
-      });
 
-      binderList.appendChild(card);
-    });
-  }
+        div.innerHTML = `
+          <div class="binder-card">
+            <div class="binder-img-container">
+              <img src="${imgUrl}" alt="${b.name}">
+            </div>
+            <div class="binder-info">
+              <h3 class="binder-name">${b.name}</h3>
+              <p class="binder-desc">${b.description || "No description provided."}</p>
+              <p class="card-count" style="color: #00f2ff; font-weight: bold; margin-top: 5px;">
+                Cards in Binder: ${binderCards.length}
+              </p>
+            </div>
+          </div>
+        `;
+        binderList.appendChild(div);
+      });
+    };
+  };
 
   saveBinderBtn.addEventListener("click", () => {
     const name = binderNameInput.value.trim();
@@ -57,51 +89,33 @@ document.addEventListener("DOMContentLoaded", () => {
     const file = binderImageInput.files?.[0];
 
     if (!name) {
-      alert("Binder name is required");
+      alert("Please enter a binder name.");
       return;
     }
 
-    function addBinder(imageData = "") {
-      binders.push({
-        name,
-        description: desc,
-        image: imageData
-      });
+    const transaction = db.transaction([STORE_NAME], "readwrite");
+    const store = transaction.objectStore(STORE_NAME);
 
-      saveToStorage();
-      renderBinders();
+    const newBinder = {
+      name: name,
+      description: desc,
+      image: file || null,
+      createdAt: new Date().getTime()
+    };
 
+    const addRequest = store.add(newBinder);
+    addRequest.onsuccess = () => {
       binderNameInput.value = "";
       binderDescInput.value = "";
       binderImageInput.value = "";
-    }
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => addBinder(e.target.result);
-      reader.readAsDataURL(file);
-    } else {
-      addBinder("");
-    }
+      render(); 
+    };
   });
 
   clearAllBtn.addEventListener("click", () => {
-    if (confirm("Clear all binders?")) {
-      binders = [];
-      saveToStorage();
-      renderBinders();
-    }
+    if (!confirm("Delete all binders?")) return;
+    const transaction = db.transaction([STORE_NAME], "readwrite");
+    const store = transaction.objectStore(STORE_NAME);
+    store.clear().onsuccess = () => render();
   });
-
-  // NAV
-  const navToggle = document.querySelector(".nav-toggle");
-  const nav = document.querySelector(".nav");
-
-  if (navToggle && nav) {
-    navToggle.addEventListener("click", () => {
-      nav.classList.toggle("show");
-    });
-  }
-
-  renderBinders();
 });
