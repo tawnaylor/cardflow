@@ -1,79 +1,118 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>CardFlow | Add Card</title>
-    <link rel="stylesheet" href="css/styles.css" />
-    <link rel="stylesheet" href="css/animations.css" />
-  </head>
-  <body>
-    <header class="site-header">
-      <div class="container header-row">
-        <div>
-          <h1 class="brand">CardFlow</h1>
-          <p class="subtitle">Your digital trading card binder</p>
-        </div>
-        <div class="header-actions">
-          <button class="nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">☰</button>
-          <nav id="main-nav">
-            <ul class="nav-links" role="list">
-              <li><a href="index.html">Home</a></li>
-              <li><a href="add-card.html" aria-current="page">Add Cards</a></li>
-              <li><a href="binders.html">Binders</a></li>
-            </ul>
-          </nav>
-        </div>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CardFlow | Add Cards</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body class="neon-street">
+  <div class="bg-effects" aria-hidden="true"></div>
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">
+      <img src="./images/cardflow%20logo.jpeg" alt="CardFlow logo">
+    </div>
+    <span class="brand-name">CardFlow</span>
+  </div>
+
+  <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+
+  <nav class="nav">
+    <a class="nav-link" href="./index.html">Home</a>
+    <a class="nav-link" href="./add-card.html">Add Cards</a>
+    <a class="nav-link" href="./binders.html">Binders</a>
+  </nav>
+</header>
+
+  <main class="page glass-panel">
+    <h1 class="page-title">Add Cards</h1>
+
+    <form id="cardForm" class="form" novalidate>
+      <div class="form-grid">
+        <label class="field field-wide">
+          <span>TCGdex Card ID</span>
+          <div class="field-inline">
+            <input id="tcgdexCardId" type="text" placeholder="e.g., swsh3-136" autocapitalize="off" spellcheck="false" />
+            <button class="btn" type="button" id="lookupTcgdexBtn">Autofill</button>
+          </div>
+          <small class="hint">Fetch card details from TCGdex and prefill the form.</small>
+        </label>
+
+        <label class="field">
+          <span>Card Name *</span>
+          <input name="name" type="text" required minlength="2" placeholder="e.g., Charizard" />
+          <small class="hint">At least 2 characters.</small>
+        </label>
+
+        <label class="field">
+          <span>Series *</span>
+          <select id="seriesSelect" name="series" required>
+            <option value="" selected disabled>Select a series…</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Series Expansion *</span>
+          <select id="expansionSelect" name="expansion" required>
+            <option value="" selected disabled>Select an expansion…</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Rarity *</span>
+          <select name="rarity" required>
+            <option value="" selected disabled>Select…</option>
+            <option>Common</option>
+            <option>Uncommon</option>
+            <option>Rare</option>
+            <option>Holo Rare</option>
+            <option>Illustration Rare</option>
+            <option>Ultra Rare</option>
+            <option>Secret Rare</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Card Number *</span>
+          <input name="number" type="text" required pattern="[A-Za-z0-9/-]{1,20}" placeholder="e.g., 151 or TG01" />
+          <small class="hint">Use 1-20 characters with letters, numbers, /, or -.</small>
+        </label>
+
+        <label class="field">
+          <span>Quantity</span>
+          <input name="qty" type="number" min="1" value="1" />
+        </label>
+
+        <label class="field">
+          <span>Image URL (optional)</span>
+          <input id="imageUrl" name="imageUrl" type="url" placeholder="https://example.com/image.jpg" />
+          <small class="hint">If provided, the image will be fetched and stored locally (base64). CORS may block some remote images.</small>
+        </label>
+
+        <label class="field field-wide">
+          <span>Or upload an image file</span>
+          <input id="imageInput" name="image" type="file" accept="image/*" />
+          <small class="hint">Optional. Uploading a file stores it locally (base64) in your browser.</small>
+        </label>
       </div>
-    </header>
 
-    <main class="container" style="padding-top: 32px;">
-      <h2 style="margin-bottom: 24px;">Add a Card</h2>
+      <div class="form-actions">
+        <button class="btn primary" type="submit">Add To Binder</button>
+        <button class="btn" type="button" id="seedDemo">Add Demo Cards</button>
+      </div>
 
-      <section class="panel" style="margin-bottom: 24px;">
-        <h3 style="margin-top:0;">TCGdex Autofill</h3>
-        <div style="display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap;">
-          <label class="field" style="flex:1; min-width:200px;">
-            <span class="field-label">TCGdex Card ID</span>
-            <input id="tcgdex-id" class="input" type="text" placeholder="e.g. swsh1-1" aria-describedby="autofill-help" />
-          </label>
-          <button type="button" id="autofill-btn" class="btn primary">Autofill</button>
-        </div>
-        <small class="hint" id="autofill-help">Fetch card details from TCGdex and prefill the form below.</small>
-        <p id="autofill-status" role="status" aria-live="polite" style="margin-top:8px; font-size:14px;"></p>
-      </section>
+      <p class="form-status" id="status" role="status" aria-live="polite"></p>
+    </form>
+  </main>
 
-      <section class="panel">
-        <form id="add-card-form" novalidate aria-label="Add a new card">
-          <div class="form-grid">
 
-            <label class="field">
-              <span class="field-label">Card Name <span class="req" aria-hidden="true">*</span></span>
-              <input id="card-name" class="input" type="text" required minlength="2"
-                     aria-required="true" aria-describedby="err-card-name" />
-              <small class="error" id="err-card-name" role="alert"></small>
-              <small class="hint">At least 2 characters.</small>
-            </label>
+        <footer class="footer">
+    <p>&copy; 2026 CardFlow. All rights reserved.</p>
+  </footer
 
-            <label class="field">
-              <span class="field-label">Series <span class="req" aria-hidden="true">*</span></span>
-              <select id="series" class="select" required aria-required="true" aria-describedby="err-series">
-                <option value="">Select a series…</option>
-              </select>
-              <small class="error" id="err-series" role="alert"></small>
-            </label>
-
-            <label class="field">
-              <span class="field-label">Series Expansion <span class="req" aria-hidden="true">*</span></span>
-              <select id="expansion" class="select" required aria-required="true" aria-describedby="err-expansion">
-                <option value="">Select an expansion…</option>
-              </select>
-              <small class="error" id="err-expansion" role="alert"></small>
-            </label>
-
-            <label class="field">
-              <span class="field-label">Rarity <span class="req" aria-hidden="true">*</span></span>
-              <select id="rarity" class="select" required aria-required="true" aria-describedby="err-rarity">
-                <option value="">Select…</option>
-                <option>Common</option>
-                <option>Uncommon</option>
+<script type="module" src="./js/home.js"></script>
+  <script src="./js/navbar.js"></script>
+  
+</body>
+</html>
