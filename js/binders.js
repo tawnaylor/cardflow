@@ -1,5 +1,7 @@
 console.log("🔥 binders.js: Persistent Storage & Card Count Fix");
 
+const CARD_STORAGE_KEY = "cardflow_cards_v1";
+
 // 1. DATABASE CONFIGURATION
 const DB_NAME = "CardFlowDB";
 const STORE_NAME = "binders";
@@ -44,6 +46,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const binderDescInput = document.getElementById("binderDesc");
   const binderImageInput = document.getElementById("binderImage");
 
+  if (!binderList || !clearAllBtn || !saveBinderBtn || !binderNameInput || !binderDescInput || !binderImageInput) {
+    return;
+  }
+
   // Made global so it can be called by the Database success event
   window.render = function() {
     if (!db) return;
@@ -62,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
       // Fetch latest cards from LocalStorage for the count
-      const allCards = JSON.parse(localStorage.getItem("cardflow_cards") || "[]");
+      const allCards = JSON.parse(localStorage.getItem(CARD_STORAGE_KEY) || localStorage.getItem("cardflow_cards") || "[]");
 
       binders.forEach((b) => {
         const div = document.createElement("div");
@@ -120,15 +126,8 @@ document.addEventListener("DOMContentLoaded", () => {
       binderNameInput.value = "";
       binderDescInput.value = "";
       binderImageInput.value = "";
-    }
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => addBinder(e.target.result);
-      reader.readAsDataURL(file);
-    } else {
-      addBinder("");
-    }
+      render();
+    };
   });
 
   clearAllBtn.addEventListener("click", () => {

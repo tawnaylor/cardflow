@@ -35,6 +35,13 @@
       <div class="form-grid">
 
         <label class="field field-wide">
+          <span>Binder *</span>
+          <select id="binderSelect" name="binderId" required>
+            <option value="" disabled selected>Choose a binder...</option>
+          </select>
+        </label>
+
+        <label class="field field-wide">
           <span>TCGdex Card ID</span>
           <div class="field-inline">
             <input id="tcgdexCardId" type="text" placeholder="e.g., swsh3-136" />
@@ -119,7 +126,6 @@
 
   <script type="module" src="./js/add.js"></script>
   <script src="./js/navbar.js"></script>
-  <script src="./js/binders.js"></script>
 
 </body>
 </html>

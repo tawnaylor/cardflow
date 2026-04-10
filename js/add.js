@@ -1,4 +1,4 @@
-import { upsertCard, fileToDataUrl, getCards } from "./storage.js";
+import { upsertCard, fileToDataUrl } from "./storage.js";
 import { fetchTcgdexCard } from "./tcgdex.js";
 
 const form = document.getElementById("cardForm");
@@ -14,7 +14,7 @@ const lookupTcgdexBtn = document.getElementById('lookupTcgdexBtn');
 const CARD_NUMBER_PATTERN = /^[A-Za-z0-9/-]{1,20}$/;
 
 function setStatus(msg) {
-  status.textContent = msg;
+  if (status) status.textContent = msg;
 }
 
 /**
@@ -22,10 +22,18 @@ function setStatus(msg) {
  * This is necessary to link the card to a binder ID for the count to work.
  */
 function loadBindersIntoSelect() {
+  if (!binderSelect) return;
+
   const request = indexedDB.open("CardFlowDB", 1);
+  request.onerror = () => {
+    setStatus('Unable to load binders. Open the Binders page and create one first.');
+  };
   request.onsuccess = (e) => {
     const db = e.target.result;
-    if (!db.objectStoreNames.contains("binders")) return;
+    if (!db.objectStoreNames.contains("binders")) {
+      binderSelect.innerHTML = '<option value="" disabled selected>Create a binder first...</option>';
+      return;
+    }
     
     const transaction = db.transaction(["binders"], "readonly");
     const store = transaction.objectStore("binders");
@@ -33,14 +41,23 @@ function loadBindersIntoSelect() {
 
     getAll.onsuccess = () => {
       const binders = getAll.result;
-      if (binderSelect) {
-        binderSelect.innerHTML = '<option value="" disabled selected>Choose a binder...</option>';
-        binders.forEach(binder => {
-          const opt = document.createElement('option');
-          opt.value = binder.id; 
-          opt.textContent = binder.name;
-          binderSelect.appendChild(opt);
-        });
+      const selectedBinderId = binderSelect.value;
+      binderSelect.innerHTML = '<option value="" disabled selected>Choose a binder...</option>';
+
+      if (!binders.length) {
+        binderSelect.innerHTML = '<option value="" disabled selected>Create a binder first...</option>';
+        return;
+      }
+
+      binders.forEach(binder => {
+        const opt = document.createElement('option');
+        opt.value = String(binder.id);
+        opt.textContent = binder.name;
+        binderSelect.appendChild(opt);
+      });
+
+      if (selectedBinderId) {
+        binderSelect.value = selectedBinderId;
       }
     };
   };
@@ -113,19 +130,23 @@ async function autofillFromTcgdex() {
 
 function validate(formEl) {
   const problems = [];
+  const nameField = formEl.elements.name;
+  const seriesField = formEl.elements.series;
+  const expansionField = formEl.elements.expansion;
+  const rarityField = formEl.elements.rarity;
+  const numberField = formEl.elements.number;
 
-  // NEW VALIDATION: User MUST select a binder
   if (binderSelect && !binderSelect.value) problems.push("You must select a binder.");
-  if (!name.value.trim() || name.value.trim().length < 2) problems.push("Card name is required (min 2 chars).");
-  if (!series.value.trim()) problems.push("Series is required.");
-  if (!expansion.value.trim()) problems.push("Series expansion is required.");
-  if (!rarity.value) problems.push("Rarity is required.");
-  if (!CARD_NUMBER_PATTERN.test(number.value.trim())) problems.push("Card number must be 1-20 characters using letters, numbers, /, or -.");
+  if (!nameField.value.trim() || nameField.value.trim().length < 2) problems.push("Card name is required (min 2 chars).");
+  if (!seriesField.value.trim()) problems.push("Series is required.");
+  if (!expansionField.value.trim()) problems.push("Series expansion is required.");
+  if (!rarityField.value) problems.push("Rarity is required.");
+  if (!CARD_NUMBER_PATTERN.test(numberField.value.trim())) problems.push("Card number must be 1-20 characters using letters, numbers, /, or -.");
 
   return problems;
 }
 
-form.addEventListener("submit", async (e) => {
+form?.addEventListener("submit", async (e) => {
   e.preventDefault();
   setStatus("");
   const problems = validate(form);
@@ -154,8 +175,10 @@ form.addEventListener("submit", async (e) => {
     }
   }
 
+  const selectedBinderId = binderSelect?.value || "";
+
   const payload = {
-    binderId: binderSelect.value, // FIXED: Links the card to the specific binder ID
+    binderId: selectedBinderId,
     name: form.elements.name.value,
     series: form.elements.series.value,
     expansion: form.elements.expansion.value,
@@ -175,15 +198,16 @@ form.addEventListener("submit", async (e) => {
 
   form.reset();
   form.elements.qty.value = 1;
-  loadBindersIntoSelect(); // Refresh dropdown
+  if (binderSelect) binderSelect.value = selectedBinderId;
+  loadBindersIntoSelect();
 });
 
-seedBtn.addEventListener("click", () => {
-  if (!binderSelect.value) {
+seedBtn?.addEventListener("click", () => {
+  if (!binderSelect?.value) {
     setStatus("Select a binder first to add demo cards to it!");
     return;
   }
-  const bId = Number(binderSelect.value); 
+
   const demo = [
     { name:"Pikachu", series:"Scarlet & Violet", expansion:"Paldea Evolved", rarity:"Rare", number:"1", qty:2, imageDataUrl:"", binderId: binderSelect.value },
     { name:"Charizard", series:"Scarlet & Violet", expansion:"Obsidian Flames", rarity:"Ultra Rare", number:"2", qty:2, imageDataUrl:"", binderId: binderSelect.value },
