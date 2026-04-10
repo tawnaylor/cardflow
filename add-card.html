@@ -30,14 +30,12 @@
     <main class="container" style="padding-top:32px; padding-bottom:60px;">
       <h2 style="margin-bottom:8px;">Add a Card</h2>
 
-      <!-- TCGdex Autofill -->
       <section class="panel" style="margin-bottom:20px;" aria-label="TCGdex autofill">
         <h3 style="margin-top:0;">TCGdex Autofill</h3>
         <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;">
           <label class="field" style="flex:1;min-width:200px;">
             <span class="field-label">TCGdex Card ID</span>
-            <input id="tcgdexCardId" class="input" type="text" placeholder="e.g. swsh3-136"
-                   aria-describedby="autofill-hint" />
+            <input id="tcgdexCardId" class="input" type="text" placeholder="e.g. swsh3-136" aria-describedby="autofill-hint" />
           </label>
           <button type="button" id="lookupTcgdexBtn" class="btn primary">Autofill</button>
         </div>
@@ -45,7 +43,6 @@
         <p id="autofillStatus" role="status" aria-live="polite" style="margin-top:8px;font-size:14px;min-height:20px;"></p>
       </section>
 
-      <!-- Add Card Form -->
       <section class="panel" aria-label="Add card form">
         <form id="cardForm" novalidate>
           <div class="form-grid">
@@ -94,7 +91,8 @@
             <label class="field">
               <span class="field-label">Card Number <span class="req" aria-hidden="true">*</span></span>
               <input id="cardNumber" name="number" class="input" type="text" required
-                     pattern="[A-Za-z0-9/\-]{1,20}" aria-required="true" aria-describedby="err-number hint-number" />
+                     pattern="[A-Za-z0-9/\-]{1,20}" aria-required="true"
+                     aria-describedby="err-number hint-number" />
               <small class="hint" id="hint-number">1–20 chars: letters, numbers, / or -</small>
               <small class="error" id="err-number" role="alert"></small>
             </label>
