@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CardFlow | Card Detail</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-row">
+        <div>
+          <h1 class="brand">CardFlow</h1>
+          <p class="subtitle">Your digital trading card binder</p>
+        </div>
+        <div class="header-actions">
+          <button class="nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+          <nav id="main-nav">
+            <ul class="nav-links" role="list">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="add-card.html">Add Cards</a></li>
+              <li><a href="binders.html">Binders</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main class="container" style="padding-top: 32px;">
+      <a href="index.html" class="btn" style="margin-bottom: 20px; display:inline-block;">← Back to Collection</a>
+      <div id="card-detail-container" aria-live="polite">
+        <p>Loading card…</p>
+      </div>
+    </main>
+
+    <div id="toast" class="toast" hidden aria-live="polite" aria-atomic="true"></div>
+
+    <footer class="site-footer" role="contentinfo">
+      <div class="footer-inner">
+        <div class="footer-left"><div class="footer-brand">CardFlow</div></div>
+        <nav class="footer-center" aria-label="Footer navigation">
+          <a href="index.html">Home</a>
+          <a href="add-card.html">Add Cards</a>
+          <a href="binders.html">Binders</a>
+        </nav>
+      </div>
+    </footer>
+
+    <script type="module" src="js/card-detail.js"></script>
+  </body>
+</html>
