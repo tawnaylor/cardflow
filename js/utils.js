@@ -35,17 +35,19 @@ export function showToast(message) {
 
 export function initNav() {
   const toggle = document.querySelector('.nav-toggle');
-  const nav = document.querySelector('#main-nav .nav-links');
+  const nav = document.querySelector('#main-nav .nav-links') || document.querySelector('.nav');
   if (!toggle || !nav) return;
   toggle.addEventListener('click', () => {
     const open = toggle.getAttribute('aria-expanded') === 'true';
     toggle.setAttribute('aria-expanded', String(!open));
-    nav.classList.toggle('nav-links--open');
+    if (nav.classList.contains('nav-links')) nav.classList.toggle('nav-links--open');
+    else nav.classList.toggle('show');
   });
   document.addEventListener('click', e => {
     if (!nav.contains(e.target) && !toggle.contains(e.target)) {
       toggle.setAttribute('aria-expanded', 'false');
       nav.classList.remove('nav-links--open');
+      nav.classList.remove('show');
     }
   });
 }

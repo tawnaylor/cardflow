@@ -8,27 +8,24 @@
     <link rel="stylesheet" href="css/animations.css" />
   </head>
 
-  <body>
-    <header class="site-header">
-      <div class="container header-row">
-        <div>
-          <h1 class="brand">CardFlow</h1>
-          <p class="subtitle">Your digital trading card binder</p>
-        </div>
+  <body class="neon-street">
+    <div class="bg-effects" aria-hidden="true"></div>
 
-        <div class="header-actions">
-          <!-- Hamburger for mobile -->
-          <button class="nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">☰</button>
-          <nav id="main-nav">
-            <ul class="nav-links" role="list">
-              <li><a href="index.html" aria-current="page">Home</a></li>
-              <li><a href="add-card.html">Add Cards</a></li>
-              <li><a href="binders.html">Binders</a></li>
-            </ul>
-          </nav>
-          <button id="addCardBtn" class="btn primary" type="button">+ Add Card</button>
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">
+          <img src="./images/cardflow%20logo.jpeg" alt="CardFlow logo">
         </div>
+        <span class="brand-name">CardFlow</span>
       </div>
+
+      <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+
+      <nav class="nav">
+        <a class="nav-link" href="./index.html" aria-current="page">Home</a>
+        <a class="nav-link" href="./add-card.html">Add Cards</a>
+        <a class="nav-link" href="./binders.html">Binders</a>
+      </nav>
     </header>
 
     <main class="container">
