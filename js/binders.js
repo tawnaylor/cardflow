@@ -1,11 +1,7 @@
-console.log("🔥 binders.js: Persistent Storage & Card Count Fix");
-
-// 1. DATABASE CONFIGURATION
 const DB_NAME = "CardFlowDB";
 const STORE_NAME = "binders";
 let db;
 
-// Initialize IndexedDB
 const request = indexedDB.open(DB_NAME, 1);
 
 request.onupgradeneeded = (e) => {
@@ -15,16 +11,24 @@ request.onupgradeneeded = (e) => {
   }
 };
 
-// This ensures binders appear automatically every time the page loads
 request.onsuccess = (e) => {
   db = e.target.result;
-  console.log("Database connected.");
   render(); 
 };
 
-request.onerror = (e) => console.error("Database error:", e.target.error);
-
 document.addEventListener("DOMContentLoaded", () => {
+  // --- MOBILE NAV TOGGLE ---
+  const navToggle = document.querySelector(".nav-toggle");
+  const navMenu = document.querySelector(".nav");
+
+  if (navToggle && navMenu) {
+    navToggle.addEventListener("click", () => {
+      // This toggles the 'active' class which your CSS should handle
+      navMenu.classList.toggle("active");
+    });
+  }
+
+  // --- BINDER ELEMENTS ---
   const binderList = document.getElementById("binderList");
   const saveBinderBtn = document.getElementById("saveBinder");
   const clearAllBtn = document.getElementById("clearAll");
@@ -32,7 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const binderDescInput = document.getElementById("binderDesc");
   const binderImageInput = document.getElementById("binderImage");
 
-  // Made global so it can be called by the Database success event
   window.render = function() {
     if (!db) return;
 
@@ -49,15 +52,14 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Fetch latest cards from LocalStorage for the count
-      const allCards = JSON.parse(localStorage.getItem("cardflow_cards") || "[]");
+      const allCards = JSON.parse(localStorage.getItem("cardflow_cards_v1") || "[]");
 
       binders.forEach((b) => {
         const div = document.createElement("div");
         div.className = "binder-item";
 
-        // FIX: Ensure we compare IDs as Strings to avoid "0" counts
-        const binderCards = allCards.filter(card => String(card.binderId) === String(b.id));
+        const binderCards = allCards.filter(card => Number(card.binderId) === Number(b.id));
+        const totalQty = binderCards.reduce((sum, card) => sum + (Number(card.qty) || 0), 0);
 
         let imgUrl = 'https://via.placeholder.com/300x400?text=No+Image';
         if (b.image) {
@@ -73,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <h3 class="binder-name">${b.name}</h3>
               <p class="binder-desc">${b.description || "No description provided."}</p>
               <p class="card-count" style="color: #00f2ff; font-weight: bold; margin-top: 5px;">
-                Cards in Binder: ${binderCards.length}
+                Unique: ${binderCards.length} | Total Quantity: ${totalQty}
               </p>
             </div>
           </div>
@@ -85,26 +87,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   saveBinderBtn.addEventListener("click", () => {
     const name = binderNameInput.value.trim();
-    const desc = binderDescInput.value.trim();
-    const file = binderImageInput.files?.[0];
-
-    if (!name) {
-      alert("Please enter a binder name.");
-      return;
-    }
+    if (!name) return alert("Please enter a name.");
 
     const transaction = db.transaction([STORE_NAME], "readwrite");
     const store = transaction.objectStore(STORE_NAME);
-
     const newBinder = {
       name: name,
-      description: desc,
-      image: file || null,
-      createdAt: new Date().getTime()
+      description: binderDescInput.value.trim(),
+      image: binderImageInput.files?.[0] || null,
+      createdAt: Date.now()
     };
 
-    const addRequest = store.add(newBinder);
-    addRequest.onsuccess = () => {
+    store.add(newBinder).onsuccess = () => {
       binderNameInput.value = "";
       binderDescInput.value = "";
       binderImageInput.value = "";
@@ -114,8 +108,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   clearAllBtn.addEventListener("click", () => {
     if (!confirm("Delete all binders?")) return;
-    const transaction = db.transaction([STORE_NAME], "readwrite");
-    const store = transaction.objectStore(STORE_NAME);
-    store.clear().onsuccess = () => render();
+    db.transaction([STORE_NAME], "readwrite").objectStore(STORE_NAME).clear().onsuccess = () => render();
   });
 });
