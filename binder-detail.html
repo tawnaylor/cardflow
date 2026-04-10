@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CardFlow | Binder Detail</title>
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body class="neon-street">
+  <div class="bg-effects" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">
+        <img src="./images/cardflow%20logo.jpeg" alt="CardFlow logo">
+      </div>
+      <span class="brand-name">CardFlow</span>
+    </div>
+
+    <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+
+    <nav class="nav">
+      <a class="nav-link" href="./index.html">Home</a>
+      <a class="nav-link" href="./add-card.html">Add Cards</a>
+      <a class="nav-link" href="./binders.html" aria-current="page">Binders</a>
+    </nav>
+  </header>
+
+  <main class="page glass-panel">
+    <a href="./binders.html" class="btn" style="display:inline-block;margin-bottom:18px;">← Back to Binders</a>
+
+    <section id="binderDetailHero" class="panel" aria-live="polite">
+      <p>Loading binder...</p>
+    </section>
+
+    <section class="panel" style="margin-top:20px;">
+      <div class="panel-head">
+        <h2>Cards In This Binder</h2>
+      </div>
+      <div id="binderCardsEmpty" class="empty-state" hidden>
+        <div>
+          <h3 style="margin-top:0;">No cards in this binder yet</h3>
+          <p>Add cards from the Add Cards page and assign them to this binder.</p>
+        </div>
+      </div>
+      <div id="binderCardsGrid" class="binder-grid" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand">CardFlow</div>
+      <nav class="footer-center" aria-label="Footer navigation">
+        <a href="index.html">Home</a>
+        <a href="add-card.html">Add Cards</a>
+        <a href="binders.html" aria-current="page">Binders</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script type="module" src="./js/binder-detail.js"></script>
+</body>
+</html>

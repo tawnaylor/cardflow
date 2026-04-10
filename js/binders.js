@@ -74,29 +74,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const div = document.createElement("div");
         div.className = "binder-item";
 
-        // FIX: Ensure we compare IDs as Strings to avoid "0" counts
         const binderCards = allCards.filter(card => String(card.binderId) === String(b.id));
         const binderQtyTotal = binderCards.reduce((sum, card) => sum + Number(card.quantity || card.qty || 1), 0);
-        const cardPreviewMarkup = binderCards.length
-          ? `
-            <div class="binder-card-list">
-              ${binderCards.slice(0, 4).map(card => {
-                const imageSrc = card.imageUrl || card.imageDataUrl || card.externalImageUrl || '';
-                return `
-                  <a class="binder-card-preview" href="card-detail.html?id=${encodeURIComponent(card.id)}" aria-label="Open ${escapeAttr(card.name)} details">
-                    <div class="binder-card-preview__thumb">${imageSrc
-                      ? `<img src="${escapeAttr(imageSrc)}" alt="${escapeAttr(card.name)}">`
-                      : '<div class="binder-card__placeholder">No image</div>'}</div>
-                    <div class="binder-card-preview__body">
-                      <h4>${escapeHtml(card.name)}</h4>
-                      <p>${escapeHtml(card.setId || card.expansion || 'No set')}</p>
-                      <span class="qty-pill">x${Number(card.quantity || card.qty || 1)}</span>
-                    </div>
-                  </a>
-                `;
-              }).join('')}
-            </div>`
-          : '<p class="binder-empty-copy">No cards in this binder yet.</p>';
+        const accentHue = 180 + ((Number(b.id) * 23) % 120);
+        const featureCard = binderCards[0] || null;
+        const featureImage = featureCard ? featureCard.imageUrl || featureCard.imageDataUrl || featureCard.externalImageUrl || '' : '';
+        const subtitle = binderCards.length
+          ? `${binderCards.length} unique cards • ${binderQtyTotal} total`
+          : 'Empty binder';
 
         let imgUrl = 'https://via.placeholder.com/300x400?text=No+Image';
         if (b.image) {
@@ -104,19 +89,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         div.innerHTML = `
-          <div class="binder-card">
-            <div class="binder-img-container">
-              <img src="${imgUrl}" alt="${b.name}">
-            </div>
-            <div class="binder-info">
-              <h3 class="binder-name">${b.name}</h3>
-              <p class="binder-desc">${b.description || "No description provided."}</p>
-              <p class="card-count" style="color: #00f2ff; font-weight: bold; margin-top: 5px;">
-                Cards in Binder: ${binderQtyTotal}
-              </p>
-              ${cardPreviewMarkup}
-            </div>
-          </div>
+          <a class="binder-book" href="binder-detail.html?id=${encodeURIComponent(b.id)}" aria-label="Open binder ${escapeAttr(b.name)}" style="--binder-hue:${accentHue};">
+            <span class="binder-book__spine"></span>
+            <span class="binder-book__pages"></span>
+            <span class="binder-book__cover">
+              <span class="binder-book__badge">Binder</span>
+              <span class="binder-book__title">${escapeHtml(b.name)}</span>
+              <span class="binder-book__subtitle">${escapeHtml(subtitle)}</span>
+              <span class="binder-book__description">${escapeHtml(b.description || 'Open this binder to browse the cards inside.')}</span>
+              <span class="binder-book__art">${featureImage
+                ? `<img src="${escapeAttr(featureImage)}" alt="${escapeAttr(featureCard?.name || b.name)}">`
+                : `<img src="${escapeAttr(imgUrl)}" alt="${escapeAttr(b.name)}">`}</span>
+            </span>
+          </a>
         `;
         binderList.appendChild(div);
       });
