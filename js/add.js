@@ -358,6 +358,6 @@ async function populateSeriesFromDataset() {
 }
 
 // Initialization
-loadBindersIntoSelect();
+window.addEventListener("DOMContentLoaded", loadBindersIntoSelect);
 populateSeriesFromDataset();
 populateTcgdexCardPicker();
