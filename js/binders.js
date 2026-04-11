@@ -141,7 +141,7 @@ function clearAllBinders() {
 }
 
 // Initialize IndexedDB
-const request = indexedDB.open(DB_NAME, 1);
+const request = indexedDB.open(DB_NAME, 2);
 
 request.onupgradeneeded = (e) => {
   db = e.target.result;
