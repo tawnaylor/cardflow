@@ -105,41 +105,42 @@ async function applyTcgdexPickerSelection() {
 function loadBindersIntoSelect() {
   if (!binderSelect) return;
 
-  const request = indexedDB.open(DB_NAME, 2);
+  const request = indexedDB.open("CardFlowDB", 2);
+
   request.onerror = () => {
     setStatus('Unable to load binders. Open the Binders page and create one first.');
   };
+
   request.onsuccess = (e) => {
     const db = e.target.result;
+
     if (!db.objectStoreNames.contains("binders")) {
       binderSelect.innerHTML = '<option value="" disabled selected>Create a binder first...</option>';
       return;
     }
-    
+
     const transaction = db.transaction(["binders"], "readonly");
     const store = transaction.objectStore("binders");
     const getAll = store.getAll();
 
     getAll.onsuccess = () => {
       const binders = getAll.result;
-      const selectedBinderId = binderSelect.value;
-      binderSelect.innerHTML = '<option value="" disabled selected>Choose a binder...</option>';
+
+      binderSelect.innerHTML =
+        '<option value="" disabled selected>Choose a binder...</option>';
 
       if (!binders.length) {
-        binderSelect.innerHTML = '<option value="" disabled selected>Create a binder first...</option>';
+        binderSelect.innerHTML =
+          '<option value="" disabled selected>Create a binder first...</option>';
         return;
       }
 
       binders.forEach(binder => {
-        const opt = document.createElement('option');
+        const opt = document.createElement("option");
         opt.value = String(binder.id);
         opt.textContent = binder.name;
         binderSelect.appendChild(opt);
       });
-
-      if (selectedBinderId) {
-        binderSelect.value = selectedBinderId;
-      }
     };
   };
 }
