@@ -105,7 +105,7 @@ async function applyTcgdexPickerSelection() {
 function loadBindersIntoSelect() {
   if (!binderSelect) return;
 
-  const request = indexedDB.open("CardFlowDB", 1);
+  const request = indexedDB.open(DB_NAME, 2);
   request.onerror = () => {
     setStatus('Unable to load binders. Open the Binders page and create one first.');
   };
